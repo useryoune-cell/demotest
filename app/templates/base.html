@@ -18,7 +18,7 @@
             }
         })();
     </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='profile-dark-20') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='deploy-fixes-21') }}">
     {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
@@ -29,7 +29,9 @@
         </a>
         <nav class="main-nav" aria-label="Điều hướng chính">
             <a href="{{ url_for('main.landing') }}">Trang chủ</a>
+            {% if request.endpoint == "main.landing" %}
             <a href="{{ url_for('main.landing') }}#features">Tính năng</a>
+            {% endif %}
             <a href="{{ url_for('main.login', role='student') }}">Đăng nhập</a>
         </nav>
         <div class="header-actions">
@@ -51,7 +53,7 @@
         <span>Được xây dựng để rèn tư duy phản biện trong kỷ nguyên AI.</span>
     </footer>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js', v='profile-dark-20') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js', v='deploy-fixes-21') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

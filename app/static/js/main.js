@@ -91,6 +91,19 @@ const countObserver = new IntersectionObserver(
 
 document.querySelectorAll("[data-count]").forEach((node) => countObserver.observe(node));
 
+document.querySelectorAll(".module-avatar").forEach((image) => {
+    image.addEventListener("error", () => {
+        image.hidden = true;
+        const fallback = image.nextElementSibling;
+        if (fallback?.classList.contains("module-avatar-fallback")) {
+            fallback.hidden = false;
+        }
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    });
+});
+
 if (document.body.classList.contains("landing-page")) {
     document
         .querySelectorAll(".feature-strip article, .process-grid article, .area-card, .module-card")

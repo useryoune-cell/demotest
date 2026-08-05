@@ -26,7 +26,8 @@
                 {% for child in child_modules %}
                 <a class="module-avatar-card app-module-card" href="{{ url_for('main.module_detail', slug=child.slug) }}" aria-label="{{ child.title }}">
                     {% if child.image %}
-                    <img class="module-avatar" src="{{ url_for('static', filename=child.image, v='module-avatar-set-2') }}" alt="">
+                    <img class="module-avatar" src="{{ url_for('static', filename=child.image, v='module-avatar-set-3') }}" alt="">
+                    <span class="module-avatar-fallback" hidden><i data-lucide="{{ child.icon }}"></i></span>
                     {% else %}
                     <span class="module-avatar-fallback"><i data-lucide="{{ child.icon }}"></i></span>
                     {% endif %}

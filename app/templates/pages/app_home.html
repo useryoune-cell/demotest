@@ -85,7 +85,8 @@
                 {% for module in recommended %}
                 <a class="module-avatar-card recommended-avatar-card" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">
                     {% if module.image %}
-                    <img class="module-avatar" src="{{ url_for('static', filename=module.image, v='module-avatar-set-2') }}" alt="">
+                    <img class="module-avatar" src="{{ url_for('static', filename=module.image, v='module-avatar-set-3') }}" alt="">
+                    <span class="module-avatar-fallback" hidden><i data-lucide="{{ module.icon }}"></i></span>
                     {% else %}
                     <span class="module-avatar-fallback"><i data-lucide="{{ module.icon }}"></i></span>
                     {% endif %}
@@ -121,7 +122,8 @@
                 {% for module in modules %}
                 <a class="module-avatar-card app-module-card" data-area="{{ module.area_key }}" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">
                     {% if module.image %}
-                    <img class="module-avatar" src="{{ url_for('static', filename=module.image, v='module-avatar-set-2') }}" alt="">
+                    <img class="module-avatar" src="{{ url_for('static', filename=module.image, v='module-avatar-set-3') }}" alt="">
+                    <span class="module-avatar-fallback" hidden><i data-lucide="{{ module.icon }}"></i></span>
                     {% else %}
                     <span class="module-avatar-fallback"><i data-lucide="{{ module.icon }}"></i></span>
                     {% endif %}
