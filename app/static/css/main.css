@@ -4390,6 +4390,10 @@ body:not(.landing-page):not(.game-page) .module-avatar-fallback {
     box-shadow: 0 16px 32px rgba(69, 55, 38, 0.18);
 }
 
+body:not(.landing-page):not(.game-page) .module-avatar-fallback[hidden] {
+    display: none !important;
+}
+
 body:not(.landing-page):not(.game-page) .module-avatar-card .module-avatar {
     object-fit: cover;
 }
