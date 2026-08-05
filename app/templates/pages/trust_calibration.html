@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Tin hay không tin? · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <button class="button primary" type="button" id="nextTrustItem"><i data-lucide="shuffle"></i><span>Câu tiếp</span></button>
+        </div>
+
+        <section class="trust-layout" data-total="{{ item_count }}">
+            <article class="app-panel trust-card" id="trustCard" data-item-id="{{ item.id }}" data-index="0">
+                <p class="eyebrow dark">Câu hỏi</p>
+                <h2 id="trustQuestion">{{ item.question }}</h2>
+                <div class="ai-answer-box" id="trustAiAnswer">{{ item.ai_answer }}</div>
+            </article>
+
+            <aside class="app-panel trust-control">
+                <div class="trust-slider-block">
+                    <label for="trustInitial">Mức tin cậy ban đầu</label>
+                    <strong><span id="trustInitialValue">50</span>%</strong>
+                    <input id="trustInitial" type="range" min="0" max="100" value="50">
+                    <button class="button primary" type="button" id="lockTrustInitial"><i data-lucide="lock"></i><span>Chốt mức tin cậy</span></button>
+                </div>
+                <div class="evidence-box" id="trustEvidence" hidden></div>
+                <div class="trust-slider-block" id="trustRevisedBlock" hidden>
+                    <label for="trustRevised">Mức tin cậy sau bằng chứng</label>
+                    <strong><span id="trustRevisedValue">50</span>%</strong>
+                    <input id="trustRevised" type="range" min="0" max="100" value="50">
+                    <button class="button primary" type="button" id="scoreTrust"><i data-lucide="check"></i><span>Xem kết quả</span></button>
+                </div>
+            </aside>
+        </section>
+
+        <section class="app-panel trust-result" id="trustResult" hidden>
+            <div class="calibration-bar">
+                <span class="marker initial" id="markerInitial">Ban đầu</span>
+                <span class="marker revised" id="markerRevised">Sau</span>
+                <span class="marker truth" id="markerTruth">Đúng</span>
+            </div>
+            <p id="trustExplanation"></p>
+        </section>
+    </section>
+</div>
+{% endblock %}

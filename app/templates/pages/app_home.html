@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Không gian học tập · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+    <aside class="app-sidebar" aria-label="Điều hướng học sinh">
+        <a class="sidebar-item active" href="{{ url_for('main.app_home') }}">
+            <i data-lucide="home"></i>
+            <span>Tổng quan</span>
+        </a>
+        <a class="sidebar-item" href="#modules">
+            <i data-lucide="grid-3x3"></i>
+            <span>Mô-đun</span>
+        </a>
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug='nhat-ky-phan-tu-ai') }}">
+            <i data-lucide="book-open-check"></i>
+            <span>Nhật ký</span>
+        </a>
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug='ho-so-nang-luc') }}">
+            <i data-lucide="radar"></i>
+            <span>Hồ sơ</span>
+        </a>
+        {% if is_guest %}
+        <a class="sidebar-item" href="{{ url_for('main.student_register') }}">
+            <i data-lucide="user-plus"></i>
+            <span>Đăng ký</span>
+        </a>
+        <a class="sidebar-item" href="{{ url_for('main.login', role='student') }}">
+            <i data-lucide="log-in"></i>
+            <span>Đăng nhập</span>
+        </a>
+        {% else %}
+        <a class="sidebar-item" href="{{ url_for('main.student_logout') }}">
+            <i data-lucide="log-out"></i>
+            <span>Thoát</span>
+        </a>
+        {% endif %}
+    </aside>
+
+    <section class="app-content">
+        <div class="student-hero">
+            <div>
+                <p class="eyebrow dark">Không gian học tập</p>
+                <h1>Chào {{ student.name if student else "bạn" }}</h1>
+            </div>
+            <div class="profile-ring" aria-label="Tiến độ học tập">
+                <span>42%</span>
+                <small>tiến độ tuần</small>
+            </div>
+        </div>
+
+        <div class="student-summary">
+            <article>
+                <i data-lucide="search-check"></i>
+                <span>Kiểm chứng</span>
+                <strong>68</strong>
+            </article>
+            <article>
+                <i data-lucide="scale"></i>
+                <span>Lập luận</span>
+                <strong>61</strong>
+            </article>
+            <article>
+                <i data-lucide="refresh-cw"></i>
+                <span>Tự điều chỉnh</span>
+                <strong>74</strong>
+            </article>
+            <article>
+                <i data-lucide="shield-question"></i>
+                <span>Độ độc lập</span>
+                <strong>57</strong>
+            </article>
+        </div>
+
+        <section class="app-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Nhiệm vụ khuyến nghị</p>
+                    <h2>Luồng học ngắn hôm nay</h2>
+                </div>
+                <a class="text-link" href="#modules">Xem tất cả</a>
+            </div>
+            <div class="recommended-row avatar-only-row learning-flow">
+                {% for module in recommended %}
+                <a class="module-avatar-card recommended-avatar-card" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">
+                    {% if module.image %}
+                    <img class="module-avatar" src="{{ url_for('static', filename=module.image, v='module-avatar-set-2') }}" alt="">
+                    {% else %}
+                    <span class="module-avatar-fallback"><i data-lucide="{{ module.icon }}"></i></span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="app-panel" id="modules">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Mô-đun</p>
+                    <h2>Chọn bài luyện</h2>
+                </div>
+                <div class="filter-tabs" aria-label="Lọc mô-đun">
+                    <button class="filter-tab active" type="button" data-filter="all">Tất cả</button>
+                    {% for area in areas %}
+                    <button class="filter-tab" type="button" data-filter="{{ area.key }}">{{ area.name }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="area-summary">
+                {% for area in areas %}
+                <article class="area-mini {{ area.color }}">
+                    <span>{{ area.count }}</span>
+                    <p>{{ area.name }}</p>
+                </article>
+                {% endfor %}
+            </div>
+
+            <div class="module-grid app-module-grid avatar-only-grid">
+                {% for module in modules %}
+                <a class="module-avatar-card app-module-card" data-area="{{ module.area_key }}" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">
+                    {% if module.image %}
+                    <img class="module-avatar" src="{{ url_for('static', filename=module.image, v='module-avatar-set-2') }}" alt="">
+                    {% else %}
+                    <span class="module-avatar-fallback"><i data-lucide="{{ module.icon }}"></i></span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

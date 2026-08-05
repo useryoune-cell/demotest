@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}So sánh ba câu trả lời AI · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+                <p>{{ item.question }}</p>
+            </div>
+        </div>
+
+        <section class="compare-grid">
+            {% for answer in item.answers %}
+            <article class="compare-card" data-answer-label="{{ answer.label }}">
+                <span class="module-number">{{ answer.label }}</span>
+                <h2>{{ answer.type }}</h2>
+                <p>{{ answer.text }}</p>
+                <dl>
+                    <dt>Điểm mạnh</dt><dd>{{ answer.strength }}</dd>
+                    <dt>Điểm yếu</dt><dd>{{ answer.weakness }}</dd>
+                </dl>
+            </article>
+            {% endfor %}
+        </section>
+
+        <form class="app-panel compare-form" id="compareForm">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Đánh giá</p>
+                    <h2>Chọn câu tốt nhất và tổng hợp</h2>
+                </div>
+                <span class="response-meta" id="compareMeta"></span>
+            </div>
+            <div class="choice-row">
+                {% for answer in item.answers %}
+                <label><input type="radio" name="bestAnswer" value="{{ answer.label }}" {% if loop.first %}checked{% endif %}> Câu {{ answer.label }}</label>
+                {% endfor %}
+            </div>
+            <label class="field-label" for="compareCriteria">Tiêu chí lựa chọn</label>
+            <textarea id="compareCriteria" rows="4"></textarea>
+            <label class="field-label" for="compareSynthesis">Câu trả lời tổng hợp của em</label>
+            <textarea id="compareSynthesis" rows="5"></textarea>
+            <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chấm điểm</span></button>
+        </form>
+    </section>
+</div>
+{% endblock %}

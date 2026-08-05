@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Phòng tranh luận 5 người · Đấu trường lập luận{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Rời phòng</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content room-battle-content">
+        <section class="room-topic-hero">
+            <p class="eyebrow dark">Phòng tranh luận 5 người</p>
+            <h1>{{ topic.title }}</h1>
+            <div class="room-battle-meta">
+                <span><i data-lucide="timer"></i> 4 vòng</span>
+                <span><i data-lucide="users"></i> 5 vai trò</span>
+                <span><i data-lucide="scale"></i> AI trọng tài chấm cuối trận</span>
+            </div>
+        </section>
+
+        <section class="room-arena">
+            <div class="room-team team-blue">
+                <div class="team-heading">
+                    <span>Đội Ủng hộ</span>
+                    <strong>{{ topic.side_a }}</strong>
+                </div>
+                <article class="room-player-card active" data-room-player="0">
+                    <div class="room-player-avatar"><i data-lucide="user"></i></div>
+                    <strong>Bạn</strong>
+                    <small>Mở luận điểm</small>
+                    <em>Sẵn sàng</em>
+                </article>
+                <article class="room-player-card" data-room-player="1">
+                    <div class="room-player-avatar bot"><i data-lucide="bot"></i></div>
+                    <strong>AI Minh</strong>
+                    <small>Đưa bằng chứng</small>
+                    <em>Sẵn sàng</em>
+                </article>
+            </div>
+
+            <div class="room-center-stage">
+                <div class="room-phase-board">
+                    <p class="eyebrow dark" id="roomPhaseLabel">Vòng 1 · Mở luận điểm</p>
+                    <h2 id="roomTurnSpeaker">Lượt của Bạn</h2>
+                    <span id="roomTurnRole">Mở luận điểm cho đội Ủng hộ</span>
+                </div>
+                <div class="room-transcript" id="roomTranscript">
+                    <article>
+                        <strong>AI Trọng tài</strong>
+                        <p>Phòng đã bắt đầu. Mỗi người nói đúng vai trò, tập trung vào bằng chứng và phản biện.</p>
+                    </article>
+                </div>
+                <form class="room-speech-panel" id="roomDebateForm">
+                    <textarea id="roomDebateInput" rows="4" placeholder="Nhập phần phát biểu của bạn trong lượt này..."></textarea>
+                    <button class="button primary" type="submit"><i data-lucide="send"></i><span>Gửi lượt</span></button>
+                    <p class="socratic-meta" id="roomBattleStatus"></p>
+                </form>
+            </div>
+
+            <div class="room-team team-red">
+                <div class="team-heading">
+                    <span>Đội Phản đối</span>
+                    <strong>{{ topic.side_b }}</strong>
+                </div>
+                <article class="room-player-card" data-room-player="2">
+                    <div class="room-player-avatar bot"><i data-lucide="bot"></i></div>
+                    <strong>AI Trâm</strong>
+                    <small>Phản biện</small>
+                    <em>Sẵn sàng</em>
+                </article>
+                <article class="room-player-card" data-room-player="3">
+                    <div class="room-player-avatar bot"><i data-lucide="bot"></i></div>
+                    <strong>AI Quân</strong>
+                    <small>Bắt lỗi ngụy biện</small>
+                    <em>Sẵn sàng</em>
+                </article>
+            </div>
+
+            <article class="room-observer-card" data-room-player="4">
+                <div class="room-player-avatar judge"><i data-lucide="gavel"></i></div>
+                <div>
+                    <strong>AI Lan</strong>
+                    <small>Tổng kết viên · ghi lại điểm mạnh/yếu của hai đội</small>
+                </div>
+                <em>Quan sát</em>
+            </article>
+        </section>
+    </section>
+</div>
+{% endblock %}

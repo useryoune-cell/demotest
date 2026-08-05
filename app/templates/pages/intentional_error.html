@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}AI cố tình sai · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+        </div>
+
+        <section class="level-picker" aria-label="Chọn cấp độ lỗi">
+            {% for level in levels %}
+            <button class="level-button {% if level.level == item.level %}active{% endif %}" type="button" data-error-level="{{ level.level }}">
+                <span>{{ level.level }}</span>
+                <small>{{ level.level_name }}</small>
+            </button>
+            {% endfor %}
+        </section>
+
+        <section class="error-layout">
+            <article class="app-panel error-task" id="errorTask" data-level="{{ item.level }}">
+                <p class="eyebrow dark">Nhiệm vụ</p>
+                <h2 id="errorQuestion">{{ item.question }}</h2>
+                <div class="ai-answer-box selectable" id="errorAiAnswer">{{ item.ai_answer }}</div>
+            </article>
+
+            <form class="app-panel error-form" id="errorForm">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Phân tích lỗi</p>
+                        <h2>Kiểm chứng</h2>
+                    </div>
+                    <span class="response-meta" id="errorMeta"></span>
+                </div>
+                <label class="field-label" for="errorSuspicious">Đoạn đáng nghi</label>
+                <textarea id="errorSuspicious" rows="2"></textarea>
+                <label class="field-label" for="errorType">Loại lỗi</label>
+                <select id="errorType">
+                    <option>Dữ kiện sai</option>
+                    <option>Nguồn không tồn tại</option>
+                    <option>Suy luận thiếu căn cứ</option>
+                    <option>Khái quát hóa quá mức</option>
+                    <option>Đúng nhưng sai bối cảnh</option>
+                    <option>Thiên lệch</option>
+                    <option>Khái quát hóa + thiên lệch</option>
+                </select>
+                <label class="field-label" for="errorExplanation">Vì sao đáng nghi?</label>
+                <textarea id="errorExplanation" rows="3"></textarea>
+                <label class="field-label" for="errorEvidence">Nguồn/bằng chứng kiểm chứng</label>
+                <textarea id="errorEvidence" rows="3"></textarea>
+                <label class="field-label" for="errorRewrite">Viết lại chính xác hơn</label>
+                <textarea id="errorRewrite" rows="4"></textarea>
+                <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chấm bài</span></button>
+            </form>
+        </section>
+    </section>
+</div>
+{% endblock %}

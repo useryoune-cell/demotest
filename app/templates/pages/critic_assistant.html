@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Trợ lí phản biện · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for item in modules %}
+        <a class="sidebar-item {% if item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=item.slug) }}">
+            <i data-lucide="{{ item.icon }}"></i><span>{{ item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+        </div>
+
+        <section class="app-panel">
+            <div class="module-grid app-module-grid critic-assistant-grid avatar-only-grid">
+                {% for child in child_modules %}
+                <a class="module-avatar-card app-module-card" href="{{ url_for('main.module_detail', slug=child.slug) }}" aria-label="{{ child.title }}">
+                    {% if child.image %}
+                    <img class="module-avatar" src="{{ url_for('static', filename=child.image, v='module-avatar-set-2') }}" alt="">
+                    {% else %}
+                    <span class="module-avatar-fallback"><i data-lucide="{{ child.icon }}"></i></span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

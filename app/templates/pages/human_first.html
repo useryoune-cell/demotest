@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Con người trước - AI sau · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
+            <i data-lucide="arrow-left"></i>
+            <span>Quay lại</span>
+        </a>
+        {% for item in modules %}
+        <a class="sidebar-item {% if item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=item.slug) }}">
+            <i data-lucide="{{ item.icon }}"></i>
+            <span>{{ item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero human-first-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <a class="button primary" href="{{ url_for('main.module_detail', slug='nhat-ky-phan-tu-ai') }}">
+                <i data-lucide="book-open-check"></i>
+                <span>Viết phản tư</span>
+            </a>
+        </div>
+
+        <section class="human-flow">
+            <div class="flow-step active" data-human-step="1">
+                <span>1</span>
+                <strong>Em trả lời trước</strong>
+            </div>
+            <div class="flow-step" data-human-step="2">
+                <span>2</span>
+                <strong>Xem AI</strong>
+            </div>
+            <div class="flow-step" data-human-step="3">
+                <span>3</span>
+                <strong>Giữ hay đổi</strong>
+            </div>
+        </section>
+
+        <section class="human-first-grid">
+            <form class="app-panel human-answer-panel" id="humanFirstForm">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Bước 1</p>
+                        <h2>Câu trả lời của em</h2>
+                    </div>
+                </div>
+
+                <label class="field-label" for="humanQuestion">Câu hỏi</label>
+                <select id="humanQuestion">
+                    {% for question in questions %}
+                    <option value="{{ question.id }}" data-hint="{{ question.hint }}">{{ question.subject }} · {{ question.question }}</option>
+                    {% endfor %}
+                </select>
+                <p class="hint-text" id="humanQuestionHint" hidden>{{ questions[0].hint }}</p>
+
+                <label class="field-label" for="humanAnswer">Trả lời trước khi xem AI</label>
+                <textarea id="humanAnswer" rows="8" placeholder="Câu trả lời của em..."></textarea>
+
+                <div class="confidence-row">
+                    <label for="humanConfidence">Mức độ chắc chắn</label>
+                    <strong><span id="humanConfidenceValue">50</span>%</strong>
+                </div>
+                <input id="humanConfidence" type="range" min="0" max="100" value="50">
+
+                <button class="button primary" type="submit">
+                    <i data-lucide="lock-open"></i>
+                    <span>Nộp & mở AI</span>
+                </button>
+                <p class="socratic-meta" id="humanFirstMeta"></p>
+            </form>
+
+            <section class="app-panel ai-after-panel locked" id="aiAfterPanel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Bước 2</p>
+                        <h2>Câu trả lời AI</h2>
+                    </div>
+                    <span class="response-meta" id="humanAiMeta"></span>
+                </div>
+                <div class="locked-state" id="aiLockedState">
+                    <i data-lucide="lock"></i>
+                    <p>AI đang khóa.</p>
+                </div>
+                <div class="ai-answer-output" id="humanAiAnswer" hidden></div>
+            </section>
+        </section>
+
+        <section class="app-panel decision-panel" id="humanDecisionPanel" hidden>
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Bước 3</p>
+                    <h2>Em giữ hay đổi câu trả lời?</h2>
+                </div>
+            </div>
+            <div class="decision-actions">
+                <button class="decision-button active" type="button" data-decision="keep">
+                    <i data-lucide="shield-check"></i>
+                    <span>Giữ câu trả lời của em</span>
+                </button>
+                <button class="decision-button" type="button" data-decision="change">
+                    <i data-lucide="refresh-cw"></i>
+                    <span>Đổi theo AI</span>
+                </button>
+            </div>
+            <label class="field-label" for="decisionReason">Lý do</label>
+            <textarea id="decisionReason" rows="4" placeholder="Lý do..."></textarea>
+            <a class="button primary" id="goReflectionLink" href="{{ url_for('main.module_detail', slug='nhat-ky-phan-tu-ai') }}">
+                <i data-lucide="book-open-check"></i>
+                <span>Hoàn thành & phản tư</span>
+            </a>
+        </section>
+    </section>
+</div>
+{% endblock %}

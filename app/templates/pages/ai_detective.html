@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Thám tử AI · AI Critical Thinking Lab{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+        </div>
+
+        <section class="detective-map" aria-label="Bản đồ nhiệm vụ Thám tử AI">
+            {% for station_item in stations %}
+            <button class="detective-node {% if loop.first %}active current{% endif %}" type="button" data-station-code="{{ station_item.code }}" {% if not loop.first %}disabled{% endif %}>
+                <span>{{ station_item.code }}</span>
+                <small>{{ station_item.title }}</small>
+                <i data-lucide="{% if loop.first %}car{% else %}lock{% endif %}"></i>
+            </button>
+            {% endfor %}
+        </section>
+
+        <section class="detective-layout">
+            <article class="app-panel detective-task" id="detectiveTask" data-code="{{ station.code }}">
+                <p class="eyebrow dark" id="detectiveTaskLabel">{{ station.code }} · {{ station.title }}</p>
+                <h2 id="detectiveTaskTitle">{{ station.task }}</h2>
+                <div class="ai-answer-box selectable" id="detectiveText">{{ station.text }}</div>
+            </article>
+
+            <form class="app-panel detective-form" id="detectiveForm">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Phân tích</p>
+                        <h2>Kiểm chứng</h2>
+                    </div>
+                    <span class="response-meta" id="detectiveMeta"></span>
+                </div>
+                <label class="field-label" for="detectiveSuspicious">Đoạn đáng nghi</label>
+                <textarea id="detectiveSuspicious" rows="2"></textarea>
+                <label class="field-label" for="detectiveType">Loại lỗi</label>
+                <select id="detectiveType">
+                    <option>Dữ kiện sai</option>
+                    <option>Nguồn không tồn tại</option>
+                    <option>Suy luận thiếu căn cứ</option>
+                    <option>Khái quát hóa quá mức</option>
+                    <option>Đúng nhưng sai bối cảnh</option>
+                    <option>Thiên lệch</option>
+                </select>
+                <label class="field-label" for="detectiveExplanation">Vì sao đáng nghi?</label>
+                <textarea id="detectiveExplanation" rows="3"></textarea>
+                <label class="field-label" for="detectiveEvidence">Nguồn/bằng chứng kiểm chứng</label>
+                <textarea id="detectiveEvidence" rows="3"></textarea>
+                <label class="field-label" for="detectiveRewrite">Viết lại chính xác hơn</label>
+                <textarea id="detectiveRewrite" rows="4"></textarea>
+                <button class="button primary" type="submit"><i data-lucide="badge-check"></i><span>Phá án</span></button>
+            </form>
+        </section>
+    </section>
+</div>
+{% endblock %}

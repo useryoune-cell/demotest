@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Prompt phản biện · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+        </div>
+
+        <section class="prompt-layout">
+            <form class="app-panel prompt-panel" id="promptCriticForm">
+                <div class="panel-heading"><div><p class="eyebrow dark">Tình huống</p><h2>Viết prompt kích hoạt phản biện</h2></div><span class="response-meta" id="promptScoreMeta"></span></div>
+                <label class="field-label" for="promptScenario">Chọn tình huống</label>
+                <select id="promptScenario">
+                    {% for scenario in scenarios %}
+                    <option value="{{ scenario.id }}">{{ scenario.title }} · {{ scenario.task }}</option>
+                    {% endfor %}
+                </select>
+                <label class="field-label" for="criticPrompt">Prompt của em</label>
+                <textarea id="criticPrompt" rows="10" placeholder="Prompt của em..."></textarea>
+                <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chấm điểm</span></button>
+            </form>
+
+            <aside class="app-panel prompt-rubric">
+                <div class="panel-heading"><div><p class="eyebrow dark">Rubric</p><h2>5 tiêu chí</h2></div></div>
+                <div id="promptRubric">
+                    {% for item in rubric %}
+                    <article class="prompt-rubric-row" data-rubric-key="{{ item.key }}">
+                        <div><strong>{{ item.label }}</strong><span>0/20</span></div>
+                        <div class="progress-track"><span style="width: 0%"></span></div>
+                    </article>
+                    {% endfor %}
+                </div>
+                <div class="prompt-suggestion" id="promptSuggestion" hidden></div>
+            </aside>
+        </section>
+    </section>
+</div>
+{% endblock %}

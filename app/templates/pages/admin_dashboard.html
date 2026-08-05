@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell admin-shell">
+    <aside class="app-sidebar" aria-label="Điều hướng admin">
+        <a class="sidebar-item active" href="{{ url_for('main.admin_dashboard') }}"><i data-lucide="shield"></i><span>Admin</span></a>
+        <a class="sidebar-item" href="#teacherAccounts"><i data-lucide="users"></i><span>Giáo viên</span></a>
+        <a class="sidebar-item" href="#adminReports"><i data-lucide="send"></i><span>Báo cáo</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.gemini_lab') }}"><i data-lucide="sparkles"></i><span>Gemini</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.admin_logout') }}"><i data-lucide="log-out"></i><span>Thoát</span></a>
+    </aside>
+
+    <section class="app-content">
+        <div class="teacher-top">
+            <div>
+                <p class="eyebrow dark">Admin</p>
+                <h1>Quản lý tài khoản giáo viên</h1>
+            </div>
+        </div>
+
+        {% if error %}<div class="auth-error wide">{{ error }}</div>{% endif %}
+
+        <div class="admin-grid">
+            <section class="app-panel" id="teacherAccounts">
+                <div class="panel-heading"><div><p class="eyebrow dark">Tài khoản</p><h2>Danh sách giáo viên</h2></div></div>
+                <div class="teacher-account-list">
+                    {% for teacher in teachers %}
+                    <article>
+                        <div>
+                            <strong>{{ teacher.name }}</strong>
+                            <span>{{ teacher.username }} · {{ teacher.email or "chưa có email" }}</span>
+                        </div>
+                        <em class="{% if teacher.active %}active{% endif %}">{{ "Đang hoạt động" if teacher.active else "Đã khóa" }}</em>
+                        <form method="post" action="{{ url_for('main.admin_toggle_teacher', username=teacher.username) }}">
+                            <button type="submit">{{ "Khóa" if teacher.active else "Mở" }}</button>
+                        </form>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <form class="app-panel admin-form" method="post" action="{{ url_for('main.admin_create_teacher') }}">
+                <div class="panel-heading"><div><p class="eyebrow dark">Cấp phát</p><h2>Tạo giáo viên</h2></div></div>
+                <label class="field-label" for="teacherName">Tên hiển thị</label>
+                <input id="teacherName" name="name" placeholder="Giáo viên phản biện">
+                <label class="field-label" for="teacherEmail">Email</label>
+                <input id="teacherEmail" name="email" type="email" placeholder="teacher@example.com">
+                <label class="field-label" for="teacherUsername">Username</label>
+                <input id="teacherUsername" name="username" required>
+                <label class="field-label" for="teacherPassword">Mật khẩu</label>
+                <div class="password-field">
+                    <input id="teacherPassword" name="password" type="password" required>
+                    <button type="button" class="password-toggle" data-password-toggle="teacherPassword" aria-label="Hiện mật khẩu"><i data-lucide="eye"></i></button>
+                </div>
+                <button class="button primary" type="submit"><i data-lucide="user-plus"></i><span>Tạo tài khoản</span></button>
+            </form>
+        </div>
+
+        <div class="admin-grid lower" id="adminReports">
+            <form class="app-panel admin-form" method="post" action="{{ url_for('main.admin_send_report') }}">
+                <div class="panel-heading"><div><p class="eyebrow dark">Báo cáo</p><h2>Gửi cho giáo viên</h2></div></div>
+                <label class="field-label" for="reportTeacher">Giáo viên nhận</label>
+                <select id="reportTeacher" name="teacher_username" required>
+                    {% for teacher in teachers %}
+                    <option value="{{ teacher.username }}">{{ teacher.name }} · {{ teacher.username }}</option>
+                    {% endfor %}
+                </select>
+                <label class="field-label" for="reportTitle">Tiêu đề</label>
+                <input id="reportTitle" name="title" value="Báo cáo tiến độ học sinh">
+                <label class="field-label" for="reportBody">Nội dung</label>
+                <textarea id="reportBody" name="body" rows="6">Học sinh cần tăng hoạt động kiểm chứng đa nguồn và giảm phụ thuộc gợi ý AI.</textarea>
+                <button class="button primary" type="submit"><i data-lucide="send"></i><span>Gửi báo cáo</span></button>
+            </form>
+
+            <section class="app-panel">
+                <div class="panel-heading"><div><p class="eyebrow dark">Đã gửi</p><h2>Lịch sử báo cáo</h2></div></div>
+                <div class="report-list">
+                    {% if reports %}
+                        {% for report in reports %}
+                        <article>
+                            <span>{{ report.teacher_name }}</span>
+                            <strong>{{ report.title }}</strong>
+                            <p>{{ report.body }}</p>
+                        </article>
+                        {% endfor %}
+                    {% else %}
+                        <p class="muted-note">Chưa có báo cáo.</p>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+{% endblock %}

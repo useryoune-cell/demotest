@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Ghép phòng 5 người · Đấu trường lập luận{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Thoát</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content solo-stage-content">
+        <section class="room-match-page">
+            <div class="room-match-header">
+                <p class="eyebrow dark">Phòng 5 người</p>
+                <h1 id="roomTitle">Đang tìm người chơi</h1>
+                <div class="room-countdown">
+                    <span id="roomCountdown">18</span>
+                    <small>giây</small>
+                </div>
+                <p id="roomStatus">Đã có 1/5 người trong phòng. Đang tìm thêm người chơi...</p>
+            </div>
+
+            <div class="room-slots">
+                <article class="room-slot filled self" data-room-slot>
+                    <div class="room-slot-avatar"><i data-lucide="user"></i></div>
+                    <strong>Bạn</strong>
+                    <small>Chủ phòng</small>
+                </article>
+                <article class="room-slot" data-room-slot>
+                    <div class="room-slot-avatar"><i data-lucide="loader"></i></div>
+                    <strong>Đang tìm...</strong>
+                    <small>Chờ người chơi</small>
+                </article>
+                <article class="room-slot" data-room-slot>
+                    <div class="room-slot-avatar"><i data-lucide="loader"></i></div>
+                    <strong>Đang tìm...</strong>
+                    <small>Chờ người chơi</small>
+                </article>
+                <article class="room-slot" data-room-slot>
+                    <div class="room-slot-avatar"><i data-lucide="loader"></i></div>
+                    <strong>Đang tìm...</strong>
+                    <small>Chờ người chơi</small>
+                </article>
+                <article class="room-slot" data-room-slot>
+                    <div class="room-slot-avatar"><i data-lucide="loader"></i></div>
+                    <strong>Đang tìm...</strong>
+                    <small>Chờ người chơi</small>
+                </article>
+            </div>
+
+            <div class="room-match-actions">
+                <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Hủy</a>
+                <button class="button primary" type="button" id="roomReadyButton" data-room-battle-url="{{ url_for('main.debate_room_battle', topic=topic_index) }}" disabled>
+                    <i data-lucide="check"></i>
+                    <span>Sẵn sàng</span>
+                </button>
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

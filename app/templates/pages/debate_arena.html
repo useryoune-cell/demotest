@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Đấu trường lập luận · AI Critical Thinking Lab{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero debate-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <div class="rank-badge" style="--rank-color: {{ rank.color }}">
+                <div class="rank-emblem">
+                    <i data-lucide="shield"></i>
+                </div>
+                <span>{{ rank.name }}</span>
+                <strong id="rankPoints">{{ rank_points }}</strong>
+                <small>điểm rank</small>
+            </div>
+        </div>
+
+        <section class="debate-lobby solo-rank-lobby">
+            <article class="app-panel player-card solo-player-card">
+                <div class="solo-avatar-frame">
+                    <div class="solo-avatar"><i data-lucide="user"></i></div>
+                    <div class="solo-wreath"></div>
+                </div>
+                <h2>Người chơi</h2>
+                <p class="solo-rank-name">{{ rank.name }}</p>
+                <div class="rank-track" aria-label="Các bậc xếp hạng">
+                    {% for rank_item in ranks %}
+                    <span class="rank-token {% if rank_item.name == rank.name %}active{% endif %}">{{ rank_item.name }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="app-panel match-card solo-match-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Sảnh chờ</p>
+                        <h2>Solo Rank</h2>
+                    </div>
+                </div>
+                <div class="mode-toggle">
+                    <button class="mode-button active" type="button" data-debate-mode="solo">
+                        <i data-lucide="swords"></i>
+                        <span>Solo Rank</span>
+                    </button>
+                    <button class="mode-button" type="button" data-debate-mode="room">
+                        <i data-lucide="users"></i>
+                        <span>Phòng 5 người</span>
+                    </button>
+                </div>
+                <button class="button primary" type="button" id="findDebateMatch" data-matching-url="{{ url_for('main.debate_matching') }}" data-room-url="{{ url_for('main.debate_room_matching') }}">
+                    <i data-lucide="search"></i>
+                    <span>Ghép trận</span>
+                </button>
+                <p class="socratic-meta" id="matchStatus"></p>
+            </article>
+
+            <article class="app-panel leaderboard-card solo-leaderboard-card">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Bảng xếp hạng</p>
+                        <h2>Toàn server</h2>
+                    </div>
+                    <div class="leaderboard-cup"><i data-lucide="trophy"></i></div>
+                </div>
+                <ol class="leaderboard-list pro-leaderboard">
+                    <li class="leaderboard-row champion">
+                        <span class="leaderboard-place"><i data-lucide="crown"></i></span>
+                        <span class="leaderboard-player">
+                            <strong>Lan Anh</strong>
+                            <small><span class="mini-rank diamond">Kim Cương</span></small>
+                        </span>
+                        <strong class="leaderboard-score">442</strong>
+                    </li>
+                    <li class="leaderboard-row">
+                        <span class="leaderboard-place silver"><i data-lucide="medal"></i></span>
+                        <span class="leaderboard-player">
+                            <strong>Minh Quân</strong>
+                            <small><span class="mini-rank gold">Vàng</span></small>
+                        </span>
+                        <strong class="leaderboard-score">388</strong>
+                    </li>
+                    <li class="leaderboard-row">
+                        <span class="leaderboard-place bronze"><i data-lucide="medal"></i></span>
+                        <span class="leaderboard-player">
+                            <strong>Bảo Trâm</strong>
+                            <small><span class="mini-rank gold">Vàng</span></small>
+                        </span>
+                        <strong class="leaderboard-score">315</strong>
+                    </li>
+                    <li class="leaderboard-row self">
+                        <span class="leaderboard-place"><i data-lucide="shield"></i></span>
+                        <span class="leaderboard-player">
+                            <strong>Bạn</strong>
+                            <small><span class="mini-rank current">{{ rank.name }}</span></small>
+                        </span>
+                        <strong class="leaderboard-score" id="leaderboardSelf">{{ rank_points }}</strong>
+                    </li>
+                </ol>
+            </article>
+        </section>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Trận Solo Rank · Đấu trường lập luận{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Rời trận</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <section class="debate-arena solo-battle-page" id="debateArena" data-topic-index="{{ topic_index }}">
+            <div class="debate-topic">
+                <p class="eyebrow dark">Solo Rank · Chủ đề tranh biện</p>
+                <h1 id="debateTopic">{{ topic.title }}</h1>
+                <div class="topic-sides">
+                    <span id="debateSideA">{{ topic.side_a }}</span>
+                    <span id="debateSideB">{{ topic.side_b }}</span>
+                </div>
+            </div>
+
+            <div class="debate-board">
+                <article class="debate-speaker active">
+                    <div class="speaker-head">
+                        <span>Hiệp 1 · Lập luận của bạn</span>
+                        <strong id="debateTimer">30s</strong>
+                    </div>
+                    <div class="argument-skill-row">
+                        <span>Bằng chứng</span>
+                        <span>Phản ví dụ</span>
+                        <span>Bắt lỗi ngụy biện</span>
+                        <span>Tái lập luận</span>
+                    </div>
+                    <div class="voice-control-row">
+                        <button class="voice-button" type="button" id="voiceArgumentButton" aria-pressed="false">
+                            <i data-lucide="mic"></i>
+                            <span>Nói lập luận</span>
+                        </button>
+                        <span class="voice-status" id="voiceArgumentStatus">Mic tiếng Việt</span>
+                    </div>
+                    <textarea id="playerArgument" rows="8" placeholder="Viết đòn lập luận của bạn: nêu quan điểm, lý do, bằng chứng và dự đoán phản biện..."></textarea>
+                    <button class="button primary" type="button" id="finishDebateTurn">
+                        <i data-lucide="check"></i>
+                        <span>Tung đòn</span>
+                    </button>
+                    <p class="socratic-meta battle-status" id="battleStatus"></p>
+                </article>
+
+                <article class="debate-speaker opponent">
+                    <div class="speaker-head">
+                        <span>AI Challenger</span>
+                        <strong>Phản công</strong>
+                    </div>
+                    <div class="opponent-transcript" id="opponentTranscript"></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="app-panel debate-result" id="debateResult" hidden>
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Kết quả trận</p>
+                    <h2 id="debateWinner">Đang chấm...</h2>
+                </div>
+                <span class="response-meta" id="debateScoreMeta"></span>
+            </div>
+            <p id="debateFeedback"></p>
+            <div class="rubric-grid" id="debateRubric"></div>
+        </section>
+    </section>
+</div>
+{% endblock %}

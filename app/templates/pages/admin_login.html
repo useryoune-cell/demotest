@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Admin · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<section class="auth-page admin-auth">
+    <form class="auth-card" method="post">
+        <p class="eyebrow dark">Admin</p>
+        <h1>Quản trị hệ thống</h1>
+        {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
+        <label class="field-label" for="username">Tên đăng nhập</label>
+        <input id="username" name="username" autocomplete="username" required>
+        <label class="field-label" for="password">Mật khẩu</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button class="button primary" type="submit"><i data-lucide="shield-check"></i><span>Đăng nhập admin</span></button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Nhật ký phản tư AI · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
+            <i data-lucide="arrow-left"></i>
+            <span>Quay lại</span>
+        </a>
+        {% for item in modules %}
+        <a class="sidebar-item {% if item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=item.slug) }}">
+            <i data-lucide="{{ item.icon }}"></i>
+            <span>{{ item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <a class="button primary" href="{{ url_for('main.module_detail', slug='con-nguoi-truoc-ai-sau') }}">
+                <i data-lucide="brain"></i>
+                <span>Làm bài trước</span>
+            </a>
+        </div>
+
+        <div class="reflection-grid">
+            <form class="app-panel reflection-form" id="reflectionForm">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Form phản tư</p>
+                        <h2>7 câu hỏi ngắn</h2>
+                    </div>
+                    <span class="response-meta" id="reflectionMeta"></span>
+                </div>
+                {% for question in questions %}
+                <section class="reflection-question" data-reflection-index="{{ loop.index0 }}">
+                    <div>
+                        <strong>{{ loop.index }}. {{ question }}</strong>
+                        <button type="button" class="skip-question">Bỏ qua</button>
+                    </div>
+                    <textarea rows="3"></textarea>
+                </section>
+                {% endfor %}
+                <button class="button primary" type="submit">
+                    <i data-lucide="save"></i>
+                    <span>Lưu nhật ký</span>
+                </button>
+            </form>
+
+            <aside class="reflection-side">
+                <section class="app-panel reflection-profile-card">
+                    <div class="student-avatar-card">
+                        <div class="student-avatar-preview" data-avatar-preview>
+                            {% if student and student.avatar_filename %}
+                            <img src="{{ url_for('main.student_avatar_file', filename=student.avatar_filename) }}" alt="Avatar của {{ student.name }}">
+                            {% else %}
+                            <span>{{ (student.name if student else "Học sinh")[:1] }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <p class="eyebrow dark">{{ student.username if student else "student" }}</p>
+                            <h2>{{ student.name if student else "Học sinh" }}</h2>
+                            {% if avatar_error %}<div class="auth-error wide">{{ avatar_error }}</div>{% endif %}
+                            {% if avatar_success %}<div class="auth-success">{{ avatar_success }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <form class="avatar-form" method="post" action="{{ url_for('main.student_avatar_upload') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="next" value="nhat-ky-phan-tu-ai">
+                        <label class="field-label" for="reflectionAvatar">Ảnh hồ sơ</label>
+                        <div class="avatar-upload-row">
+                            <input id="reflectionAvatar" name="avatar" type="file" accept="image/png,image/jpeg,image/gif,image/webp" data-avatar-input required>
+                            <button class="button primary" type="submit"><i data-lucide="upload"></i><span>Lưu ảnh</span></button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="app-panel reflection-history">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow dark">Gần đây</p>
+                            <h2>Nhật ký đã lưu</h2>
+                        </div>
+                    </div>
+                    <div id="reflectionEntries">
+                        {% if entries %}
+                            {% for entry in entries %}
+                            <article class="reflection-entry">
+                                <span>{{ entry.module }}</span>
+                                <strong>{{ entry.answers|length }} câu đã trả lời</strong>
+                            </article>
+                            {% endfor %}
+                        {% else %}
+                        <p class="muted-note">Chưa có nhật ký.</p>
+                        {% endif %}
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </section>
+</div>
+{% endblock %}

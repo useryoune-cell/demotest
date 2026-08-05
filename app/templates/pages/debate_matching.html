@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Ghép trận Solo Rank · AI Critical Thinking Lab{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Thoát</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content solo-stage-content">
+        <section class="solo-match-page" aria-live="polite">
+            <div class="solo-match-dialog">
+                <a class="solo-close" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="Hủy ghép trận"><i data-lucide="x"></i></a>
+                <div class="solo-countdown-ring">
+                    <span id="matchCountdown">23</span>
+                </div>
+                <p class="eyebrow dark">Solo Rank</p>
+                <h1 id="matchmakingTitle">Đang ghép đối thủ</h1>
+                <p id="matchmakingHint">Hệ thống đang tìm AI Challenger cùng cấp lập luận.</p>
+                <div class="solo-match-actions">
+                    <a class="button primary" id="readyDebateMatch" data-vs-url="{{ url_for('main.debate_vs', topic=1) }}" href="{{ url_for('main.debate_vs', topic=1) }}">Sẵn sàng</a>
+                    <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Hủy</a>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

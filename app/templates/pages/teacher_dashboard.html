@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Chế độ giáo viên · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell teacher-shell">
+    <aside class="app-sidebar" aria-label="Điều hướng giáo viên">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Học sinh</span></a>
+        <a class="sidebar-item active" href="{{ url_for('main.teacher_dashboard') }}"><i data-lucide="layout-dashboard"></i><span>Tổng quan</span></a>
+        <a class="sidebar-item" href="#teacherTasks"><i data-lucide="clipboard-list"></i><span>Nhiệm vụ</span></a>
+        <a class="sidebar-item" href="#teacherReview"><i data-lucide="shield-check"></i><span>Duyệt nội dung</span></a>
+        <a class="sidebar-item" href="#teacherStudents"><i data-lucide="users"></i><span>Học sinh</span></a>
+        <a class="sidebar-item" href="#teacherReport"><i data-lucide="bar-chart-3"></i><span>Báo cáo</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.teacher_logout') }}"><i data-lucide="log-out"></i><span>Thoát</span></a>
+    </aside>
+
+    <section class="app-content">
+        <div class="teacher-top">
+            <div>
+                <p class="eyebrow dark">Chế độ giáo viên</p>
+                <h1>Tổng quan tiến độ học sinh</h1>
+            </div>
+            <button class="button primary" type="button"><i data-lucide="plus"></i><span>Tạo nhiệm vụ</span></button>
+        </div>
+
+        <div class="teacher-kpis">
+            <article><span>Hoàn thành</span><strong>{{ overview.completion }}%</strong></article>
+            <article><span>Phụ thuộc gợi ý</span><strong>{{ overview.dependency }}%</strong></article>
+            <article><span>Chờ duyệt</span><strong>{{ overview.pending_reviews }}</strong></article>
+            <article><span>Nhật ký mới</span><strong>{{ overview.new_reflections }}</strong></article>
+        </div>
+
+        <div class="teacher-grid">
+            <section class="app-panel" id="teacherReport">
+                <div class="panel-heading"><div><p class="eyebrow dark">{{ overview.scope_name }}</p><h2>8 năng lực trung bình</h2></div></div>
+                <div class="skill-bars">
+                    {% for skill, score in overview.skills %}
+                    <div class="skill-row">
+                        <span>{{ skill }}</span>
+                        <strong>{{ score }}</strong>
+                        <div class="progress-track"><span style="width: {{ score }}%"></span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="app-panel" id="teacherReview">
+                <div class="panel-heading"><div><p class="eyebrow dark">Duyệt nội dung</p><h2>Hàng chờ nhiệm vụ</h2></div></div>
+                <div class="review-list">
+                    {% for item in overview.reviews %}
+                    <article><span>{{ item.type }}</span><strong>{{ item.module }} · {{ item.detail }}</strong></article>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+
+        <div class="teacher-grid lower">
+            <section class="app-panel" id="teacherStudents">
+                <div class="panel-heading"><div><p class="eyebrow dark">Học sinh</p><h2>Theo dõi cá nhân</h2></div></div>
+                <div class="student-table">
+                    <div class="student-table-head"><span>Học sinh</span><span>Tiến độ</span><span>Phụ thuộc</span><span>Rủi ro</span></div>
+                    {% for student in overview.students %}
+                    <article>
+                        <strong>{{ student.name }}</strong>
+                        <span>{{ student.progress }}%</span>
+                        <span>{{ student.dependency }}%</span>
+                        <em>{{ student.risk }}</em>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="app-panel" id="teacherTasks">
+                <div class="panel-heading"><div><p class="eyebrow dark">Nhiệm vụ cá nhân hóa</p><h2>Lỗi thường gặp</h2></div></div>
+                <div class="common-error-list">
+                    {% for error in overview.common_errors %}
+                    <article><i data-lucide="alert-circle"></i><span>{{ error }}</span></article>
+                    {% endfor %}
+                </div>
+                <div class="teacher-actions">
+                    <button type="button"><i data-lucide="send"></i><span>Giao Thám tử AI</span></button>
+                    <button type="button"><i data-lucide="radar"></i><span>Xem hồ sơ học sinh</span></button>
+                </div>
+            </section>
+        </div>
+
+        <section class="app-panel teacher-report-inbox">
+            <div class="panel-heading"><div><p class="eyebrow dark">Báo cáo từ admin</p><h2>Hộp thư giáo viên</h2></div></div>
+            <div class="report-list">
+                {% if reports %}
+                    {% for report in reports %}
+                    <article>
+                        <span>{{ report.created_at[:10] }}</span>
+                        <strong>{{ report.title }}</strong>
+                        <p>{{ report.body }}</p>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <p class="muted-note">Chưa có báo cáo.</p>
+                {% endif %}
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

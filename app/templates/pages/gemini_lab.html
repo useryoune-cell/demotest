@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Gemini Test · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+    <aside class="app-sidebar" aria-label="Điều hướng Gemini">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
+            <i data-lucide="arrow-left"></i>
+            <span>Quay lại</span>
+        </a>
+        <a class="sidebar-item active" href="{{ url_for('main.gemini_lab') }}">
+            <i data-lucide="sparkles"></i>
+            <span>Gemini test</span>
+        </a>
+        <a class="sidebar-item" href="{{ url_for('main.health') }}">
+            <i data-lucide="activity"></i>
+            <span>Health</span>
+        </a>
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">Gemini service</p>
+                <h1>Test xoay key Gemini</h1>
+            </div>
+            <button class="button primary" type="button" id="refreshGeminiStatus">
+                <i data-lucide="refresh-cw"></i>
+                <span>Làm mới trạng thái</span>
+            </button>
+        </div>
+
+        <div class="gemini-grid">
+            <section class="app-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Prompt thử nghiệm</p>
+                        <h2>Gửi một request</h2>
+                    </div>
+                </div>
+                <form class="gemini-form" id="geminiTestForm">
+                    <textarea id="geminiPrompt" rows="8">Viết 3 câu hỏi Socratic để học sinh tự kiểm chứng một câu trả lời của AI.</textarea>
+                    <button class="button primary" type="submit">
+                        <i data-lucide="send"></i>
+                        <span>Gửi Gemini</span>
+                    </button>
+                </form>
+            </section>
+
+            <section class="app-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Key pool</p>
+                        <h2>Trạng thái</h2>
+                    </div>
+                </div>
+                <div class="key-status-list" id="geminiStatus">
+                    <p class="muted-note">Đang tải...</p>
+                </div>
+            </section>
+        </div>
+
+        <section class="app-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Kết quả</p>
+                    <h2>Phản hồi từ Gemini</h2>
+                </div>
+                <span class="response-meta" id="geminiMeta"></span>
+            </div>
+            <pre class="gemini-output" id="geminiOutput"></pre>
+        </section>
+    </section>
+</div>
+{% endblock %}

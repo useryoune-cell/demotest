@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}VS · Đấu trường lập luận{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Thoát</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content solo-stage-content">
+        <section class="solo-vs-screen solo-vs-page" id="soloVsScreen" data-battle-url="{{ url_for('main.debate_battle', topic=topic_index) }}">
+            <article class="vs-player blue">
+                <div class="solo-avatar-frame">
+                    <div class="solo-avatar"><i data-lucide="user"></i></div>
+                    <div class="solo-wreath"></div>
+                </div>
+                <strong>Bạn</strong>
+                <span>{{ rank.name }} · <span id="soloSelfPoints">{{ rank_points }}</span> điểm</span>
+            </article>
+            <div class="vs-center">
+                <div class="vs-mark">VS</div>
+                <span id="vsCountdown">3</span>
+            </div>
+            <article class="vs-player red">
+                <div class="solo-avatar-frame">
+                    <div class="solo-avatar bot"><i data-lucide="bot"></i></div>
+                    <div class="solo-wreath"></div>
+                </div>
+                <strong>AI Challenger</strong>
+                <span>Cùng cấp · phản biện mạnh</span>
+            </article>
+        </section>
+    </section>
+</div>
+{% endblock %}

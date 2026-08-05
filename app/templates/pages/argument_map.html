@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Bản đồ lập luận · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <button class="button primary" type="button" id="scoreArgumentMap"><i data-lucide="check"></i><span>Chấm bản đồ</span></button>
+        </div>
+
+        <section class="app-panel argument-source">
+            <p class="eyebrow dark">Câu hỏi</p>
+            <h2>{{ argument_map.question }}</h2>
+            <p>{{ argument_map.source_text }}</p>
+        </section>
+
+        <section class="argument-workspace" data-map-id="{{ argument_map.id }}">
+            <aside class="piece-tray">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Mảnh nội dung</p>
+                        <h2>Phân loại</h2>
+                    </div>
+                </div>
+                <div class="argument-pieces" id="argumentPieces">
+                    {% for piece in argument_map.pieces %}
+                    <article class="argument-piece" draggable="true" data-piece-id="{{ piece.id }}">
+                        {{ piece.text }}
+                    </article>
+                    {% endfor %}
+                </div>
+            </aside>
+
+            <section class="argument-canvas" aria-label="Canvas bản đồ lập luận">
+                {% for bucket in argument_map.buckets %}
+                <div class="argument-bucket" data-bucket-key="{{ bucket.key }}">
+                    <h3>{{ bucket.label }}</h3>
+                    <div class="bucket-dropzone"></div>
+                </div>
+                {% endfor %}
+            </section>
+        </section>
+
+        <section class="app-panel argument-result argument-complete" id="argumentResult" hidden>
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Kết quả</p>
+                    <h2 id="argumentScore">0/100</h2>
+                </div>
+                <span class="argument-result-badge" id="argumentResultBadge">Đang chấm</span>
+            </div>
+            <h3 id="argumentResultTitle">Bản đồ đã được chấm</h3>
+            <p id="argumentFeedback"></p>
+            <div class="argument-result-actions">
+                <button class="button secondary" type="button" id="retryArgumentMap">
+                    <i data-lucide="rotate-ccw"></i><span>Làm lại</span>
+                </button>
+                <a class="button secondary" href="{{ url_for('main.app_home') }}">
+                    <i data-lucide="layout-grid"></i><span>Về bảng học</span>
+                </a>
+                <a class="button primary" href="{{ url_for('main.module_detail', slug='prompt-phan-bien') }}" id="nextArgumentModule">
+                    <i data-lucide="arrow-right"></i><span>Bài tiếp theo</span>
+                </a>
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

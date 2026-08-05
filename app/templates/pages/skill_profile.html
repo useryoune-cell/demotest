@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Hồ sơ năng lực · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <a class="button primary" href="#savedActivities"><i data-lucide="save"></i><span>Hoạt động đã lưu</span></a>
+        </div>
+
+        <section class="app-panel profile-avatar-panel">
+            <div class="student-avatar-card">
+                <div class="student-avatar-preview" data-avatar-preview>
+                    {% if student and student.avatar_filename %}
+                    <img src="{{ url_for('main.student_avatar_file', filename=student.avatar_filename) }}" alt="Avatar của {{ student.name }}">
+                    {% else %}
+                    <span>{{ (student.name if student else "Học sinh")[:1] }}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="eyebrow dark">{{ student.username if student else "student" }}</p>
+                    <h2>{{ student.name if student else "Học sinh" }}</h2>
+                    {% if avatar_error %}<div class="auth-error wide">{{ avatar_error }}</div>{% endif %}
+                    {% if avatar_success %}<div class="auth-success">{{ avatar_success }}</div>{% endif %}
+                </div>
+            </div>
+            <form class="avatar-form" method="post" action="{{ url_for('main.student_avatar_upload') }}" enctype="multipart/form-data">
+                <label class="field-label" for="avatar">Ảnh đại diện</label>
+                <div class="avatar-upload-row">
+                    <input id="avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/gif,image/webp" data-avatar-input required>
+                    <button class="button primary" type="submit"><i data-lucide="upload"></i><span>Lưu avatar</span></button>
+                </div>
+            </form>
+        </section>
+
+        <section class="profile-grid">
+            <article class="app-panel radar-panel">
+                <div class="panel-heading"><div><p class="eyebrow dark">{{ profile.student_name }}</p><h2>Radar 8 năng lực</h2></div></div>
+                <div class="radar-chart" id="profileRadar" data-scores="{% for skill in profile.skills %}{{ skill.score }}{% if not loop.last %},{% endif %}{% endfor %}">
+                    <svg viewBox="0 0 320 320" role="img" aria-label="Biểu đồ radar năng lực"></svg>
+                </div>
+            </article>
+
+            <article class="app-panel profile-skills">
+                <div class="panel-heading"><div><p class="eyebrow dark">Chi tiết</p><h2>Điểm từng năng lực</h2></div></div>
+                <div class="skill-bars">
+                    {% for skill in profile.skills %}
+                    <div class="skill-row">
+                        <span>{{ skill.label }}</span>
+                        <strong>{{ skill.score }}</strong>
+                        <div class="progress-track"><span style="width: {{ skill.score }}%"></span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+
+        <section class="profile-grid lower">
+            <article class="app-panel progress-panel">
+                <div class="panel-heading"><div><p class="eyebrow dark">Tiến bộ</p><h2>7 phiên gần nhất</h2></div></div>
+                <div class="line-chart" data-values="{% for value in profile.timeline %}{{ value }}{% if not loop.last %},{% endif %}{% endfor %}" id="profileLine"></div>
+            </article>
+
+            <article class="app-panel">
+                <div class="panel-heading"><div><p class="eyebrow dark">Khuyến nghị</p><h2>Nhiệm vụ tiếp theo</h2></div></div>
+                <div class="recommendation-list">
+                    {% for item in profile.recommendations %}
+                    <article><strong>{{ item.module }}</strong><span>{{ item.reason }}</span></article>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+
+        <section class="app-panel">
+            <div class="panel-heading"><div><p class="eyebrow dark">Lỗi thường gặp</p><h2>Mẫu cần chú ý</h2></div></div>
+            <div class="common-error-list">
+                {% for error in profile.common_errors %}
+                <article><i data-lucide="alert-circle"></i><span>{{ error }}</span></article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="app-panel" id="savedActivities">
+            <div class="panel-heading"><div><p class="eyebrow dark">Đã lưu</p><h2>Hoạt động gần đây</h2></div></div>
+            <div class="report-list">
+                {% if activities %}
+                    {% for activity in activities %}
+                    <article>
+                        <span>{{ activity.created_at[:10] }}</span>
+                        <strong>{{ activity.module }} · {{ activity.action }}</strong>
+                        <p>{% if activity.score is not none %}Điểm: {{ activity.score }}{% else %}Đã lưu bài làm.{% endif %}</p>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <p class="muted-note">Chưa có hoạt động.</p>
+                {% endif %}
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

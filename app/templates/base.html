@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}AI Critical Thinking Lab{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem("ct-theme") === "dark") {
+                    document.documentElement.classList.add("theme-dark");
+                }
+            } catch (error) {
+                document.documentElement.classList.remove("theme-dark");
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='profile-dark-20') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('main.landing') }}" aria-label="AI Critical Thinking Lab">
+            <span class="brand-mark">AI</span>
+            <span>Critical Thinking Lab</span>
+        </a>
+        <nav class="main-nav" aria-label="Điều hướng chính">
+            <a href="{{ url_for('main.landing') }}">Trang chủ</a>
+            <a href="{{ url_for('main.landing') }}#features">Tính năng</a>
+            <a href="{{ url_for('main.login', role='student') }}">Đăng nhập</a>
+        </nav>
+        <div class="header-actions">
+            {% if request.endpoint != "main.landing" %}
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Chuyển chế độ tối">
+                <i data-lucide="moon"></i>
+            </button>
+            {% endif %}
+            <a class="header-cta" href="{{ url_for('main.start_learning') }}">Bắt đầu</a>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <span>© 2026 · AI Critical Thinking Lab</span>
+        <span>Được xây dựng để rèn tư duy phản biện trong kỷ nguyên AI.</span>
+    </footer>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js', v='profile-dark-20') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

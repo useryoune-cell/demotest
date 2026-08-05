@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Kết quả Solo Rank · Đấu trường lập luận{% endblock %}
+
+{% block body_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Sảnh</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content solo-result-content">
+        <section class="solo-result-hero {{ result.winner }}">
+            <p class="eyebrow dark">Kết quả Solo Rank</p>
+            <h1>
+                {% if result.winner == "player" %}
+                Bạn đã thắng
+                {% elif result.winner == "draw" %}
+                Trận hòa
+                {% else %}
+                Bạn đã thua
+                {% endif %}
+            </h1>
+            <div class="result-scoreline">
+                <span>Bạn <strong>{{ result.player.total }}</strong></span>
+                <em>VS</em>
+                <span>Đối thủ <strong>{{ result.opponent.total }}</strong></span>
+            </div>
+            <div class="rank-delta {% if result.rank_delta > 0 %}gain{% elif result.rank_delta < 0 %}loss{% else %}safe{% endif %}">
+                {% if result.rank_delta > 0 %}+{% endif %}{{ result.rank_delta }} điểm rank
+            </div>
+            {% if result.previous_rank.name != result.rank.name %}
+            <div class="promotion-burst">Lên hạng: {{ result.rank.name }}</div>
+            {% endif %}
+        </section>
+
+        <section class="solo-result-grid">
+            <article class="app-panel rank-result-card">
+                <div class="solo-avatar-frame">
+                    <div class="solo-avatar"><i data-lucide="user"></i></div>
+                    <div class="solo-wreath"></div>
+                </div>
+                <p class="eyebrow dark">Rank hiện tại</p>
+                <h2>{{ result.rank.name }}</h2>
+                <strong class="rank-total">{{ result.rank_points }}</strong>
+                <div class="rank-progress">
+                    <span style="width: {{ rank_progress }}%"></span>
+                </div>
+                <p class="rank-next">
+                    {% if next_rank %}
+                    Còn {{ next_rank.min - result.rank_points }} điểm để lên {{ next_rank.name }}
+                    {% else %}
+                    Bạn đang ở bậc cao nhất
+                    {% endif %}
+                </p>
+            </article>
+
+            <article class="app-panel rank-ladder-card">
+                <p class="eyebrow dark">Bậc xếp hạng</p>
+                <div class="rank-ladder">
+                    {% for rank_item in ranks %}
+                    <div class="rank-step {% if result.rank_points >= rank_item.min %}unlocked{% endif %} {% if rank_item.name == result.rank.name %}current{% endif %}">
+                        <span>{{ rank_item.name }}</span>
+                        <strong>{{ rank_item.min }}</strong>
+                    </div>
+                    {% endfor %}
+                </div>
+                <p class="rank-rule">Thắng +20 điểm. Thua -30 điểm từ Vàng trở lên. Đồng và Bạc thua không trừ điểm.</p>
+            </article>
+        </section>
+
+        <section class="app-panel debate-result-detail">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow dark">Phân tích trận</p>
+                    <h2>Điểm mạnh và điểm cần sửa</h2>
+                </div>
+            </div>
+            <p>{{ result.feedback }}</p>
+            <div class="rubric-grid">
+                <article class="rubric-item"><span>Luận điểm</span><strong>{{ result.player.claim }}</strong></article>
+                <article class="rubric-item"><span>Bằng chứng</span><strong>{{ result.player.evidence }}</strong></article>
+                <article class="rubric-item"><span>Suy luận</span><strong>{{ result.player.reasoning }}</strong></article>
+                <article class="rubric-item"><span>Phản biện</span><strong>{{ result.player.counter }}</strong></article>
+                <article class="rubric-item"><span>Độ rõ</span><strong>{{ result.player.clarity }}</strong></article>
+            </div>
+            <div class="solo-result-actions">
+                <a class="button primary" href="{{ url_for('main.debate_matching') }}"><i data-lucide="rotate-cw"></i><span>Đấu tiếp</span></a>
+                <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Về sảnh</a>
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

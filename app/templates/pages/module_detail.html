@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ module.title }} · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
+            <i data-lucide="arrow-left"></i>
+            <span>Quay lại</span>
+        </a>
+        {% for item in modules %}
+        <a class="sidebar-item {% if item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=item.slug) }}">
+            <i data-lucide="{{ item.icon }}"></i>
+            <span>{{ item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <div class="module-status-card">
+                <span>{{ module.status }}</span>
+                <strong>{{ module.progress }}%</strong>
+                <div class="progress-track">
+                    <span style="width: {{ module.progress }}%"></span>
+                </div>
+            </div>
+        </div>
+
+        <section class="activity-frame">
+            <div class="activity-toolbar">
+                <button type="button" title="Làm mới"><i data-lucide="refresh-cw"></i></button>
+                <button type="button" title="Lưu"><i data-lucide="save"></i></button>
+                <button type="button" title="Mở rộng"><i data-lucide="maximize-2"></i></button>
+            </div>
+            <div class="activity-placeholder">
+                <i data-lucide="{{ module.icon }}"></i>
+                <h2>{{ module.title }}</h2>
+                <a class="button primary" href="{{ url_for('main.app_home') }}">
+                    <i data-lucide="grid-3x3"></i>
+                    <span>Chọn mô-đun khác</span>
+                </a>
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

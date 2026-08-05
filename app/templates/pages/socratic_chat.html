@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Chatbot Socratic · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
+            <i data-lucide="arrow-left"></i>
+            <span>Quay lại</span>
+        </a>
+        {% for item in modules %}
+        <a class="sidebar-item {% if item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=item.slug) }}">
+            <i data-lucide="{{ item.icon }}"></i>
+            <span>{{ item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content">
+        <div class="module-detail-hero socratic-hero">
+            <div>
+                <p class="eyebrow dark">{{ module.area }}</p>
+                <h1>{{ module.title }}</h1>
+            </div>
+            <a class="button primary" href="{{ url_for('main.module_detail', slug='nhat-ky-phan-tu-ai') }}">
+                <i data-lucide="book-open-check"></i>
+                <span>Kết thúc & Phản tư</span>
+            </a>
+        </div>
+
+        <section class="socratic-stagebar" aria-label="Tiến trình Socratic">
+            {% for stage in stages %}
+            <button class="stage-pill {% if loop.index0 == 0 %}active{% endif %}" type="button" data-stage-index="{{ loop.index0 }}">
+                <span>{{ stage.key }}</span>
+                <small>{{ stage.label }}</small>
+            </button>
+            {% endfor %}
+        </section>
+
+        <section class="socratic-workspace">
+            <div class="socratic-chat-panel">
+                <div class="chat-thread" id="socraticThread" aria-live="polite">
+                    <article class="socratic-message ai">
+                        <span>AI</span>
+                        <p>Nêu một chủ đề để bắt đầu.</p>
+                    </article>
+                </div>
+                <form class="socratic-form" id="socraticForm">
+                    <textarea id="socraticInput" rows="3" placeholder="Nhập câu hỏi..."></textarea>
+                    <button class="button primary" type="submit">
+                        <i data-lucide="send"></i>
+                        <span>Gửi</span>
+                    </button>
+                </form>
+                <p class="socratic-meta" id="socraticMeta"></p>
+            </div>
+
+            <aside class="thinking-board" aria-label="Bảng tư duy">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow dark">Bảng tư duy</p>
+                        <h2>Lập luận đang hình thành</h2>
+                    </div>
+                </div>
+                <div class="board-columns">
+                    {% for key, label in board_keys.items() %}
+                    <section class="board-section" data-board-key="{{ key }}">
+                        <h3>{{ label }}</h3>
+                        <div class="board-items"></div>
+                    </section>
+                    {% endfor %}
+                </div>
+            </aside>
+        </section>
+    </section>
+</div>
+{% endblock %}
