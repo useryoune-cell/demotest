@@ -23,9 +23,9 @@
                 <p class="eyebrow dark">{{ module.area }}</p>
                 <h1>{{ module.title }}</h1>
             </div>
-            <a class="button primary" href="{{ url_for('main.module_detail', slug='con-nguoi-truoc-ai-sau') }}">
-                <i data-lucide="brain"></i>
-                <span>Làm bài trước</span>
+            <a class="button primary" href="{{ url_for('main.module_detail', slug='chatbot-socratic') }}">
+                <i data-lucide="messages-square"></i>
+                <span>Vào chatbot</span>
             </a>
         </div>
 
@@ -33,20 +33,37 @@
             <form class="app-panel reflection-form" id="reflectionForm">
                 <div class="panel-heading">
                     <div>
-                        <p class="eyebrow dark">Form phản tư</p>
-                        <h2>7 câu hỏi ngắn</h2>
+                        <p class="eyebrow dark">Phản tư sau phiên học</p>
+                        <h2>Nhật ký 3 phần</h2>
                     </div>
                     <span class="response-meta" id="reflectionMeta"></span>
                 </div>
-                {% for question in questions %}
-                <section class="reflection-question" data-reflection-index="{{ loop.index0 }}">
+                <section class="reflection-block">
                     <div>
-                        <strong>{{ loop.index }}. {{ question }}</strong>
-                        <button type="button" class="skip-question">Bỏ qua</button>
+                        <span>01</span>
+                        <h3>Tóm tắt nội dung vừa học</h3>
                     </div>
-                    <textarea rows="3"></textarea>
+                    <p id="reflectionSummary">Chưa có phiên học nào được chuyển sang nhật ký.</p>
                 </section>
-                {% endfor %}
+                <section class="reflection-block">
+                    <div>
+                        <span>02</span>
+                        <h3>AI nhận xét sơ bộ</h3>
+                    </div>
+                    <p id="reflectionAiReview">Khi kết thúc một phiên chatbot, nhận xét của AI sẽ xuất hiện ở đây.</p>
+                </section>
+                <section class="reflection-block reflection-takeaway">
+                    <div>
+                        <span>03</span>
+                        <h3>Điều em tự rút ra</h3>
+                    </div>
+                    <textarea id="reflectionTakeaway" rows="5" placeholder="Sau phiên này em hiểu thêm điều gì, còn nghi ngờ gì, hoặc sẽ kiểm chứng gì tiếp?"></textarea>
+                    <div class="reflection-choice-row" aria-label="Gợi ý tự phản tư">
+                        <button type="button" data-takeaway-chip="Em đã đổi cách nhìn sau phiên này.">Em đổi cách nhìn</button>
+                        <button type="button" data-takeaway-chip="Em cần kiểm chứng thêm bằng nguồn khác.">Cần kiểm chứng thêm</button>
+                        <button type="button" data-takeaway-chip="Em giữ quan điểm nhưng đã hiểu rõ điểm yếu của lập luận.">Giữ quan điểm</button>
+                    </div>
+                </section>
                 <button class="button primary" type="submit">
                     <i data-lucide="save"></i>
                     <span>Lưu nhật ký</span>
@@ -92,7 +109,7 @@
                             {% for entry in entries %}
                             <article class="reflection-entry">
                                 <span>{{ entry.module }}</span>
-                                <strong>{{ entry.answers|length }} câu đã trả lời</strong>
+                                <strong>{{ (entry.answers.get('takeaway') or entry.answers.get('summary') or (entry.answers|length ~ ' mục đã lưu'))|truncate(96) }}</strong>
                             </article>
                             {% endfor %}
                         {% else %}

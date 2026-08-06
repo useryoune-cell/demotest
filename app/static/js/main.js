@@ -568,6 +568,46 @@ if (socraticForm) {
     });
 }
 
+const finishSocraticLink = document.getElementById("finishSocraticLink");
+if (finishSocraticLink) {
+    finishSocraticLink.addEventListener("click", async (event) => {
+        const userMessages = socraticState.messages.filter((message) => message.role === "user");
+        if (!userMessages.length) {
+            sessionStorage.removeItem("reflectionDraft");
+            return;
+        }
+
+        event.preventDefault();
+        socraticMeta.textContent = "Đang tạo bản nháp nhật ký...";
+
+        try {
+            const response = await fetch("/api/modules/reflection/draft", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messages: socraticState.messages,
+                    board: socraticState.board,
+                    mode: socraticState.mode,
+                }),
+            });
+            const data = await response.json();
+            if (response.ok && data.ok) {
+                sessionStorage.setItem("reflectionDraft", JSON.stringify(data.draft));
+            }
+        } catch (error) {
+            const latest = userMessages[userMessages.length - 1]?.content || "";
+            sessionStorage.setItem("reflectionDraft", JSON.stringify({
+                source_module: "chatbot-socratic",
+                summary: latest ? `Học sinh vừa trao đổi về: ${latest}` : "Phiên chatbot vừa kết thúc.",
+                ai_review: "AI chưa tạo được nhận xét tự động. Em có thể tự ghi điều đã hiểu, điều còn nghi ngờ và điều cần kiểm chứng thêm.",
+                student_takeaway: "",
+            }));
+        } finally {
+            window.location.href = finishSocraticLink.href;
+        }
+    });
+}
+
 const humanFirstForm = document.getElementById("humanFirstForm");
 const humanQuestion = document.getElementById("humanQuestion");
 const humanQuestionHint = document.getElementById("humanQuestionHint");
@@ -702,37 +742,62 @@ if (goReflectionLink) {
 const reflectionForm = document.getElementById("reflectionForm");
 const reflectionMeta = document.getElementById("reflectionMeta");
 const reflectionEntries = document.getElementById("reflectionEntries");
+const reflectionSummary = document.getElementById("reflectionSummary");
+const reflectionAiReview = document.getElementById("reflectionAiReview");
+const reflectionTakeaway = document.getElementById("reflectionTakeaway");
 
-document.querySelectorAll(".skip-question").forEach((button) => {
-    button.addEventListener("click", () => {
-        const question = button.closest(".reflection-question");
-        const textarea = question.querySelector("textarea");
-        question.classList.toggle("is-skipped");
-        textarea.disabled = question.classList.contains("is-skipped");
-        if (textarea.disabled) {
-            textarea.value = "";
-        }
-    });
-});
+function savedReflectionTitle(entry) {
+    const answers = entry.answers || {};
+    return answers.takeaway || answers.summary || `${Object.keys(answers).length} mục đã lưu`;
+}
+
+function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = String(value || "");
+    return div.innerHTML;
+}
 
 if (reflectionForm) {
+    let reflectionContext = {};
+    const draft = JSON.parse(sessionStorage.getItem("reflectionDraft") || "{}");
     const context = JSON.parse(sessionStorage.getItem("humanFirstContext") || "{}");
-    if (context.student_answer) {
-        const firstAnswer = reflectionForm.querySelector('[data-reflection-index="0"] textarea');
-        firstAnswer.value = context.student_answer;
+
+    if (draft.summary || draft.ai_review) {
+        reflectionContext = draft;
+        reflectionSummary.textContent = draft.summary || reflectionSummary.textContent;
+        reflectionAiReview.textContent = draft.ai_review || reflectionAiReview.textContent;
+        reflectionTakeaway.value = draft.student_takeaway || "";
+        reflectionMeta.textContent = "Đã nhận bản nháp từ chatbot.";
+    } else if (context.student_answer) {
+        reflectionContext = {
+            source_module: context.module || "con-nguoi-truoc-ai-sau",
+            summary: `Học sinh đã trả lời trước: ${context.student_answer}`,
+            ai_review: context.ai_answer
+                ? `AI đã đưa phản hồi để học sinh so sánh. Quyết định của học sinh: ${context.decision || "chưa ghi"}. Lý do: ${context.reason || "chưa ghi"}.`
+                : "Học sinh đã có câu trả lời ban đầu nhưng chưa có phản hồi AI để so sánh.",
+        };
+        reflectionSummary.textContent = reflectionContext.summary;
+        reflectionAiReview.textContent = reflectionContext.ai_review;
+        reflectionTakeaway.value = context.reason || "";
     }
+
+    document.querySelectorAll("[data-takeaway-chip]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const value = button.dataset.takeawayChip || "";
+            reflectionTakeaway.value = reflectionTakeaway.value
+                ? `${reflectionTakeaway.value.trim()}\n${value}`
+                : value;
+            reflectionTakeaway.focus();
+        });
+    });
 
     reflectionForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        const answers = {};
-
-        reflectionForm.querySelectorAll(".reflection-question").forEach((question) => {
-            const index = question.dataset.reflectionIndex;
-            const textarea = question.querySelector("textarea");
-            if (!textarea.disabled && textarea.value.trim()) {
-                answers[index] = textarea.value.trim();
-            }
-        });
+        const answers = {
+            summary: reflectionSummary.textContent.trim(),
+            ai_review: reflectionAiReview.textContent.trim(),
+            takeaway: reflectionTakeaway.value.trim(),
+        };
 
         reflectionMeta.textContent = "Đang lưu...";
         try {
@@ -740,9 +805,9 @@ if (reflectionForm) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    module: context.module || "manual",
+                    module: reflectionContext.source_module || context.module || "manual",
                     answers,
-                    context,
+                    context: reflectionContext,
                 }),
             });
             const data = await response.json();
@@ -753,11 +818,12 @@ if (reflectionForm) {
             }
 
             reflectionMeta.textContent = "Đã lưu.";
+            sessionStorage.removeItem("reflectionDraft");
             reflectionEntries.innerHTML = data.entries
                 .map((entry) => `
                     <article class="reflection-entry">
-                        <span>${entry.module}</span>
-                        <strong>${Object.keys(entry.answers).length} câu đã trả lời</strong>
+                        <span>${escapeHtml(entry.module)}</span>
+                        <strong>${escapeHtml(savedReflectionTitle(entry))}</strong>
                     </article>
                 `)
                 .join("");

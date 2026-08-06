@@ -1704,7 +1704,8 @@ p {
 .human-answer-panel select,
 .human-answer-panel textarea,
 .decision-panel textarea,
-.reflection-question textarea {
+.reflection-question textarea,
+.reflection-takeaway textarea {
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 8px;
@@ -1717,7 +1718,8 @@ p {
 .human-answer-panel select:focus,
 .human-answer-panel textarea:focus,
 .decision-panel textarea:focus,
-.reflection-question textarea:focus {
+.reflection-question textarea:focus,
+.reflection-takeaway textarea:focus {
     outline: 3px solid rgba(79, 70, 229, 0.16);
     border-color: var(--indigo);
 }
@@ -1842,6 +1844,67 @@ p {
 .reflection-question.is-skipped textarea {
     background: #f2f4f7;
     color: var(--muted);
+}
+
+.reflection-block {
+    display: grid;
+    gap: 10px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+}
+
+.reflection-block:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.reflection-block > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reflection-block span {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(180, 122, 22, 0.12);
+    color: var(--notebook-red);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 900;
+}
+
+.reflection-block h3 {
+    font-size: 20px;
+}
+
+.reflection-block p {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(255, 253, 247, 0.68);
+    color: var(--ink);
+    line-height: 1.65;
+}
+
+.reflection-choice-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.reflection-choice-row button {
+    min-height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 12px;
+    background: rgba(255, 253, 247, 0.82);
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 800;
 }
 
 .reflection-entry {
@@ -3425,6 +3488,7 @@ textarea,
 .human-answer-panel textarea,
 .decision-panel textarea,
 .reflection-question textarea,
+.reflection-takeaway textarea,
 .prompt-panel select,
 .prompt-panel textarea,
 .gemini-form textarea,
@@ -3453,7 +3517,8 @@ textarea:focus,
 .human-answer-panel select:focus,
 .human-answer-panel textarea:focus,
 .decision-panel textarea:focus,
-.reflection-question textarea:focus {
+.reflection-question textarea:focus,
+.reflection-takeaway textarea:focus {
     outline: 3px solid rgba(212, 175, 92, 0.18);
     border-color: var(--gold);
 }
@@ -4131,6 +4196,7 @@ body:not(.landing-page) .human-answer-panel select,
 body:not(.landing-page) .human-answer-panel textarea,
 body:not(.landing-page) .decision-panel textarea,
 body:not(.landing-page) .reflection-question textarea,
+body:not(.landing-page) .reflection-takeaway textarea,
 body:not(.landing-page) .prompt-panel select,
 body:not(.landing-page) .prompt-panel textarea,
 body:not(.landing-page) .gemini-form textarea,
@@ -4331,6 +4397,7 @@ body:not(.landing-page):not(.game-page) .human-answer-panel select,
 body:not(.landing-page):not(.game-page) .human-answer-panel textarea,
 body:not(.landing-page):not(.game-page) .decision-panel textarea,
 body:not(.landing-page):not(.game-page) .reflection-question textarea,
+body:not(.landing-page):not(.game-page) .reflection-takeaway textarea,
 body:not(.landing-page):not(.game-page) .prompt-panel select,
 body:not(.landing-page):not(.game-page) .prompt-panel textarea,
 body:not(.landing-page):not(.game-page) .gemini-form textarea,
@@ -4719,6 +4786,7 @@ html.theme-dark body:not(.landing-page):not(.game-page) .human-answer-panel sele
 html.theme-dark body:not(.landing-page):not(.game-page) .human-answer-panel textarea,
 html.theme-dark body:not(.landing-page):not(.game-page) .decision-panel textarea,
 html.theme-dark body:not(.landing-page):not(.game-page) .reflection-question textarea,
+html.theme-dark body:not(.landing-page):not(.game-page) .reflection-takeaway textarea,
 html.theme-dark body:not(.landing-page):not(.game-page) .prompt-panel select,
 html.theme-dark body:not(.landing-page):not(.game-page) .prompt-panel textarea,
 html.theme-dark body:not(.landing-page):not(.game-page) .gemini-form textarea,
@@ -4778,6 +4846,32 @@ html.theme-dark body:not(.landing-page):not(.game-page) .socratic-message.ai {
 html.theme-dark body:not(.landing-page):not(.game-page) .socratic-message.user {
     background: rgba(240, 71, 81, 0.9);
     color: #fffdf7;
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .reflection-block {
+    border-top-color: rgba(212, 175, 92, 0.22);
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .reflection-block span {
+    background: rgba(212, 175, 92, 0.14);
+    color: var(--sun);
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .reflection-block p {
+    border-color: rgba(212, 175, 92, 0.24);
+    background: rgba(10, 8, 4, 0.46);
+    color: var(--ink);
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .reflection-choice-row button {
+    border-color: rgba(212, 175, 92, 0.26);
+    background: rgba(18, 14, 8, 0.9);
+    color: var(--muted);
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .reflection-choice-row button:hover {
+    border-color: rgba(240, 200, 106, 0.48);
+    color: var(--sun);
 }
 
 html.theme-dark body:not(.landing-page):not(.game-page) .progress-track {

@@ -61,6 +61,9 @@ from app.services.human_first_service import (
 from app.services.prompt_service import PROMPT_SCENARIOS, RUBRIC, score_prompt
 from app.services.reflection_store import (
     REFLECTION_QUESTIONS,
+    build_reflection_draft_prompt,
+    fallback_reflection_draft,
+    parse_reflection_draft,
     recent_reflections,
     save_reflection,
     transfer_reflections,
@@ -809,6 +812,38 @@ def reflection_save():
     entry = save_reflection(payload, username)
     record_student_activity(username, payload.get("module"), "reflection", payload=entry)
     return jsonify({"ok": True, "entry": entry, "entries": recent_reflections(username)})
+
+
+@main_bp.post("/api/modules/reflection/draft")
+@student_required
+def reflection_draft():
+    payload = request.json or {}
+    messages = payload.get("messages") or []
+    board = payload.get("board") or {}
+    mode = normalize_socratic_mode(payload.get("mode"))
+
+    draft = fallback_reflection_draft(messages, board, mode)
+    meta = {"model": "fallback", "key_label": "fallback", "source": "fallback"}
+
+    try:
+        client = GeminiClient.from_app_config(current_app.config)
+        result = client.generate_text(build_reflection_draft_prompt(messages, board, mode))
+        draft = parse_reflection_draft(result.text)
+        meta = {
+            "model": result.model,
+            "key_label": f"key_{result.key_index + 1}",
+            "source": "gemini",
+        }
+    except (GeminiClientError, ValueError):
+        pass
+
+    record_student_activity(
+        session.get("student_username"),
+        "nhat-ky-phan-tu-ai",
+        "draft",
+        payload={"source_module": "chatbot-socratic", "mode": mode},
+    )
+    return jsonify({"ok": True, "draft": draft, "meta": meta})
 
 
 @main_bp.get("/api/modules/trust/item")
