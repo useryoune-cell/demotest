@@ -368,13 +368,25 @@ const socraticThread = document.getElementById("socraticThread");
 const socraticMeta = document.getElementById("socraticMeta");
 const stagePills = document.querySelectorAll("[data-stage-index]");
 const boardSections = document.querySelectorAll("[data-board-key]");
+const socraticModeButtons = document.querySelectorAll("[data-socratic-mode]");
+
+const socraticModeIntro = {
+    easy: "Em nêu một chủ đề hoặc câu hỏi. Mình sẽ gợi ý từng bước để em tự viết được câu trả lời.",
+    advanced: "Em nêu một chủ đề hoặc nhận định. Mình sẽ hỏi sâu để kiểm tra luận điểm, bằng chứng và phản biện của em.",
+};
+
+const socraticModeLoading = {
+    easy: "Đang chuẩn bị gợi ý từng bước...",
+    advanced: "Đang chất vấn lập luận...",
+};
 
 const socraticState = {
+    mode: "easy",
     stageIndex: 0,
     messages: [
         {
             role: "assistant",
-            content: "Em hãy đặt một câu hỏi hoặc nêu một chủ đề. Mình sẽ không đưa đáp án ngay, mà sẽ hỏi để em tự dựng lập luận.",
+            content: socraticModeIntro.easy,
         },
     ],
     board: {
@@ -385,6 +397,28 @@ const socraticState = {
         revisions: [],
     },
 };
+
+function resetSocraticThreadForMode(mode) {
+    if (!socraticThread) {
+        return;
+    }
+    const intro = socraticModeIntro[mode] || socraticModeIntro.easy;
+    socraticState.mode = mode;
+    socraticState.stageIndex = 0;
+    socraticState.messages = [{ role: "assistant", content: intro }];
+    socraticState.board = {
+        claims: [],
+        evidence: [],
+        unclear: [],
+        counterpoints: [],
+        revisions: [],
+    };
+    socraticThread.innerHTML = "";
+    appendSocraticMessage("assistant", intro);
+    setSocraticStage(0);
+    renderBoard();
+    socraticMeta.textContent = mode === "advanced" ? "Phiên bản nâng cao" : "Phiên bản dễ tiếp cận";
+}
 
 function appendSocraticMessage(role, content, extraClass = "") {
     if (!socraticThread) {
@@ -474,6 +508,14 @@ function renderBoard() {
 if (socraticForm) {
     renderBoard();
 
+    socraticModeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const mode = button.dataset.socraticMode || "easy";
+            socraticModeButtons.forEach((item) => item.classList.toggle("active", item === button));
+            resetSocraticThreadForMode(mode);
+        });
+    });
+
     socraticForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const content = socraticInput.value.trim();
@@ -486,7 +528,7 @@ if (socraticForm) {
         socraticInput.value = "";
         socraticInput.disabled = true;
 
-        const loading = appendSocraticMessage("assistant", "Đang chất vấn lập luận...", "loading");
+        const loading = appendSocraticMessage("assistant", socraticModeLoading[socraticState.mode] || socraticModeLoading.easy, "loading");
         socraticMeta.textContent = "Đang gọi Gemini...";
 
         try {
@@ -497,6 +539,7 @@ if (socraticForm) {
                     messages: socraticState.messages,
                     stage_index: socraticState.stageIndex,
                     board: socraticState.board,
+                    mode: socraticState.mode,
                 }),
             });
             const data = await response.json();
@@ -513,7 +556,7 @@ if (socraticForm) {
             setSocraticStage(Number(data.stage_index || 0));
             addBoardUpdates(data.board_updates || {});
             addSocraticLabels(data.labels || []);
-            socraticMeta.textContent = `${data.stage.key} · ${data.meta.model} · ${data.meta.key_label}`;
+            socraticMeta.textContent = `${data.meta.mode_label || "Socratic"} · ${data.stage.key} · ${data.meta.model} · ${data.meta.key_label}`;
         } catch (error) {
             loading.remove();
             appendSocraticMessage("assistant", `Không gọi được API: ${error}`, "error");

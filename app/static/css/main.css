@@ -1436,7 +1436,40 @@ p {
 
 .socratic-chat-panel {
     display: grid;
-    grid-template-rows: minmax(0, 1fr) auto auto;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+}
+
+.socratic-mode-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px;
+    border-bottom: 1px solid var(--line);
+}
+
+.socratic-mode-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fbfcff;
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.socratic-mode-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.socratic-mode-button.active {
+    border-color: var(--indigo);
+    background: #eef0ff;
+    color: var(--indigo);
 }
 
 .chat-thread {
@@ -4708,6 +4741,7 @@ html.theme-dark body:not(.landing-page):not(.game-page) textarea::placeholder {
 
 html.theme-dark body:not(.landing-page):not(.game-page) .filter-tab,
 html.theme-dark body:not(.landing-page):not(.game-page) .stage-pill,
+html.theme-dark body:not(.landing-page):not(.game-page) .socratic-mode-button,
 html.theme-dark body:not(.landing-page):not(.game-page) .activity-toolbar button,
 html.theme-dark body:not(.landing-page):not(.game-page) .skip-question,
 html.theme-dark body:not(.landing-page):not(.game-page) .teacher-account-list button,
@@ -4715,6 +4749,16 @@ html.theme-dark body:not(.landing-page):not(.game-page) .teacher-actions button 
     border-color: rgba(212, 175, 92, 0.26);
     background: rgba(18, 14, 8, 0.9);
     color: var(--muted);
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .socratic-mode-switch {
+    border-bottom-color: rgba(212, 175, 92, 0.22);
+}
+
+html.theme-dark body:not(.landing-page):not(.game-page) .socratic-mode-button.active {
+    border-color: rgba(240, 200, 106, 0.44);
+    background: rgba(212, 175, 92, 0.14);
+    color: var(--sun);
 }
 
 html.theme-dark body:not(.landing-page):not(.game-page) .module-number,

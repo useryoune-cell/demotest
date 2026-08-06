@@ -68,9 +68,11 @@ from app.services.reflection_store import (
 from app.services.student_store import record_student_activity, student_activities, transfer_student_activity
 from app.services.socratic_service import (
     BOARD_KEYS,
+    SOCRATIC_MODES,
     SOCRATIC_STAGES,
     build_socratic_prompt,
     fallback_socratic_response,
+    normalize_socratic_mode,
     parse_socratic_response,
 )
 
@@ -711,6 +713,7 @@ def socratic_message():
     messages = payload.get("messages") or []
     stage_index = payload.get("stage_index", 0)
     board = payload.get("board") or {}
+    mode = normalize_socratic_mode(payload.get("mode"))
 
     if not messages or not str(messages[-1].get("content", "")).strip():
         return jsonify({"error": "Message is required."}), 400
@@ -720,7 +723,7 @@ def socratic_message():
     except (TypeError, ValueError):
         stage_index = 0
 
-    prompt = build_socratic_prompt(messages=messages, stage_index=stage_index, board=board)
+    prompt = build_socratic_prompt(messages=messages, stage_index=stage_index, board=board, mode=mode)
     try:
         client = GeminiClient.from_app_config(current_app.config)
         result = client.generate_text(prompt)
@@ -735,7 +738,7 @@ def socratic_message():
         session.get("student_username"),
         "chatbot-socratic",
         "message",
-        payload={"stage_index": stage_index, "board": board},
+        payload={"stage_index": stage_index, "board": board, "mode": mode},
     )
     return jsonify(
         {
@@ -744,6 +747,8 @@ def socratic_message():
                 "model": result.model if result else current_app.config["GEMINI_MODEL"],
                 "key_label": f"key_{result.key_index + 1}" if result else "fallback",
                 "attempts": result.attempts if result else 0,
+                "mode": mode,
+                "mode_label": SOCRATIC_MODES[mode]["label"],
             },
         }
     )

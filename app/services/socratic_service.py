@@ -19,9 +19,41 @@ BOARD_KEYS = {
 }
 
 
-def build_socratic_prompt(messages, stage_index, board):
+SOCRATIC_MODES = {
+    "easy": {
+        "label": "Dễ tiếp cận",
+        "system": """
+Chế độ Dễ tiếp cận:
+- Dành cho học sinh mới bắt đầu hoặc chưa biết trả lời.
+- Được phép gợi ý hướng làm bằng 2-3 gạch đầu dòng ngắn.
+- Được phép đưa khung câu trả lời, ví dụ: "Em có thể bắt đầu bằng: Theo em..., vì..."
+- Không viết nguyên đáp án hoàn chỉnh thay học sinh.
+- Sau phần gợi ý, hãy hỏi 1 câu rất cụ thể để học sinh viết tiếp.
+""".strip(),
+    },
+    "advanced": {
+        "label": "Nâng cao",
+        "system": """
+Chế độ Nâng cao:
+- Dành cho học sinh đã có nền tảng tốt.
+- Không đưa đáp án hoàn chỉnh ngay.
+- Ưu tiên chất vấn, yêu cầu bằng chứng, phản ví dụ và giúp học sinh tự điều chỉnh lập luận.
+- Chỉ hỏi 1-2 câu trọng tâm ở mỗi lượt, trừ giai đoạn SYNTHESIZE.
+""".strip(),
+    },
+}
+
+
+def normalize_socratic_mode(mode):
+    mode = str(mode or "easy").strip().lower()
+    return mode if mode in SOCRATIC_MODES else "easy"
+
+
+def build_socratic_prompt(messages, stage_index, board, mode="easy"):
     safe_stage_index = min(max(int(stage_index or 0), 0), len(SOCRATIC_STAGES) - 1)
     stage = SOCRATIC_STAGES[safe_stage_index]
+    safe_mode = normalize_socratic_mode(mode)
+    mode_config = SOCRATIC_MODES[safe_mode]
     history = "\n".join(
         f"{item.get('role', 'user')}: {item.get('content', '')}" for item in messages[-10:]
     )
@@ -29,7 +61,9 @@ def build_socratic_prompt(messages, stage_index, board):
 
     return f"""
 Bạn là Chatbot Socratic trong AI Critical Thinking Lab cho học sinh THPT Việt Nam.
-Mục tiêu: không đưa đáp án hoàn chỉnh ngay; hãy chất vấn, gợi mở, yêu cầu bằng chứng, phản ví dụ và giúp học sinh tự điều chỉnh lập luận.
+Mục tiêu: giúp học sinh tự hình thành lập luận, không làm bài thay học sinh.
+Phiên bản đang dùng: {mode_config["label"]}.
+{mode_config["system"]}
 
 Giai đoạn hiện tại: {safe_stage_index} - {stage["key"]}: {stage["label"]}.
 Chuỗi giai đoạn: PROBE -> CLAIM -> EVIDENCE -> COUNTER -> REVISE -> SYNTHESIZE.
@@ -42,7 +76,7 @@ Bảng tư duy hiện tại dạng JSON:
 
 Yêu cầu phản hồi:
 1. Trả lời ngắn, thân thiện, bằng tiếng Việt.
-2. Chỉ hỏi 1-2 câu trọng tâm ở mỗi lượt, trừ giai đoạn SYNTHESIZE.
+2. Bám đúng phiên bản đang dùng.
 3. Nếu học sinh chưa nêu nhận định, hãy kéo về CLAIM.
 4. Nếu học sinh nêu nhận định nhưng thiếu căn cứ, hãy kéo về EVIDENCE.
 5. Nếu đã có căn cứ, hãy đưa phản ví dụ hoặc điểm chưa nhất quán ở COUNTER.

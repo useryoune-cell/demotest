@@ -40,10 +40,20 @@
 
         <section class="socratic-workspace">
             <div class="socratic-chat-panel">
+                <div class="socratic-mode-switch" aria-label="Chọn phiên bản chatbot">
+                    <button class="socratic-mode-button active" type="button" data-socratic-mode="easy">
+                        <i data-lucide="hand-heart"></i>
+                        <span>Dễ tiếp cận</span>
+                    </button>
+                    <button class="socratic-mode-button" type="button" data-socratic-mode="advanced">
+                        <i data-lucide="brain-circuit"></i>
+                        <span>Nâng cao</span>
+                    </button>
+                </div>
                 <div class="chat-thread" id="socraticThread" aria-live="polite">
                     <article class="socratic-message ai">
                         <span>AI</span>
-                        <p>Nêu một chủ đề để bắt đầu.</p>
+                        <p>Em nêu một chủ đề hoặc câu hỏi. Mình sẽ gợi ý từng bước để em tự viết được câu trả lời.</p>
                     </article>
                 </div>
                 <form class="socratic-form" id="socraticForm">
