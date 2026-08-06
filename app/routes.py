@@ -214,6 +214,24 @@ def _allowed_avatar(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_AVATAR_EXTENSIONS
 
 
+def _login_destination(role):
+    next_path = request.args.get("next", "")
+    default_paths = {
+        "student": url_for("main.app_home"),
+        "teacher": url_for("main.teacher_dashboard"),
+        "admin": url_for("main.admin_dashboard"),
+    }
+    allowed_prefixes = {
+        "student": ("/app", "/student"),
+        "teacher": ("/teacher",),
+        "admin": ("/admin",),
+    }
+    if next_path.startswith("/") and not next_path.startswith("//"):
+        if any(next_path.startswith(prefix) for prefix in allowed_prefixes.get(role, ())):
+            return next_path
+    return default_paths.get(role, url_for("main.app_home"))
+
+
 @main_bp.get("/")
 def landing():
     return render_template("pages/landing.html")
@@ -454,13 +472,13 @@ def login():
                 guest_username = session.get("student_username") if session.get("student_guest") else ""
                 _merge_guest_student_data(student, guest_username)
                 _set_student_session(student)
-                return redirect(request.args.get("next") or url_for("main.app_home"))
+                return redirect(_login_destination("student"))
 
         if selected_role == "admin" and verify_admin(username, password):
             session.clear()
             session["role"] = "admin"
             session["admin_username"] = username
-            return redirect(request.args.get("next") or url_for("main.admin_dashboard"))
+            return redirect(_login_destination("admin"))
 
         if selected_role == "teacher":
             teacher = verify_teacher(username, password)
@@ -469,7 +487,7 @@ def login():
                 session["role"] = "teacher"
                 session["teacher_username"] = teacher["username"]
                 session["teacher_name"] = teacher["name"]
-                return redirect(request.args.get("next") or url_for("main.teacher_dashboard"))
+                return redirect(_login_destination("teacher"))
 
         error = "Tên đăng nhập, mật khẩu hoặc vai trò không đúng."
     return render_template("pages/login.html", error=error, selected_role=selected_role)

@@ -35,7 +35,25 @@ DEFAULT_AUTH_DATA = {
 
 
 def _data():
-    return load_json("auth.json", DEFAULT_AUTH_DATA)
+    data = load_json("auth.json", DEFAULT_AUTH_DATA)
+    changed = False
+    teachers = data.setdefault("teachers", [])
+    students = data.setdefault("students", [])
+    data.setdefault("reports", [])
+
+    for default_teacher in DEFAULT_TEACHER_ACCOUNTS:
+        if not any(teacher.get("username") == default_teacher["username"] for teacher in teachers):
+            teachers.append(default_teacher.copy())
+            changed = True
+
+    for default_student in DEFAULT_STUDENT_ACCOUNTS:
+        if not any(student.get("username") == default_student["username"] for student in students):
+            students.append(default_student.copy())
+            changed = True
+
+    if changed:
+        save_json("auth.json", data)
+    return data
 
 
 def _save(data):
