@@ -151,6 +151,13 @@ def list_teachers():
     return _teachers()
 
 
+def list_students(include_anonymous=False):
+    students = _students()
+    if include_anonymous:
+        return students
+    return [student for student in students if not student.get("anonymous")]
+
+
 def create_student(username, password, name):
     data = _data()
     username = str(username or "").strip()

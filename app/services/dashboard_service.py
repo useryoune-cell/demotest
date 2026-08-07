@@ -1,3 +1,4 @@
+from app.services.auth_service import list_students
 from app.services.student_store import student_activities
 
 
@@ -156,8 +157,78 @@ def _student_scores(username):
     }
 
 
+def _risk_label(progress, dependency, has_activity):
+    if not has_activity and progress == 0:
+        return "Chưa có dữ liệu"
+    if dependency >= 55:
+        return "Cần hỗ trợ"
+    if dependency >= 35:
+        return "Vừa"
+    return "Thấp"
+
+
 def teacher_overview():
-    return TEACHER_OVERVIEW
+    students = []
+    profiles = []
+    reflection_total = 0
+
+    for student in list_students():
+        username = student.get("username")
+        dashboard = student_dashboard(username)
+        profile = student_profile(username)
+        scores = _student_scores(username)
+        progress = int(dashboard["progress"])
+        independence = next(
+            (metric["score"] for metric in dashboard["metrics"] if metric["key"] == "independence"),
+            0,
+        )
+        has_activity = username == DEMO_STUDENT_USERNAME or bool(scores["activities"])
+        dependency = 0 if not has_activity else max(0, 100 - int(independence))
+        reflection_total += sum(1 for item in scores["activities"] if item.get("action") == "reflection")
+        students.append(
+            {
+                "name": student.get("name") or username,
+                "progress": progress,
+                "dependency": dependency,
+                "risk": _risk_label(progress, dependency, has_activity),
+            }
+        )
+        profiles.append(profile)
+
+    if not students:
+        return {
+            **TEACHER_OVERVIEW,
+            "completion": 0,
+            "dependency": 0,
+            "pending_reviews": 0,
+            "new_reflections": 0,
+            "scope_name": "Chưa có học sinh",
+            "skills": [(skill["label"], 0) for skill in PROFILE["skills"]],
+            "students": [],
+            "reviews": [],
+            "common_errors": ["Chưa có dữ liệu học tập."],
+        }
+
+    completion = round(sum(student["progress"] for student in students) / len(students))
+    active_dependencies = [student["dependency"] for student in students if student["progress"] > 0]
+    dependency = round(sum(active_dependencies) / len(active_dependencies)) if active_dependencies else 0
+    skill_totals = []
+    for index, skill in enumerate(PROFILE["skills"]):
+        values = [profile["skills"][index]["score"] for profile in profiles]
+        skill_totals.append((skill["label"], _average(values)))
+
+    return {
+        **TEACHER_OVERVIEW,
+        "completion": completion,
+        "dependency": dependency,
+        "pending_reviews": 0,
+        "new_reflections": reflection_total,
+        "scope_name": "Tất cả học sinh thật",
+        "skills": skill_totals,
+        "students": students,
+        "reviews": [],
+        "common_errors": ["Dữ liệu sẽ tự hình thành khi học sinh hoàn thành bài luyện."],
+    }
 
 
 def student_dashboard(username):
