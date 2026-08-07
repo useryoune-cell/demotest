@@ -881,7 +881,7 @@ p {
     border-radius: 50%;
     background:
         radial-gradient(circle at center, var(--white) 0 55%, transparent 56%),
-        conic-gradient(var(--teal) 0 42%, #e6e9f1 42% 100%);
+        conic-gradient(var(--teal) 0 var(--profile-progress, 42%), #e6e9f1 var(--profile-progress, 42%) 100%);
 }
 
 .profile-ring span {
@@ -3478,7 +3478,7 @@ h3 {
 .profile-ring {
     background:
         radial-gradient(circle at center, #151008 0 55%, transparent 56%),
-        conic-gradient(var(--gold-soft) 0 42%, rgba(247, 240, 223, 0.14) 42% 100%);
+        conic-gradient(var(--gold-soft) 0 var(--profile-progress, 42%), rgba(247, 240, 223, 0.14) var(--profile-progress, 42%) 100%);
 }
 
 input,
@@ -4186,7 +4186,7 @@ body:not(.landing-page) .progress-track span {
 body:not(.landing-page) .profile-ring {
     background:
         radial-gradient(circle at center, var(--white) 0 55%, transparent 56%),
-        conic-gradient(var(--teal) 0 42%, #e6e9f1 42% 100%);
+        conic-gradient(var(--teal) 0 var(--profile-progress, 42%), #e6e9f1 var(--profile-progress, 42%) 100%);
 }
 
 body:not(.landing-page) input,
@@ -4885,7 +4885,7 @@ html.theme-dark body:not(.landing-page):not(.game-page) .progress-track span {
 html.theme-dark body:not(.landing-page):not(.game-page) .profile-ring {
     background:
         radial-gradient(circle at center, rgba(22, 17, 9, 0.92) 0 55%, transparent 56%),
-        conic-gradient(var(--teal) 0 42%, rgba(245, 234, 212, 0.12) 42% 100%);
+        conic-gradient(var(--teal) 0 var(--profile-progress, 42%), rgba(245, 234, 212, 0.12) var(--profile-progress, 42%) 100%);
 }
 
 html.theme-dark body:not(.landing-page):not(.game-page) .student-avatar-preview,

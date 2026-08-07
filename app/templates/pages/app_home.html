@@ -44,33 +44,20 @@
                 <p class="eyebrow dark">Không gian học tập</p>
                 <h1>Chào {{ student.name if student else "bạn" }}</h1>
             </div>
-            <div class="profile-ring" aria-label="Tiến độ học tập">
-                <span>42%</span>
+            <div class="profile-ring" aria-label="Tiến độ học tập" style="--profile-progress: {{ dashboard.progress }}%;">
+                <span>{{ dashboard.progress }}%</span>
                 <small>tiến độ tuần</small>
             </div>
         </div>
 
         <div class="student-summary">
+            {% for metric in dashboard.metrics %}
             <article>
-                <i data-lucide="search-check"></i>
-                <span>Kiểm chứng</span>
-                <strong>68</strong>
+                <i data-lucide="{{ metric.icon }}"></i>
+                <span>{{ metric.label }}</span>
+                <strong>{{ metric.score }}</strong>
             </article>
-            <article>
-                <i data-lucide="scale"></i>
-                <span>Lập luận</span>
-                <strong>61</strong>
-            </article>
-            <article>
-                <i data-lucide="refresh-cw"></i>
-                <span>Tự điều chỉnh</span>
-                <strong>74</strong>
-            </article>
-            <article>
-                <i data-lucide="shield-question"></i>
-                <span>Độ độc lập</span>
-                <strong>57</strong>
-            </article>
+            {% endfor %}
         </div>
 
         <section class="app-panel">

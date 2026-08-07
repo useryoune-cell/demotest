@@ -32,7 +32,7 @@ from app.services.auth_service import (
     verify_student,
     verify_teacher,
 )
-from app.services.dashboard_service import student_profile, teacher_overview
+from app.services.dashboard_service import student_dashboard, student_profile, teacher_overview
 from app.services.debate_service import DEBATE_TOPICS, RANKS, get_rank, get_topic, judge_debate
 from app.services.evaluation_bank import (
     ERROR_ITEMS,
@@ -262,6 +262,7 @@ def app_home():
         areas=STUDENT_AREA_SUMMARY,
         recommended=recommended,
         student=get_student(username),
+        dashboard=student_dashboard(username),
         is_guest=session.get("student_guest", False),
     )
 
@@ -453,7 +454,7 @@ def module_detail(slug):
             "pages/skill_profile.html",
             module=module,
             modules=STUDENT_NAV_MODULES,
-            profile=student_profile(),
+            profile=student_profile(username),
             activities=student_activities(username),
             student=get_student(username),
             avatar_error=request.args.get("avatar_error", ""),
@@ -1038,10 +1039,11 @@ def prompt_score():
 @main_bp.get("/api/modules/profile")
 @student_required
 def profile_data():
+    username = session.get("student_username")
     return jsonify(
         {
-            "profile": student_profile(),
-            "activities": student_activities(session.get("student_username")),
+            "profile": student_profile(username),
+            "activities": student_activities(username),
         }
     )
 
