@@ -24,6 +24,14 @@ DEFAULT_STUDENT_ACCOUNTS = [
         "avatar_filename": "",
         "active": True,
         "created_at": "demo",
+    },
+    {
+        "username": "student02",
+        "password": "student123",
+        "name": "Học sinh demo 02",
+        "avatar_filename": "",
+        "active": True,
+        "created_at": "demo",
     }
 ]
 
