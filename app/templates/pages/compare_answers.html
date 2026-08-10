@@ -26,12 +26,7 @@
             {% for answer in item.answers %}
             <article class="compare-card" data-answer-label="{{ answer.label }}">
                 <span class="module-number">{{ answer.label }}</span>
-                <h2>{{ answer.type }}</h2>
                 <p>{{ answer.text }}</p>
-                <dl>
-                    <dt>Điểm mạnh</dt><dd>{{ answer.strength }}</dd>
-                    <dt>Điểm yếu</dt><dd>{{ answer.weakness }}</dd>
-                </dl>
             </article>
             {% endfor %}
         </section>
@@ -40,7 +35,7 @@
             <div class="panel-heading">
                 <div>
                     <p class="eyebrow dark">Đánh giá</p>
-                    <h2>Chọn câu tốt nhất và tổng hợp</h2>
+                    <h2>Tự nhận định và lập luận</h2>
                 </div>
                 <span class="response-meta" id="compareMeta"></span>
             </div>
@@ -49,11 +44,11 @@
                 <label><input type="radio" name="bestAnswer" value="{{ answer.label }}" {% if loop.first %}checked{% endif %}> Câu {{ answer.label }}</label>
                 {% endfor %}
             </div>
-            <label class="field-label" for="compareCriteria">Tiêu chí lựa chọn</label>
-            <textarea id="compareCriteria" rows="4"></textarea>
-            <label class="field-label" for="compareSynthesis">Câu trả lời tổng hợp của em</label>
+            <label class="field-label" for="compareCriteria">Vì sao em chọn câu đó?</label>
+            <textarea id="compareCriteria" rows="4" placeholder="Nêu tiêu chí của em: độ đúng, bằng chứng, cân bằng, điểm còn thiếu..."></textarea>
+            <label class="field-label" for="compareSynthesis">Câu trả lời em tự viết lại</label>
             <textarea id="compareSynthesis" rows="5"></textarea>
-            <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chấm điểm</span></button>
+            <button class="button primary" type="submit"><i data-lucide="check"></i><span>Lưu đánh giá</span></button>
         </form>
     </section>
 </div>

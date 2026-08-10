@@ -100,14 +100,11 @@ EMPTY_PROFILE = {
 
 
 VERIFICATION_MODULES = {
-    "tin-hay-khong-tin",
     "tham-tu-ai",
-    "ai-co-tinh-sai",
     "so-sanh-ba-cau-tra-loi",
 }
 ARGUMENT_MODULES = {
     "ban-do-lap-luan",
-    "dau-truong-lap-luan",
     "prompt-phan-bien",
 }
 

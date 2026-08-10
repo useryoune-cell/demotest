@@ -934,10 +934,7 @@ if (compareForm) {
             body: JSON.stringify({ selected, criteria, synthesis }),
         });
         const data = await response.json();
-        document.getElementById("compareMeta").textContent = `${data.score}/100 · Đáp án tốt nhất: ${data.best}`;
-        if (!data.correct) {
-            document.getElementById("compareSynthesis").value = `${synthesis}\n\nGợi ý tổng hợp: ${data.suggested_synthesis}`;
-        }
+        document.getElementById("compareMeta").textContent = data.feedback || "Đã lưu bài làm.";
     });
 }
 
@@ -1715,14 +1712,22 @@ if (promptCriticForm) {
             meta.textContent = data.error || "Không chấm được prompt.";
             return;
         }
-        meta.textContent = `${data.score}/100`;
+        meta.textContent = data.feedback || "AI đã nhận xét. Giáo viên chấm cuối cùng.";
+        const promptRubric = document.getElementById("promptRubric");
+        if (promptRubric) {
+            promptRubric.hidden = false;
+        }
         data.rubric.forEach((item) => {
             const row = document.querySelector(`[data-rubric-key="${item.key}"]`);
-            row.querySelector("span").textContent = `${item.score}/${item.max}`;
-            row.querySelector(".progress-track span").style.width = `${item.score / item.max * 100}%`;
+            if (!row) {
+                return;
+            }
+            row.querySelector("span").textContent = item.score >= 14 ? "Đã có" : "Cần bổ sung";
             row.querySelector("p").textContent = item.hint;
         });
-        document.getElementById("promptSuggestion").textContent = data.suggestion;
+        const suggestion = document.getElementById("promptSuggestion");
+        suggestion.hidden = false;
+        suggestion.textContent = data.suggestion;
     });
 }
 

@@ -2718,6 +2718,33 @@ p {
     margin-top: 0;
 }
 
+.prompt-framework {
+    display: grid;
+    gap: 12px;
+}
+
+.prompt-framework article {
+    display: grid;
+    gap: 6px;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.prompt-framework strong {
+    color: var(--ink);
+}
+
+.prompt-framework span {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.prompt-feedback-list {
+    margin-top: 12px;
+}
+
 .prompt-panel select,
 .prompt-panel textarea {
     width: 100%;

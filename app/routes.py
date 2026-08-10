@@ -83,11 +83,15 @@ main_bp = Blueprint("main", __name__)
 TEACHER_MODULE_SLUG = "che-do-giao-vien"
 CRITIC_ASSISTANT_SLUG = "tro-li-phan-bien"
 CRITIC_ASSISTANT_CHILD_SLUGS = [
-    "con-nguoi-truoc-ai-sau",
-    "ai-co-tinh-sai",
     "so-sanh-ba-cau-tra-loi",
     "prompt-phan-bien",
 ]
+HIDDEN_STUDENT_MODULE_SLUGS = {
+    "tin-hay-khong-tin",
+    "dau-truong-lap-luan",
+    "con-nguoi-truoc-ai-sau",
+    "ai-co-tinh-sai",
+}
 CRITIC_ASSISTANT_MODULE = {
     "number": "00",
     "slug": CRITIC_ASSISTANT_SLUG,
@@ -96,8 +100,8 @@ CRITIC_ASSISTANT_MODULE = {
     "area_key": "training",
     "icon": "sparkles",
     "image": "images/modules/tro-li-phan-bien.png",
-    "description": "Bộ trợ lí luyện kiểm chứng câu trả lời AI, so sánh, phát hiện lỗi và viết prompt phản biện.",
-    "status": "4 công cụ",
+    "description": "Bộ trợ lí luyện đánh giá câu trả lời AI và viết prompt phản biện.",
+    "status": "2 công cụ",
     "progress": 58,
     "route_label": "Mở trợ lí",
 }
@@ -110,10 +114,10 @@ CRITIC_ASSISTANT_CHILD_MODULES = [
 ]
 _DISPLAY_MODULES = []
 for module in STUDENT_MODULES:
-    if module["slug"] in CRITIC_ASSISTANT_CHILD_SLUGS:
+    if module["slug"] in CRITIC_ASSISTANT_CHILD_SLUGS or module["slug"] in HIDDEN_STUDENT_MODULE_SLUGS:
         continue
     _DISPLAY_MODULES.append(module)
-    if module["slug"] == "tin-hay-khong-tin":
+    if module["slug"] == "chatbot-socratic":
         _DISPLAY_MODULES.append(CRITIC_ASSISTANT_MODULE)
 STUDENT_NAV_MODULES = [{**module, "number": f"{index:02d}"} for index, module in enumerate(_DISPLAY_MODULES, start=1)]
 STUDENT_AREA_SUMMARY = [
@@ -895,9 +899,8 @@ def compare_score():
     return jsonify(
         {
             "correct": correct,
-            "best": item["best"],
             "score": final_score,
-            "suggested_synthesis": item["suggested_synthesis"],
+            "feedback": "Đã lưu bài làm. AI chỉ nhận xét mức độ rõ ràng; giáo viên sẽ là người chốt đánh giá cuối cùng.",
         }
     )
 
@@ -1032,6 +1035,7 @@ def prompt_score():
     if len(prompt) < 12:
         return jsonify({"error": "Prompt is too short."}), 400
     result = score_prompt(prompt)
+    result["feedback"] = "AI đã nhận xét sơ bộ để học sinh chỉnh prompt. Giáo viên là người đánh giá cuối cùng."
     record_student_activity(session.get("student_username"), "prompt-phan-bien", "score", score=result.get("score"))
     return jsonify(result)
 
