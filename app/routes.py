@@ -239,7 +239,7 @@ def _login_destination(role):
 
 @main_bp.get("/")
 def landing():
-    return render_template("pages/landing.html")
+    return render_template("pages/landing.html", modules=STUDENT_NAV_MODULES)
 
 
 @main_bp.get("/start")
