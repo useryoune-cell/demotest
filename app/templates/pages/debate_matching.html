@@ -26,7 +26,7 @@
                 <h1 id="matchmakingTitle">Đang ghép đối thủ</h1>
                 <p id="matchmakingHint">Hệ thống đang tìm AI Challenger cùng cấp lập luận.</p>
                 <div class="solo-match-actions">
-                    <a class="button primary" id="readyDebateMatch" data-vs-url="{{ url_for('main.debate_vs', topic=1) }}" href="{{ url_for('main.debate_vs', topic=1) }}">Sẵn sàng</a>
+                    <a class="button primary" id="readyDebateMatch" data-vs-url="{{ url_for('main.debate_vs', topic=topic_index) }}" href="{{ url_for('main.debate_vs', topic=topic_index) }}">Sẵn sàng</a>
                     <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Hủy</a>
                 </div>
             </div>

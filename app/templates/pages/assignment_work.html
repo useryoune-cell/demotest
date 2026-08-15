@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}{{ task.title }} · Nhiệm vụ{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Nhiệm vụ</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content assignment-page" data-task-id="{{ task.id }}" data-consent="{{ 'yes' if consent_accepted else 'no' }}">
+        <div class="module-detail-hero">
+            <div>
+                <h1>{{ task.title }}</h1>
+                <p>Nhiệm vụ</p>
+            </div>
+            <div class="assignment-timer" aria-label="Thời gian làm bài">
+                <i data-lucide="timer"></i>
+                <div>
+                    <span>Đã làm được</span>
+                    <strong id="assignmentTimer">00:00</strong>
+                </div>
+                <small id="assignmentTimerState">Đang chờ</small>
+            </div>
+        </div>
+
+        <section class="assignment-workspace">
+            <article class="app-panel assignment-task-card">
+                <div class="panel-heading"><div><h2>Đề bài</h2></div></div>
+                <p>{{ task.prompt }}</p>
+                <h3>Rubric</h3>
+                <div class="assignment-rubric-checklist" aria-label="Rubric tự rà soát">
+                    {% for item in task.rubric.splitlines() %}
+                        {% if item.strip() %}
+                        <label>
+                            <input type="checkbox">
+                            <span>{{ item }}</span>
+                        </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </article>
+
+            <form class="app-panel assignment-form" id="assignmentForm">
+                <div class="panel-heading">
+                    <div><h2>Bài làm</h2></div>
+                    <span class="response-meta" id="assignmentMeta"></span>
+                </div>
+                <div class="assignment-answer-wrap">
+                    <textarea id="assignmentAnswer" rows="12" placeholder="Viết bài làm của bạn..."></textarea>
+                    <span class="assignment-counter" id="assignmentCounter">0 từ · 0 ký tự</span>
+                </div>
+                <div class="assignment-submit-bar">
+                    <button class="button primary" type="submit"><i data-lucide="send"></i><span>Nộp bài</span></button>
+                </div>
+            </form>
+        </section>
+
+        <div class="assignment-result app-panel" id="assignmentResult" hidden>
+            <div class="panel-heading"><div><h2>AI nhận xét sơ bộ</h2></div></div>
+            <p id="assignmentAiReview"></p>
+            <p class="muted-note">Giáo viên sẽ chỉnh và đánh giá cuối cùng.</p>
+        </div>
+
+        <div class="assignment-consent" id="assignmentConsent" role="dialog" aria-modal="true" aria-labelledby="assignmentConsentTitle" hidden>
+            <div class="assignment-consent-card">
+                <i data-lucide="shield-check"></i>
+                <span class="assignment-consent-badge">Trước khi làm bài</span>
+                <h2 id="assignmentConsentTitle">Bài làm của bạn được giám sát</h2>
+                <p>Hệ thống ghi nhận thời gian làm bài, nội dung nộp và cuộc trò chuyện với AI để gửi về giáo viên.</p>
+                <div>
+                    <button class="button primary assignment-accept" type="button" id="acceptAssignmentConsent"><i data-lucide="check"></i><span>Chấp nhận</span></button>
+                    <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Từ chối</a>
+                </div>
+            </div>
+        </div>
+
+        <aside class="assignment-chatbot" id="assignmentChatbot" aria-label="Chatbot hỗ trợ nhiệm vụ">
+            <button class="assignment-chat-toggle" type="button" id="assignmentChatToggle" aria-label="Mở chatbot" aria-expanded="false">
+                <i data-lucide="message-circle"></i>
+            </button>
+            <div class="assignment-chat-panel" id="assignmentChatPanel" hidden>
+                <div class="assignment-chat-head">
+                    <strong>Hỏi AI</strong>
+                    <button type="button" id="assignmentChatClose" aria-label="Đóng"><i data-lucide="x"></i></button>
+                </div>
+                <div class="assignment-chat-thread" id="assignmentChatThread">
+                    <article class="socratic-message ai"><span>AI</span><p>Hỏi khi bạn bí ý. AI sẽ gợi mở, không viết hộ toàn bộ bài.</p></article>
+                </div>
+                <form class="assignment-chat-form" id="assignmentChatForm">
+                    <textarea id="assignmentChatInput" rows="3" placeholder="Nhập câu hỏi..."></textarea>
+                    <button type="submit" aria-label="Gửi"><i data-lucide="send"></i></button>
+                </form>
+            </div>
+        </aside>
+    </section>
+</div>
+{% endblock %}

@@ -18,10 +18,16 @@
             }
         })();
     </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='client-feedback-1') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='module-focus-4') }}">
     {% block head %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}{% if request.path.startswith('/app/modules/') %} module-focus-page{% endif %}">
+    {% if request.path.startswith('/app/modules/') %}
+    <a class="module-focus-back" href="{{ url_for('main.app_home') }}">
+        <i data-lucide="arrow-left"></i>
+        <span>Quay lại</span>
+    </a>
+    {% endif %}
     <header class="site-header">
         <a class="brand" href="{{ url_for('main.landing') }}" aria-label="AI Critical Thinking Lab">
             <span class="brand-mark">AI</span>
@@ -50,10 +56,9 @@
 
     <footer class="site-footer">
         <span>© 2026 · AI Critical Thinking Lab</span>
-        <span>Được xây dựng để rèn tư duy phản biện trong kỷ nguyên AI.</span>
     </footer>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js', v='client-feedback-1') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js', v='module-focus-4') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

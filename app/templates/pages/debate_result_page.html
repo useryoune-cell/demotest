@@ -84,11 +84,12 @@
             </div>
             <p>{{ result.feedback }}</p>
             <div class="rubric-grid">
-                <article class="rubric-item"><span>Luận điểm</span><strong>{{ result.player.claim }}</strong></article>
-                <article class="rubric-item"><span>Bằng chứng</span><strong>{{ result.player.evidence }}</strong></article>
-                <article class="rubric-item"><span>Suy luận</span><strong>{{ result.player.reasoning }}</strong></article>
-                <article class="rubric-item"><span>Phản biện</span><strong>{{ result.player.counter }}</strong></article>
-                <article class="rubric-item"><span>Độ rõ</span><strong>{{ result.player.clarity }}</strong></article>
+                {% for item in result.rubric_scores %}
+                <article class="rubric-item">
+                    <span>{{ item.label }}</span>
+                    <strong>{{ item.score }}/{{ item.max }}</strong>
+                </article>
+                {% endfor %}
             </div>
             <div class="solo-result-actions">
                 <a class="button primary" href="{{ url_for('main.debate_matching') }}"><i data-lucide="rotate-cw"></i><span>Đấu tiếp</span></a>

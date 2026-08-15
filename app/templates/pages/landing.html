@@ -7,7 +7,26 @@
 <section class="ecosystem-home" aria-label="Hệ sinh thái giáo dục số">
     <div class="ecosystem-header">
         <h1>Hệ sinh thái giáo dục số</h1>
-        <p>Nơi tổng hợp các công cụ rèn tư duy phản biện cùng AI</p>
+    </div>
+
+    <div class="ecosystem-role-grid" aria-label="Chọn vai trò đăng nhập">
+        <section class="ecosystem-role-card">
+            <div>
+                <i data-lucide="users-round"></i>
+                <strong>Học sinh & Giáo viên</strong>
+            </div>
+            <div class="ecosystem-role-actions">
+                <a href="{{ url_for('main.login', role='student', next='/app') }}">Học sinh</a>
+                <a href="{{ url_for('main.login', role='teacher') }}">Giáo viên</a>
+            </div>
+        </section>
+        <section class="ecosystem-role-card admin">
+            <div>
+                <i data-lucide="shield-check"></i>
+                <strong>Admin</strong>
+            </div>
+            <a class="ecosystem-admin-link" href="{{ url_for('main.login', role='admin') }}">Đăng nhập</a>
+        </section>
     </div>
 
     <div class="ecosystem-grid">
@@ -15,7 +34,8 @@
         <a class="ecosystem-card" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">
             <span class="ecosystem-image-frame">
                 {% if module.image %}
-                <img src="{{ url_for('static', filename=module.image, v='ecosystem-v1') }}" alt="">
+                <img src="{{ url_for('static', filename=module.image, v='module-avatar-vertical-2') }}" alt="">
+                <span class="ecosystem-icon-fallback" hidden><i data-lucide="{{ module.icon }}"></i></span>
                 {% else %}
                 <span class="ecosystem-icon-fallback"><i data-lucide="{{ module.icon }}"></i></span>
                 {% endif %}
@@ -24,9 +44,5 @@
         </a>
         {% endfor %}
     </div>
-
-    <a class="ecosystem-login" href="{{ url_for('main.login', role='student') }}" aria-label="Đăng nhập">
-        <i data-lucide="user-round"></i>
-    </a>
 </section>
 {% endblock %}

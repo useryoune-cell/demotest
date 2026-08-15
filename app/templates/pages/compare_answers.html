@@ -16,12 +16,32 @@
     <section class="app-content">
         <div class="module-detail-hero">
             <div>
-                <p class="eyebrow dark">{{ module.area }}</p>
                 <h1>{{ module.title }}</h1>
+                {% if item %}
                 <p>{{ item.question }}</p>
+                {% endif %}
             </div>
         </div>
 
+        <section class="app-panel compare-package-panel">
+            <div class="panel-heading">
+                <div><h2>Chọn gói bài</h2></div>
+            </div>
+            {% if packages %}
+            <div class="compare-package-list">
+                {% for package in packages %}
+                <a class="compare-package-card {% if item and package.id == item.id %}active{% endif %}" href="{{ url_for('main.module_detail', slug=module.slug, package=package.id) }}">
+                    <strong>{{ package.title }}</strong>
+                    <span>{{ package.teacher_name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="muted-note">Chưa có gói bài từ giáo viên.</p>
+            {% endif %}
+        </section>
+
+        {% if item %}
         <section class="compare-grid">
             {% for answer in item.answers %}
             <article class="compare-card" data-answer-label="{{ answer.label }}">
@@ -31,12 +51,9 @@
             {% endfor %}
         </section>
 
-        <form class="app-panel compare-form" id="compareForm">
+        <form class="app-panel compare-form" id="compareForm" data-package-id="{{ item.id }}">
             <div class="panel-heading">
-                <div>
-                    <p class="eyebrow dark">Đánh giá</p>
-                    <h2>Tự nhận định và lập luận</h2>
-                </div>
+                <div><h2>Tự nhận định và lập luận</h2></div>
                 <span class="response-meta" id="compareMeta"></span>
             </div>
             <div class="choice-row">
@@ -45,11 +62,12 @@
                 {% endfor %}
             </div>
             <label class="field-label" for="compareCriteria">Vì sao em chọn câu đó?</label>
-            <textarea id="compareCriteria" rows="4" placeholder="Nêu tiêu chí của em: độ đúng, bằng chứng, cân bằng, điểm còn thiếu..."></textarea>
+            <textarea id="compareCriteria" rows="4" placeholder="Nhập lý do chọn..."></textarea>
             <label class="field-label" for="compareSynthesis">Câu trả lời em tự viết lại</label>
             <textarea id="compareSynthesis" rows="5"></textarea>
             <button class="button primary" type="submit"><i data-lucide="check"></i><span>Lưu đánh giá</span></button>
         </form>
+        {% endif %}
     </section>
 </div>
 {% endblock %}

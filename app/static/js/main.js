@@ -92,7 +92,7 @@ const countObserver = new IntersectionObserver(
 document.querySelectorAll("[data-count]").forEach((node) => countObserver.observe(node));
 
 document.querySelectorAll(".module-avatar").forEach((image) => {
-    image.addEventListener("error", () => {
+    const showModuleFallback = () => {
         image.hidden = true;
         const fallback = image.nextElementSibling;
         if (fallback?.classList.contains("module-avatar-fallback")) {
@@ -101,7 +101,28 @@ document.querySelectorAll(".module-avatar").forEach((image) => {
         if (window.lucide) {
             window.lucide.createIcons();
         }
-    });
+    };
+    image.addEventListener("error", showModuleFallback);
+    if (image.complete && image.naturalWidth === 0) {
+        showModuleFallback();
+    }
+});
+
+document.querySelectorAll(".ecosystem-image-frame img").forEach((image) => {
+    const showEcosystemFallback = () => {
+        image.hidden = true;
+        const fallback = image.nextElementSibling;
+        if (fallback?.classList.contains("ecosystem-icon-fallback")) {
+            fallback.hidden = false;
+        }
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    };
+    image.addEventListener("error", showEcosystemFallback);
+    if (image.complete && image.naturalWidth === 0) {
+        showEcosystemFallback();
+    }
 });
 
 if (document.body.classList.contains("landing-page")) {
@@ -142,7 +163,7 @@ if (typingNode) {
 
         if (index <= text.length) {
             setTimeout(typeLoop, 42);
-            return;
+            return false;
         }
 
         setTimeout(() => {
@@ -928,14 +949,268 @@ if (compareForm) {
         const selected = compareForm.querySelector('input[name="bestAnswer"]:checked').value;
         const criteria = document.getElementById("compareCriteria").value.trim();
         const synthesis = document.getElementById("compareSynthesis").value.trim();
+        const packageId = compareForm.dataset.packageId || "";
         const response = await fetch("/api/modules/compare/score", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ selected, criteria, synthesis }),
+            body: JSON.stringify({ package_id: packageId, selected, criteria, synthesis }),
         });
         const data = await response.json();
         document.getElementById("compareMeta").textContent = data.feedback || "Đã lưu bài làm.";
     });
+}
+
+const assignmentPage = document.querySelector(".assignment-page");
+if (assignmentPage && assignmentPage.dataset.taskId) {
+    const taskId = assignmentPage.dataset.taskId;
+    const consentModal = document.getElementById("assignmentConsent");
+    const acceptConsentButton = document.getElementById("acceptAssignmentConsent");
+    const assignmentForm = document.getElementById("assignmentForm");
+    const assignmentAnswer = document.getElementById("assignmentAnswer");
+    const assignmentMeta = document.getElementById("assignmentMeta");
+    const assignmentTimer = document.getElementById("assignmentTimer");
+    const assignmentTimerState = document.getElementById("assignmentTimerState");
+    const assignmentCounter = document.getElementById("assignmentCounter");
+    const assignmentResult = document.getElementById("assignmentResult");
+    const assignmentAiReview = document.getElementById("assignmentAiReview");
+    const assignmentChatbot = document.getElementById("assignmentChatbot");
+    const chatToggle = document.getElementById("assignmentChatToggle");
+    const chatClose = document.getElementById("assignmentChatClose");
+    const chatPanel = document.getElementById("assignmentChatPanel");
+    const chatForm = document.getElementById("assignmentChatForm");
+    const chatInput = document.getElementById("assignmentChatInput");
+    const chatThread = document.getElementById("assignmentChatThread");
+    const assignmentState = {
+        attemptId: "",
+        startedAt: 0,
+        timerId: null,
+        chat: [],
+    };
+    const assignmentSoftLimitSeconds = 45 * 60;
+
+    function formatAssignmentTime(seconds) {
+        const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
+        const rest = Math.floor(seconds % 60).toString().padStart(2, "0");
+        return `${minutes}:${rest}`;
+    }
+
+    function updateAssignmentTimer() {
+        if (!assignmentTimer || !assignmentState.startedAt) {
+            return;
+        }
+        const seconds = Math.max(0, Math.floor((Date.now() - assignmentState.startedAt) / 1000));
+        const ratio = Math.min(seconds / assignmentSoftLimitSeconds, 1);
+        assignmentTimer.textContent = formatAssignmentTime(seconds);
+        if (assignmentTimerState) {
+            assignmentTimerState.textContent = seconds >= assignmentSoftLimitSeconds ? "Quá mốc gợi ý" : "Mốc gợi ý 45p";
+        }
+        assignmentPage.style.setProperty("--assignment-progress", `${ratio * 100}%`);
+        assignmentTimer.closest(".assignment-timer")?.classList.toggle("warning", ratio >= 0.8);
+    }
+
+    function updateAssignmentCounter() {
+        if (!assignmentAnswer || !assignmentCounter) {
+            return;
+        }
+        const text = assignmentAnswer.value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        assignmentCounter.textContent = `${words} từ · ${assignmentAnswer.value.length} ký tự`;
+    }
+
+    function closeAssignmentChat() {
+        if (!assignmentChatbot || !chatPanel || !chatToggle) {
+            return;
+        }
+        assignmentChatbot.classList.remove("is-open");
+        assignmentPage.classList.remove("chat-open");
+        chatToggle.setAttribute("aria-expanded", "false");
+        chatToggle.innerHTML = '<i data-lucide="message-circle"></i>';
+        chatPanel.hidden = true;
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    }
+
+    function setAssignmentLocked(locked) {
+        assignmentPage.classList.toggle("is-locked", locked);
+        document.documentElement.classList.toggle("assignment-modal-open", locked);
+        if (locked) {
+            closeAssignmentChat();
+        }
+        if (assignmentForm) {
+            assignmentForm.querySelectorAll("textarea, button").forEach((node) => {
+                node.disabled = locked;
+            });
+        }
+        if (chatToggle) {
+            chatToggle.disabled = locked;
+        }
+    }
+
+    function appendAssignmentChat(role, content) {
+        const article = document.createElement("article");
+        article.className = `socratic-message ${role === "student" ? "user" : "ai"}`;
+        article.innerHTML = `<span>${role === "student" ? "HS" : "AI"}</span><p></p>`;
+        article.querySelector("p").textContent = content;
+        chatThread.appendChild(article);
+        chatThread.scrollTop = chatThread.scrollHeight;
+        assignmentState.chat.push({ role, content });
+    }
+
+    async function startAssignmentAttempt() {
+        const response = await fetch("/api/modules/assignments/start", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ task_id: taskId }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            assignmentMeta.textContent = data.error || "Không bắt đầu được phiên làm bài.";
+            return;
+        }
+        assignmentState.attemptId = data.attempt.id;
+        assignmentState.startedAt = data.attempt.started_at ? new Date(data.attempt.started_at).getTime() : Date.now();
+        updateAssignmentTimer();
+        updateAssignmentCounter();
+        assignmentState.timerId = window.setInterval(updateAssignmentTimer, 1000);
+        setAssignmentLocked(false);
+        assignmentPage.classList.add("is-consent-accepted");
+        return true;
+    }
+
+    if (assignmentPage.dataset.consent !== "yes") {
+        consentModal.hidden = false;
+        setAssignmentLocked(true);
+    } else {
+        startAssignmentAttempt();
+    }
+
+    if (acceptConsentButton) {
+        acceptConsentButton.addEventListener("click", async () => {
+            acceptConsentButton.disabled = true;
+            const response = await fetch("/api/modules/assignments/consent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ task_id: taskId }),
+            });
+            if (response.ok) {
+                await startAssignmentAttempt();
+                if (assignmentState.attemptId) {
+                    consentModal.hidden = true;
+                    consentModal.setAttribute("hidden", "");
+                } else {
+                    acceptConsentButton.disabled = false;
+                }
+            } else {
+                acceptConsentButton.disabled = false;
+            }
+        });
+    }
+
+    if (chatToggle && chatPanel) {
+        chatToggle.addEventListener("click", () => {
+            if (assignmentPage.classList.contains("is-locked")) {
+                return;
+            }
+            const willOpen = chatPanel.hidden;
+            chatPanel.hidden = false;
+            assignmentChatbot.classList.toggle("is-open", willOpen);
+            assignmentPage.classList.toggle("chat-open", willOpen);
+            chatToggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
+            chatToggle.innerHTML = `<i data-lucide="${willOpen ? "x" : "message-circle"}"></i>`;
+            if (!willOpen) {
+                chatPanel.hidden = true;
+            } else {
+                chatInput.focus();
+            }
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
+    }
+
+    if (chatClose && chatPanel) {
+        chatClose.addEventListener("click", closeAssignmentChat);
+    }
+
+    if (assignmentAnswer) {
+        updateAssignmentCounter();
+        assignmentAnswer.addEventListener("input", updateAssignmentCounter);
+    }
+
+    if (chatForm) {
+        chatForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message || !assignmentState.attemptId) {
+                return;
+            }
+            appendAssignmentChat("student", message);
+            chatInput.value = "";
+            chatInput.disabled = true;
+            const loading = document.createElement("article");
+            loading.className = "socratic-message ai loading";
+            loading.innerHTML = "<span>AI</span><p>Đang trả lời...</p>";
+            chatThread.appendChild(loading);
+
+            try {
+                const response = await fetch("/api/modules/assignments/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        task_id: taskId,
+                        attempt_id: assignmentState.attemptId,
+                        message,
+                        messages: assignmentState.chat,
+                    }),
+                });
+                const data = await response.json();
+                loading.remove();
+                appendAssignmentChat("assistant", data.answer || data.error || "AI chưa trả lời được.");
+            } catch (error) {
+                loading.remove();
+                appendAssignmentChat("assistant", `Không gửi được câu hỏi: ${error}`);
+            } finally {
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        });
+    }
+
+    if (assignmentForm) {
+        assignmentForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const answer = assignmentAnswer.value.trim();
+            const durationSeconds = assignmentState.startedAt
+                ? Math.max(0, Math.floor((Date.now() - assignmentState.startedAt) / 1000))
+                : 0;
+            assignmentMeta.textContent = "Đang nộp bài...";
+            const response = await fetch("/api/modules/assignments/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    task_id: taskId,
+                    attempt_id: assignmentState.attemptId,
+                    answer,
+                    chat: assignmentState.chat,
+                    duration_seconds: durationSeconds,
+                }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                assignmentMeta.textContent = data.error || "Không nộp được bài.";
+                return;
+            }
+            window.clearInterval(assignmentState.timerId);
+            assignmentMeta.textContent = "Đã nộp bài.";
+            assignmentAiReview.textContent = data.submission.ai_review;
+            assignmentResult.hidden = false;
+            closeAssignmentChat();
+            assignmentForm.querySelectorAll("textarea, button").forEach((node) => {
+                node.disabled = true;
+            });
+        });
+    }
 }
 
 const levelButtons = document.querySelectorAll("[data-error-level]");
@@ -1678,13 +1953,11 @@ if (finishDebateTurn) {
         if (document.getElementById("leaderboardSelf")) {
             document.getElementById("leaderboardSelf").textContent = data.rank_points;
         }
-        const rubric = [
-            ["Luận điểm", data.player.claim],
-            ["Bằng chứng", data.player.evidence],
-            ["Suy luận", data.player.reasoning],
-            ["Phản biện", data.player.counter],
-            ["Độ rõ", data.player.clarity],
-        ];
+        const playerRubric = data.rubric_scores || data.player?.rubric_scores || [];
+        const rubric = playerRubric.map((item) => [
+            item.label,
+            `${item.score}/${item.max}`,
+        ]);
         document.getElementById("debateRubric").innerHTML = rubric
             .map(([label, value]) => `<article class="rubric-item"><span>${label}</span><strong>${value}</strong></article>`)
             .join("");
@@ -1738,24 +2011,13 @@ if (profileRadar) {
     const center = 160;
     const maxRadius = 118;
     const labels = ["PT", "BC", "SL", "KN", "LL", "ĐL", "PĐ", "TĐ"];
-    const isDarkProfile = document.documentElement.classList.contains("theme-dark")
-        && !document.body.classList.contains("landing-page")
-        && !document.body.classList.contains("game-page");
-    const radarColors = isDarkProfile
-        ? {
-            ring: "rgba(212,175,92,.24)",
-            axis: "rgba(212,175,92,.2)",
-            label: "#f0d98a",
-            fill: "rgba(37,183,170,.24)",
-            stroke: "#25b7aa",
-        }
-        : {
-            ring: "rgba(102,112,133,.22)",
-            axis: "rgba(102,112,133,.18)",
-            label: "#667085",
-            fill: "rgba(79,70,229,.22)",
-            stroke: "#4f46e5",
-        };
+    const radarColors = {
+        ring: "rgba(180,122,22,.28)",
+        axis: "rgba(180,122,22,.22)",
+        label: "#8a5b16",
+        fill: "rgba(207,61,50,.16)",
+        stroke: "#cf3d32",
+    };
 
     function point(index, value) {
         const angle = -Math.PI / 2 + (Math.PI * 2 * index) / scores.length;

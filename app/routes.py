@@ -33,11 +33,45 @@ from app.services.auth_service import (
     verify_teacher,
 )
 from app.services.dashboard_service import student_dashboard, student_profile, teacher_overview
-from app.services.debate_service import DEBATE_TOPICS, RANKS, get_rank, get_topic, judge_debate
+from app.services.assignment_service import (
+    accept_consent,
+    append_chat,
+    build_assignment_chat_prompt,
+    build_assignment_review_prompt,
+    delete_task,
+    fallback_assignment_chat,
+    fallback_assignment_review,
+    format_duration,
+    get_task,
+    has_consent,
+    list_submissions as list_assignment_submissions,
+    list_tasks as list_assignment_tasks,
+    save_submission as save_assignment_submission,
+    start_attempt,
+    update_teacher_review,
+    upsert_task,
+)
+from app.services.compare_assignment_service import (
+    delete_compare_package,
+    get_compare_package,
+    list_compare_packages,
+    list_compare_submissions,
+    save_compare_submission,
+    upsert_compare_package,
+)
+from app.services.debate_config_service import (
+    allocate_debate_topic,
+    criteria_to_text,
+    debate_config,
+    delete_debate_topic,
+    get_topic,
+    update_debate_mode,
+    upsert_debate_topic,
+)
+from app.services.debate_service import RANKS, get_rank, judge_debate
 from app.services.evaluation_bank import (
     ERROR_ITEMS,
     TRUST_ITEMS,
-    get_compare_item,
     get_error_item,
     get_trust_item,
     public_error_item,
@@ -88,7 +122,6 @@ CRITIC_ASSISTANT_CHILD_SLUGS = [
 ]
 HIDDEN_STUDENT_MODULE_SLUGS = {
     "tin-hay-khong-tin",
-    "dau-truong-lap-luan",
     "con-nguoi-truoc-ai-sau",
     "ai-co-tinh-sai",
 }
@@ -101,14 +134,28 @@ CRITIC_ASSISTANT_MODULE = {
     "icon": "sparkles",
     "image": "images/modules/tro-li-phan-bien.png",
     "description": "Bộ trợ lí luyện đánh giá câu trả lời AI và viết prompt phản biện.",
-    "status": "2 công cụ",
+    "status": "4 công cụ",
     "progress": 58,
     "route_label": "Mở trợ lí",
 }
 ALLOWED_AVATAR_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 STUDENT_MODULES = [module for module in MODULES if module["slug"] != TEACHER_MODULE_SLUG]
+
+
+def _module_with_existing_image(module):
+    if not module:
+        return None
+    item = dict(module)
+    image = item.get("image")
+    if image:
+        image_path = os.path.join(os.path.dirname(__file__), "static", image.replace("/", os.sep))
+        if not os.path.exists(image_path):
+            item["image"] = None
+    return item
+
+
 CRITIC_ASSISTANT_CHILD_MODULES = [
-    {**get_module(slug), "number": f"{index:02d}"}
+    {**_module_with_existing_image(get_module(slug)), "number": f"{index:02d}"}
     for index, slug in enumerate(CRITIC_ASSISTANT_CHILD_SLUGS, start=1)
     if get_module(slug)
 ]
@@ -116,9 +163,16 @@ _DISPLAY_MODULES = []
 for module in STUDENT_MODULES:
     if module["slug"] in CRITIC_ASSISTANT_CHILD_SLUGS or module["slug"] in HIDDEN_STUDENT_MODULE_SLUGS:
         continue
-    _DISPLAY_MODULES.append(module)
+    _DISPLAY_MODULES.append(_module_with_existing_image(module))
     if module["slug"] == "chatbot-socratic":
-        _DISPLAY_MODULES.append(CRITIC_ASSISTANT_MODULE)
+        _DISPLAY_MODULES.append(_module_with_existing_image(CRITIC_ASSISTANT_MODULE))
+_DISPLAY_MODULES.sort(
+    key=lambda module: {
+        "tro-li-phan-bien": 0,
+        "nhiem-vu": 1,
+        "chatbot-socratic": 2,
+    }.get(module["slug"], 10)
+)
 STUDENT_NAV_MODULES = [{**module, "number": f"{index:02d}"} for index, module in enumerate(_DISPLAY_MODULES, start=1)]
 STUDENT_AREA_SUMMARY = [
     {
@@ -235,6 +289,8 @@ def _login_destination(role):
         "teacher": ("/teacher",),
         "admin": ("/admin",),
     }
+    if role == "student":
+        return default_paths["student"]
     if next_path.startswith("/") and not next_path.startswith("//"):
         if any(next_path.startswith(prefix) for prefix in allowed_prefixes.get(role, ())):
             return next_path
@@ -249,26 +305,15 @@ def landing():
 @main_bp.get("/start")
 def start_learning():
     student = get_student(session.get("student_username")) if session.get("role") == "student" else None
-    if not student:
-        _start_guest_session()
-    return redirect(url_for("main.app_home"))
+    if student and not session.get("student_guest"):
+        return redirect(url_for("main.app_home"))
+    return redirect(url_for("main.login", role="student", next=url_for("main.app_home")))
 
 
 @main_bp.get("/app")
 @student_required
 def app_home():
-    critic_assistant = next(module for module in STUDENT_NAV_MODULES if module["slug"] == CRITIC_ASSISTANT_SLUG)
-    recommended = [STUDENT_NAV_MODULES[0], critic_assistant, STUDENT_NAV_MODULES[1]]
-    username = session.get("student_username")
-    return render_template(
-        "pages/app_home.html",
-        modules=STUDENT_NAV_MODULES,
-        areas=STUDENT_AREA_SUMMARY,
-        recommended=recommended,
-        student=get_student(username),
-        dashboard=student_dashboard(username),
-        is_guest=session.get("student_guest", False),
-    )
+    return render_template("pages/landing.html", modules=STUDENT_NAV_MODULES)
 
 
 def _debate_view_context(**extra):
@@ -289,7 +334,7 @@ def _debate_view_context(**extra):
     context = {
         "module": module,
         "modules": STUDENT_NAV_MODULES,
-        "topics": DEBATE_TOPICS,
+        "topics": debate_config()["topics"],
         "ranks": RANKS,
         "rank": current_rank,
         "next_rank": next_rank,
@@ -304,13 +349,15 @@ def _debate_view_context(**extra):
 @main_bp.get("/app/modules/dau-truong-lap-luan/matching")
 @student_required
 def debate_matching():
-    return render_template("pages/debate_matching.html", **_debate_view_context())
+    topic_index, _topic = allocate_debate_topic()
+    return render_template("pages/debate_matching.html", **_debate_view_context(topic_index=topic_index))
 
 
 @main_bp.get("/app/modules/dau-truong-lap-luan/room-matching")
 @student_required
 def debate_room_matching():
-    return render_template("pages/debate_room_matching.html", **_debate_view_context())
+    topic_index, _topic = allocate_debate_topic()
+    return render_template("pages/debate_room_matching.html", **_debate_view_context(topic_index=topic_index))
 
 
 @main_bp.get("/app/modules/dau-truong-lap-luan/room-battle")
@@ -355,6 +402,23 @@ def debate_result_page():
     if not result:
         return redirect(url_for("main.module_detail", slug="dau-truong-lap-luan"))
     return render_template("pages/debate_result_page.html", **_debate_view_context(result=result))
+
+
+@main_bp.get("/app/modules/nhiem-vu/tasks/<task_id>")
+@student_required
+def assignment_work(task_id):
+    module = get_module("nhiem-vu")
+    task = get_task(task_id, active_only=True)
+    if not task:
+        return redirect(url_for("main.module_detail", slug="nhiem-vu"))
+    username = session.get("student_username")
+    return render_template(
+        "pages/assignment_work.html",
+        module=module,
+        modules=STUDENT_NAV_MODULES,
+        task=task,
+        consent_accepted=has_consent(username, task["id"]),
+    )
 
 
 @main_bp.get("/app/modules/<slug>")
@@ -410,11 +474,23 @@ def module_detail(slug):
             item_count=len(TRUST_ITEMS),
         )
     if slug == "so-sanh-ba-cau-tra-loi":
+        packages = list_compare_packages(active_only=True)
         return render_template(
             "pages/compare_answers.html",
             module=module,
             modules=STUDENT_NAV_MODULES,
-            item=get_compare_item(0),
+            packages=packages,
+            item=get_compare_package(request.args.get("package")),
+        )
+    if slug == "nhiem-vu":
+        if request.args.get("task"):
+            return redirect(url_for("main.assignment_work", task_id=request.args.get("task")))
+        tasks = list_assignment_tasks(active_only=True)
+        return render_template(
+            "pages/assignments.html",
+            module=module,
+            modules=STUDENT_NAV_MODULES,
+            tasks=tasks,
         )
     if slug == "ai-co-tinh-sai":
         return render_template(
@@ -579,13 +655,105 @@ def teacher_logout():
 @teacher_required
 def teacher_dashboard():
     username = session.get("teacher_username")
+    config = debate_config()
     return render_template(
         "pages/teacher_dashboard.html",
         modules=MODULES,
         overview=teacher_overview(),
         teacher=get_teacher(username),
         reports=reports_for_teacher(username),
+        debate_config=config,
+        criteria_to_text=criteria_to_text,
+        compare_packages=list_compare_packages(),
+        compare_submissions=list_compare_submissions(),
+        assignment_tasks=list_assignment_tasks(),
+        assignment_submissions=list_assignment_submissions(),
+        format_duration=format_duration,
     )
+
+
+@main_bp.post("/teacher/debate/mode")
+@teacher_required
+def teacher_debate_mode():
+    update_debate_mode(
+        request.form.get("mode", "random"),
+        fixed_topic_id=request.form.get("fixed_topic_id"),
+    )
+    return redirect(url_for("main.teacher_dashboard") + "#teacherDebate")
+
+
+@main_bp.post("/teacher/debate/topics")
+@teacher_required
+def teacher_debate_topic_save():
+    try:
+        upsert_debate_topic(request.form)
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherDebate")
+
+
+@main_bp.post("/teacher/debate/topics/<topic_id>/delete")
+@teacher_required
+def teacher_debate_topic_delete(topic_id):
+    try:
+        delete_debate_topic(topic_id)
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherDebate")
+
+
+@main_bp.post("/teacher/compare/packages")
+@teacher_required
+def teacher_compare_package_save():
+    try:
+        upsert_compare_package(request.form, get_teacher(session.get("teacher_username")))
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherCompare")
+
+
+@main_bp.post("/teacher/compare/packages/<package_id>/delete")
+@teacher_required
+def teacher_compare_package_delete(package_id):
+    try:
+        delete_compare_package(package_id)
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherCompare")
+
+
+@main_bp.post("/teacher/assignments/tasks")
+@teacher_required
+def teacher_assignment_task_save():
+    try:
+        upsert_task(request.form, get_teacher(session.get("teacher_username")))
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherAssignments")
+
+
+@main_bp.post("/teacher/assignments/tasks/<task_id>/delete")
+@teacher_required
+def teacher_assignment_task_delete(task_id):
+    try:
+        delete_task(task_id)
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherAssignments")
+
+
+@main_bp.post("/teacher/assignments/submissions/<submission_id>/review")
+@teacher_required
+def teacher_assignment_submission_review(submission_id):
+    try:
+        update_teacher_review(
+            submission_id,
+            score=request.form.get("teacher_score"),
+            review=request.form.get("teacher_review"),
+        )
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_dashboard") + "#teacherAssignmentSubmissions")
 
 
 @main_bp.route("/admin/login", methods=["GET", "POST"])
@@ -851,6 +1019,115 @@ def reflection_draft():
     return jsonify({"ok": True, "draft": draft, "meta": meta})
 
 
+@main_bp.post("/api/modules/assignments/consent")
+@student_required
+def assignment_consent():
+    payload = request.json or {}
+    task = get_task(payload.get("task_id"), active_only=True)
+    if not task:
+        return jsonify({"error": "Không tìm thấy nhiệm vụ."}), 404
+    accept_consent(session.get("student_username"), task["id"])
+    return jsonify({"ok": True})
+
+
+@main_bp.post("/api/modules/assignments/start")
+@student_required
+def assignment_start():
+    payload = request.json or {}
+    task = get_task(payload.get("task_id"), active_only=True)
+    if not task:
+        return jsonify({"error": "Không tìm thấy nhiệm vụ."}), 404
+    username = session.get("student_username")
+    if not has_consent(username, task["id"]):
+        return jsonify({"error": "Bạn cần chấp nhận điều khoản giám sát trước khi làm bài."}), 403
+    attempt = start_attempt(get_student(username), task)
+    record_student_activity(username, "nhiem-vu", "start", payload={"task_id": task["id"], "attempt_id": attempt["id"]})
+    return jsonify({"ok": True, "attempt": attempt})
+
+
+@main_bp.post("/api/modules/assignments/chat")
+@student_required
+def assignment_chat():
+    payload = request.json or {}
+    task = get_task(payload.get("task_id"), active_only=True)
+    attempt_id = str(payload.get("attempt_id") or "").strip()
+    question = str(payload.get("message") or "").strip()
+    messages = payload.get("messages") or []
+    if not task:
+        return jsonify({"error": "Không tìm thấy nhiệm vụ."}), 404
+    if not attempt_id:
+        return jsonify({"error": "Thiếu phiên làm bài."}), 400
+    if not question:
+        return jsonify({"error": "Nhập câu hỏi trước khi gửi."}), 400
+
+    try:
+        append_chat(attempt_id, "student", question)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 404
+
+    answer = fallback_assignment_chat(task, question)
+    meta = {"model": "fallback", "key_label": "fallback"}
+    try:
+        client = GeminiClient.from_app_config(current_app.config)
+        result = client.generate_text(build_assignment_chat_prompt(task, messages))
+        answer = result.text
+        meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
+    except GeminiClientError:
+        pass
+
+    append_chat(attempt_id, "assistant", answer)
+    record_student_activity(
+        session.get("student_username"),
+        "nhiem-vu",
+        "assignment_chat",
+        payload={"task_id": task["id"], "attempt_id": attempt_id},
+    )
+    return jsonify({"ok": True, "answer": answer, "meta": meta})
+
+
+@main_bp.post("/api/modules/assignments/submit")
+@student_required
+def assignment_submit():
+    payload = request.json or {}
+    task = get_task(payload.get("task_id"), active_only=True)
+    attempt_id = str(payload.get("attempt_id") or "").strip()
+    answer = str(payload.get("answer") or "").strip()
+    chat_log = payload.get("chat") or []
+    if not task:
+        return jsonify({"error": "Không tìm thấy nhiệm vụ."}), 404
+    if not has_consent(session.get("student_username"), task["id"]):
+        return jsonify({"error": "Bạn cần chấp nhận điều khoản giám sát trước khi nộp bài."}), 403
+    if len(answer) < 20:
+        return jsonify({"error": "Bài làm cần dài hơn một chút trước khi nộp."}), 400
+
+    duration_label = format_duration(payload.get("duration_seconds"))
+    ai_review = fallback_assignment_review(task, answer, chat_log, duration_label)
+    ai_meta = {"model": "fallback", "key_label": "fallback"}
+    try:
+        client = GeminiClient.from_app_config(current_app.config)
+        result = client.generate_text(build_assignment_review_prompt(task, answer, chat_log, duration_label))
+        ai_review = result.text
+        ai_meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
+    except GeminiClientError:
+        pass
+
+    submission = save_assignment_submission(
+        get_student(session.get("student_username")),
+        task,
+        attempt_id,
+        answer,
+        ai_review,
+        ai_meta,
+    )
+    record_student_activity(
+        session.get("student_username"),
+        "nhiem-vu",
+        "submit",
+        payload={"task_id": task["id"], "submission_id": submission["id"]},
+    )
+    return jsonify({"ok": True, "submission": submission})
+
+
 @main_bp.get("/api/modules/trust/item")
 @student_required
 def trust_item():
@@ -886,7 +1163,9 @@ def trust_score():
 @student_required
 def compare_score():
     payload = request.json or {}
-    item = get_compare_item(0)
+    item = get_compare_package(payload.get("package_id"))
+    if not item:
+        return jsonify({"error": "Chưa có gói bài để nộp."}), 404
     selected = str(payload.get("selected") or "").strip().upper()
     criteria = str(payload.get("criteria") or "").strip()
     synthesis = str(payload.get("synthesis") or "").strip()
@@ -895,7 +1174,28 @@ def compare_score():
     synthesis_points = min(40, len(synthesis) // 10)
     score = (30 if correct else 0) + criteria_points + synthesis_points
     final_score = min(score, 100)
-    record_student_activity(session.get("student_username"), "so-sanh-ba-cau-tra-loi", "score", score=final_score)
+    student = get_student(session.get("student_username"))
+    submission = save_compare_submission(
+        student,
+        item,
+        selected,
+        criteria,
+        synthesis,
+        final_score,
+        correct,
+    )
+    record_student_activity(
+        session.get("student_username"),
+        "so-sanh-ba-cau-tra-loi",
+        "score",
+        score=final_score,
+        payload={
+            "package_id": item["id"],
+            "package_title": item["title"],
+            "submission_id": submission["id"] if submission else "",
+            "selected": selected,
+        },
+    )
     return jsonify(
         {
             "correct": correct,
@@ -989,8 +1289,9 @@ def argument_map_score():
 @main_bp.get("/api/modules/debate/topic")
 @student_required
 def debate_topic():
+    config = debate_config()
     topic = get_topic(request.args.get("index", 0))
-    return jsonify({"topic": topic, "total": len(DEBATE_TOPICS)})
+    return jsonify({"topic": topic, "total": len(config["topics"])})
 
 
 @main_bp.post("/api/modules/debate/judge")

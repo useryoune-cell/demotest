@@ -62,7 +62,7 @@
                 <p class="hint-text" id="humanQuestionHint" hidden>{{ questions[0].hint }}</p>
 
                 <label class="field-label" for="humanAnswer">Trả lời trước khi xem AI</label>
-                <textarea id="humanAnswer" rows="8" placeholder="Câu trả lời của em..."></textarea>
+                <textarea id="humanAnswer" rows="8" placeholder="Nhập câu trả lời..."></textarea>
 
                 <div class="confidence-row">
                     <label for="humanConfidence">Mức độ chắc chắn</label>
@@ -111,7 +111,7 @@
                 </button>
             </div>
             <label class="field-label" for="decisionReason">Lý do</label>
-            <textarea id="decisionReason" rows="4" placeholder="Lý do..."></textarea>
+            <textarea id="decisionReason" rows="4" placeholder="Nhập lý do..."></textarea>
             <a class="button primary" id="goReflectionLink" href="{{ url_for('main.module_detail', slug='nhat-ky-phan-tu-ai') }}">
                 <i data-lucide="book-open-check"></i>
                 <span>Hoàn thành & phản tư</span>

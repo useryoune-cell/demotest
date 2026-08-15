@@ -8,6 +8,8 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
     DATA_DIR = os.getenv("DATA_DIR", os.path.join(os.getcwd(), "instance"))
+    SEND_FILE_MAX_AGE_DEFAULT = 0
+    TEMPLATES_AUTO_RELOAD = True
     GEMINI_API_KEYS = [
         key.strip()
         for key in os.getenv("GEMINI_API_KEYS", "").split(",")

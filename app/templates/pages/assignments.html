@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Nhiệm vụ · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content assignment-list-page">
+        <div class="module-detail-hero">
+            <div>
+                <h1>{{ module.title }}</h1>
+            </div>
+        </div>
+
+        <section class="assignment-task-grid" aria-label="Danh sách nhiệm vụ">
+            {% if tasks %}
+                {% for task in tasks %}
+                <a class="assignment-task-box" href="{{ url_for('main.assignment_work', task_id=task.id) }}">
+                    <span class="assignment-task-icon"><i data-lucide="clipboard-check"></i></span>
+                    <strong>{{ task.title }}</strong>
+                    <em>{{ task.teacher_name }}</em>
+                    <p>{{ task.prompt|truncate(140) }}</p>
+                    <span class="assignment-task-action">Vào làm bài <i data-lucide="arrow-right"></i></span>
+                </a>
+                {% endfor %}
+            {% else %}
+                <article class="app-panel assignment-empty">
+                    <i data-lucide="clipboard-x"></i>
+                    <h2>Chưa có nhiệm vụ đang mở</h2>
+                </article>
+            {% endif %}
+        </section>
+    </section>
+</div>
+{% endblock %}

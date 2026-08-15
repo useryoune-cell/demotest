@@ -47,10 +47,13 @@ def get_rank(points):
     return current
 
 
-def score_argument(text):
+def score_argument(text, criteria=None):
     text = str(text or "").strip()
     lowered = _normalize(text)
     words = [word for word in text.split() if word.strip()]
+
+    if criteria:
+        return _score_by_teacher_criteria(lowered, words, criteria)
 
     claim = min(25, max(0, len(words) // 2))
     evidence_keywords = [
@@ -72,6 +75,13 @@ def score_argument(text):
     counter = min(20, sum(1 for keyword in counter_keywords if keyword in lowered) * 6)
     clarity = min(10, len(words) // 5)
 
+    rubric_scores = [
+        {"label": "Luận điểm", "score": claim, "max": 25},
+        {"label": "Bằng chứng", "score": evidence, "max": 25},
+        {"label": "Suy luận", "score": reasoning, "max": 25},
+        {"label": "Phản biện", "score": counter, "max": 20},
+        {"label": "Độ rõ", "score": clarity, "max": 10},
+    ]
     total = min(100, claim + evidence + reasoning + counter + clarity)
     return {
         "total": total,
@@ -80,6 +90,42 @@ def score_argument(text):
         "reasoning": reasoning,
         "counter": counter,
         "clarity": clarity,
+        "rubric_scores": rubric_scores,
+    }
+
+
+def _score_by_teacher_criteria(lowered, words, criteria):
+    rubric_scores = []
+    raw_total = 0
+    max_total = 0
+    for item in criteria:
+        label = str(item.get("label") or "").strip() or "Tiêu chí"
+        try:
+            max_points = int(item.get("max", 10))
+        except (TypeError, ValueError):
+            max_points = 10
+        max_points = max(1, max_points)
+        keywords = [
+            _normalize(keyword)
+            for keyword in (item.get("keywords") or [])
+            if str(keyword or "").strip()
+        ]
+        keyword_score = sum(1 for keyword in keywords if keyword in lowered) * max(2, max_points // 4)
+        length_score = min(max_points, max(0, len(words) // 8))
+        score = min(max_points, keyword_score + length_score)
+        rubric_scores.append({"label": label, "score": score, "max": max_points})
+        raw_total += score
+        max_total += max_points
+
+    total = round((raw_total / max_total) * 100) if max_total else 0
+    return {
+        "total": min(100, total),
+        "claim": rubric_scores[0]["score"] if len(rubric_scores) > 0 else 0,
+        "evidence": rubric_scores[1]["score"] if len(rubric_scores) > 1 else 0,
+        "reasoning": rubric_scores[2]["score"] if len(rubric_scores) > 2 else 0,
+        "counter": rubric_scores[3]["score"] if len(rubric_scores) > 3 else 0,
+        "clarity": rubric_scores[4]["score"] if len(rubric_scores) > 4 else 0,
+        "rubric_scores": rubric_scores,
     }
 
 
@@ -90,9 +136,10 @@ def _normalize(value):
 
 
 def judge_debate(topic, player_argument, opponent_argument="", mode="solo"):
-    player = score_argument(player_argument)
+    criteria = topic.get("criteria") or []
+    player = score_argument(player_argument, criteria=criteria)
     opponent_text = opponent_argument or _sample_opponent_argument(topic)
-    opponent = score_argument(opponent_text)
+    opponent = score_argument(opponent_text, criteria=criteria)
 
     if player["total"] == opponent["total"]:
         winner = "draw"
@@ -113,6 +160,8 @@ def judge_debate(topic, player_argument, opponent_argument="", mode="solo"):
         "winner": winner,
         "rank_delta": delta,
         "feedback": _feedback(player, opponent, winner),
+        "criteria": criteria,
+        "rubric_scores": player.get("rubric_scores", []),
     }
 
 
@@ -132,14 +181,9 @@ def _feedback(player, opponent, winner):
     else:
         result = "Hai bên hòa; lập luận có chất lượng tương đương."
 
+    rubric_scores = player.get("rubric_scores") or []
     weakest = min(
-        [
-            ("luận điểm", player["claim"]),
-            ("bằng chứng", player["evidence"]),
-            ("liên kết suy luận", player["reasoning"]),
-            ("xem xét phản biện", player["counter"]),
-            ("độ rõ", player["clarity"]),
-        ],
+        [(item.get("label", "tiêu chí"), item.get("score", 0)) for item in rubric_scores],
         key=lambda item: item[1],
-    )[0]
+    )[0] if rubric_scores else "lập luận"
     return f"{result} Điểm cần cải thiện nhất: {weakest}."
