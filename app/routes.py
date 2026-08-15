@@ -79,14 +79,6 @@ from app.services.evaluation_bank import (
     public_trust_item,
     score_trust,
 )
-from app.services.game_bank import (
-    ARGUMENT_MAP,
-    DETECTIVE_STATIONS,
-    get_detective_station,
-    public_station,
-    score_argument_map,
-    score_detective,
-)
 from app.services.gemini_client import GeminiClient, GeminiClientError
 from app.services.human_first_service import (
     HUMAN_FIRST_QUESTIONS,
@@ -102,6 +94,21 @@ from app.services.reflection_store import (
     recent_reflections,
     save_reflection,
     transfer_reflections,
+)
+from app.services.teacher_content_service import (
+    ARGUMENT_BUCKETS,
+    delete_argument_package,
+    delete_detective_case,
+    get_argument_package,
+    get_detective_case,
+    list_argument_packages,
+    list_detective_cases,
+    pieces_to_text,
+    public_detective_case,
+    score_argument_package,
+    score_detective_case,
+    upsert_argument_package,
+    upsert_detective_case,
 )
 from app.services.student_store import record_student_activity, student_activities, transfer_student_activity
 from app.services.socratic_service import (
@@ -120,6 +127,8 @@ CRITIC_ASSISTANT_SLUG = "tro-li-phan-bien"
 TEACHER_PAGES = {
     "overview": {"label": "Tổng quan", "icon": "layout-dashboard"},
     "debate": {"label": "Đấu trường", "icon": "swords"},
+    "detective": {"label": "Thám tử AI", "icon": "map"},
+    "argument": {"label": "Bản đồ lập luận", "icon": "workflow"},
     "compare": {"label": "So sánh AI", "icon": "copy-check"},
     "assignments": {"label": "Nhiệm vụ", "icon": "clipboard-check"},
     "submissions": {"label": "Bài nộp", "icon": "shield-check"},
@@ -431,6 +440,21 @@ def assignment_work(task_id):
     )
 
 
+@main_bp.get("/app/modules/ban-do-lap-luan/maps/<map_id>")
+@student_required
+def argument_map_work(map_id):
+    module = get_module("ban-do-lap-luan")
+    argument_map = get_argument_package(map_id, active_only=True)
+    if not argument_map:
+        return redirect(url_for("main.module_detail", slug="ban-do-lap-luan"))
+    return render_template(
+        "pages/argument_map.html",
+        module=module,
+        modules=STUDENT_NAV_MODULES,
+        argument_map={**argument_map, "buckets": ARGUMENT_BUCKETS},
+    )
+
+
 @main_bp.get("/app/modules/<slug>")
 @student_required
 def module_detail(slug):
@@ -511,19 +535,23 @@ def module_detail(slug):
             item=get_error_item(1),
         )
     if slug == "tham-tu-ai":
+        stations = list_detective_cases(active_only=True)
+        station = get_detective_case(active_only=True)
         return render_template(
             "pages/ai_detective.html",
             module=module,
             modules=STUDENT_NAV_MODULES,
-            stations=DETECTIVE_STATIONS,
-            station=get_detective_station("A"),
+            stations=stations,
+            station=station,
         )
     if slug == "ban-do-lap-luan":
+        if request.args.get("map"):
+            return redirect(url_for("main.argument_map_work", map_id=request.args.get("map")))
         return render_template(
-            "pages/argument_map.html",
+            "pages/argument_packages.html",
             module=module,
             modules=STUDENT_NAV_MODULES,
-            argument_map=ARGUMENT_MAP,
+            packages=list_argument_packages(active_only=True),
         )
     if slug == "dau-truong-lap-luan":
         return render_template(
@@ -686,6 +714,10 @@ def teacher_page(page):
         criteria_to_text=criteria_to_text,
         compare_packages=list_compare_packages(),
         compare_submissions=list_compare_submissions(),
+        argument_packages=list_argument_packages(),
+        argument_buckets=ARGUMENT_BUCKETS,
+        pieces_to_text=pieces_to_text,
+        detective_cases=list_detective_cases(),
         assignment_tasks=list_assignment_tasks(),
         assignment_submissions=list_assignment_submissions(),
         format_duration=format_duration,
@@ -720,6 +752,40 @@ def teacher_debate_topic_delete(topic_id):
     except ValueError:
         pass
     return redirect(url_for("main.teacher_page", page="debate"))
+
+
+@main_bp.post("/teacher/detective/cases")
+@teacher_required
+def teacher_detective_case_save():
+    try:
+        upsert_detective_case(request.form, get_teacher(session.get("teacher_username")))
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_page", page="detective"))
+
+
+@main_bp.post("/teacher/detective/cases/<case_id>/delete")
+@teacher_required
+def teacher_detective_case_delete(case_id):
+    delete_detective_case(case_id)
+    return redirect(url_for("main.teacher_page", page="detective"))
+
+
+@main_bp.post("/teacher/argument/packages")
+@teacher_required
+def teacher_argument_package_save():
+    try:
+        upsert_argument_package(request.form, get_teacher(session.get("teacher_username")))
+    except ValueError:
+        pass
+    return redirect(url_for("main.teacher_page", page="argument"))
+
+
+@main_bp.post("/teacher/argument/packages/<package_id>/delete")
+@teacher_required
+def teacher_argument_package_delete(package_id):
+    delete_argument_package(package_id)
+    return redirect(url_for("main.teacher_page", page="argument"))
 
 
 @main_bp.post("/teacher/compare/packages")
@@ -1273,15 +1339,17 @@ def error_score():
 @student_required
 def detective_station():
     code = request.args.get("code", "A")
-    station = get_detective_station(code)
-    return jsonify({"station": public_station(station)})
+    station = get_detective_case(code, active_only=True)
+    if not station:
+        return jsonify({"error": "Chưa có vụ án đang mở."}), 404
+    return jsonify({"station": public_detective_case(station)})
 
 
 @main_bp.post("/api/modules/detective/score")
 @student_required
 def detective_score():
     payload = request.json or {}
-    result = score_detective(
+    result = score_detective_case(
         code=payload.get("code", "A"),
         suspicious_text=payload.get("suspicious_text", ""),
         error_type=payload.get("error_type", ""),
@@ -1296,14 +1364,14 @@ def detective_score():
 @main_bp.get("/api/modules/argument-map")
 @student_required
 def argument_map_item():
-    return jsonify({"argument_map": ARGUMENT_MAP})
+    return jsonify({"argument_map": get_argument_package(active_only=True)})
 
 
 @main_bp.post("/api/modules/argument-map/score")
 @student_required
 def argument_map_score():
     payload = request.json or {}
-    result = score_argument_map(payload.get("placements") or {})
+    result = score_argument_package(payload.get("map_id"), payload.get("placements") or {})
     record_student_activity(session.get("student_username"), "ban-do-lap-luan", "score", score=result.get("score"))
     return jsonify(result)
 

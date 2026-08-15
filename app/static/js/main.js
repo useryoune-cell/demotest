@@ -1402,6 +1402,7 @@ bucketDropzones.forEach((zone) => {
 
 if (scoreArgumentMap) {
     scoreArgumentMap.addEventListener("click", async () => {
+        const workspace = document.querySelector(".argument-workspace");
         const placements = {};
         document.querySelectorAll(".argument-bucket").forEach((bucket) => {
             const bucketKey = bucket.dataset.bucketKey;
@@ -1412,7 +1413,7 @@ if (scoreArgumentMap) {
         const response = await fetch("/api/modules/argument-map/score", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ placements }),
+            body: JSON.stringify({ map_id: workspace?.dataset.mapId || "", placements }),
         });
         const data = await response.json();
         const passed = data.score >= 80;

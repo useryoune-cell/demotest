@@ -23,6 +23,10 @@
             <a class="button primary" href="#newComparePackage"><i data-lucide="plus"></i><span>Tạo gói</span></a>
             {% elif teacher_page == "debate" %}
             <a class="button primary" href="#newDebateTopic"><i data-lucide="plus"></i><span>Tạo chủ đề</span></a>
+            {% elif teacher_page == "detective" %}
+            <a class="button primary" href="#newDetectiveCase"><i data-lucide="plus"></i><span>Tạo vụ án</span></a>
+            {% elif teacher_page == "argument" %}
+            <a class="button primary" href="#newArgumentPackage"><i data-lucide="plus"></i><span>Tạo gói</span></a>
             {% endif %}
         </div>
 
@@ -120,6 +124,104 @@
                     <button class="button primary" type="submit"><i data-lucide="plus"></i><span>Lưu</span></button>
                 </form>
             </details>
+        </section>
+        {% endif %}
+
+        {% if teacher_page == "detective" %}
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Dữ kiện Thám tử AI</h2></div></div>
+            <details class="teacher-topic-add" id="newDetectiveCase">
+                <summary><i data-lucide="plus"></i><span>Thêm vụ án</span></summary>
+                <form class="admin-form teacher-topic-new" method="post" action="{{ url_for('main.teacher_detective_case_save') }}">
+                    <div class="topic-side-grid">
+                        <input name="code" placeholder="Mã trạm, ví dụ C" required>
+                        <input name="title" placeholder="Tên lỗi" required>
+                    </div>
+                    <input name="task" placeholder="Nhiệm vụ học sinh cần làm" required>
+                    <textarea name="text" rows="4" placeholder="Câu trả lời AI có lỗi" required></textarea>
+                    <div class="topic-side-grid">
+                        <input name="error_type" placeholder="Loại lỗi" required>
+                        <input name="suspicious_text" placeholder="Đoạn đáng nghi" required>
+                    </div>
+                    <textarea name="evidence" rows="3" placeholder="Bằng chứng/nguồn kiểm chứng" required></textarea>
+                    <textarea name="rewrite" rows="3" placeholder="Gợi ý viết lại đúng hơn" required></textarea>
+                    <label class="compare-active-check"><input type="checkbox" name="active" checked> Đang mở</label>
+                    <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu vụ án</span></button>
+                </form>
+            </details>
+
+            <div class="teacher-topic-list">
+                {% for case in detective_cases %}
+                <article class="teacher-topic-card">
+                    <details class="teacher-topic-editor">
+                        <summary><span>{{ case.code }}</span><strong>{{ case.title }}</strong><em>{{ "Đang mở" if case.active else "Đã ẩn" }}</em></summary>
+                        <form class="admin-form" method="post" action="{{ url_for('main.teacher_detective_case_save') }}">
+                            <input type="hidden" name="case_id" value="{{ case.id }}">
+                            <div class="topic-side-grid">
+                                <input name="code" value="{{ case.code }}" required>
+                                <input name="title" value="{{ case.title }}" required>
+                            </div>
+                            <input name="task" value="{{ case.task }}" required>
+                            <textarea name="text" rows="4" required>{{ case.text }}</textarea>
+                            <div class="topic-side-grid">
+                                <input name="error_type" value="{{ case.error_type }}" required>
+                                <input name="suspicious_text" value="{{ case.suspicious_text }}" required>
+                            </div>
+                            <textarea name="evidence" rows="3" required>{{ case.evidence }}</textarea>
+                            <textarea name="rewrite" rows="3" required>{{ case.rewrite }}</textarea>
+                            <label class="compare-active-check"><input type="checkbox" name="active" {% if case.active %}checked{% endif %}> Đang mở</label>
+                            <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu</span></button>
+                        </form>
+                        <form method="post" action="{{ url_for('main.teacher_detective_case_delete', case_id=case.id) }}">
+                            <button class="button secondary" type="submit"><i data-lucide="trash-2"></i><span>Xóa</span></button>
+                        </form>
+                    </details>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if teacher_page == "argument" %}
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Gói câu hỏi Bản đồ lập luận</h2></div></div>
+            <details class="teacher-topic-add" id="newArgumentPackage">
+                <summary><i data-lucide="plus"></i><span>Thêm gói bản đồ</span></summary>
+                <form class="admin-form teacher-topic-new" method="post" action="{{ url_for('main.teacher_argument_package_save') }}">
+                    <input name="title" placeholder="Tên gói" required>
+                    <textarea name="question" rows="2" placeholder="Câu hỏi trung tâm" required></textarea>
+                    <textarea name="source_text" rows="4" placeholder="Đoạn văn nguồn" required></textarea>
+                    <textarea name="pieces" rows="7" placeholder="Mỗi dòng: nội dung mảnh|claim/evidence/assumption/counter/conclusion" required></textarea>
+                    <label class="compare-active-check"><input type="checkbox" name="active" checked> Đang mở</label>
+                    <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu gói</span></button>
+                </form>
+            </details>
+
+            <div class="review-list">
+                <article><span>Nhóm phân loại</span><strong>{% for bucket in argument_buckets %}{{ bucket.key }} = {{ bucket.label }}{% if not loop.last %} · {% endif %}{% endfor %}</strong></article>
+            </div>
+
+            <div class="teacher-topic-list">
+                {% for package in argument_packages %}
+                <article class="teacher-topic-card">
+                    <details class="teacher-topic-editor">
+                        <summary><span>{{ "Đang mở" if package.active else "Đã ẩn" }}</span><strong>{{ package.title }}</strong><em>{{ package.teacher_name }}</em></summary>
+                        <form class="admin-form" method="post" action="{{ url_for('main.teacher_argument_package_save') }}">
+                            <input type="hidden" name="package_id" value="{{ package.id }}">
+                            <input name="title" value="{{ package.title }}" required>
+                            <textarea name="question" rows="2" required>{{ package.question }}</textarea>
+                            <textarea name="source_text" rows="4" required>{{ package.source_text }}</textarea>
+                            <textarea name="pieces" rows="7" required>{{ pieces_to_text(package.pieces) }}</textarea>
+                            <label class="compare-active-check"><input type="checkbox" name="active" {% if package.active %}checked{% endif %}> Đang mở</label>
+                            <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu</span></button>
+                        </form>
+                        <form method="post" action="{{ url_for('main.teacher_argument_package_delete', package_id=package.id) }}">
+                            <button class="button secondary" type="submit"><i data-lucide="trash-2"></i><span>Xóa</span></button>
+                        </form>
+                    </details>
+                </article>
+                {% endfor %}
+            </div>
         </section>
         {% endif %}
 

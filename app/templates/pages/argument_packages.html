@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Bản đồ lập luận · AI Critical Thinking Lab{% endblock %}
+
+{% block content %}
+<div class="app-shell module-shell">
+    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
+        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
+        {% for nav_item in modules %}
+        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+        </a>
+        {% endfor %}
+    </aside>
+
+    <section class="app-content assignment-list-page">
+        <div class="module-detail-hero">
+            <div><h1>{{ module.title }}</h1></div>
+        </div>
+
+        <section class="assignment-task-grid" aria-label="Danh sách gói bản đồ lập luận">
+            {% if packages %}
+                {% for package in packages %}
+                <a class="assignment-task-box" href="{{ url_for('main.argument_map_work', map_id=package.id) }}">
+                    <span class="assignment-task-icon"><i data-lucide="workflow"></i></span>
+                    <strong>{{ package.title }}</strong>
+                    <em>{{ package.teacher_name }}</em>
+                    <p>{{ package.question|truncate(140) }}</p>
+                    <span class="assignment-task-action">Vào phân loại <i data-lucide="arrow-right"></i></span>
+                </a>
+                {% endfor %}
+            {% else %}
+                <article class="app-panel assignment-empty">
+                    <i data-lucide="workflow"></i>
+                    <h2>Chưa có gói bản đồ đang mở</h2>
+                </article>
+            {% endif %}
+        </section>
+    </section>
+</div>
+{% endblock %}
