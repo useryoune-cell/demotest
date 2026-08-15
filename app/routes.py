@@ -38,6 +38,7 @@ from app.services.assignment_service import (
     append_chat,
     build_assignment_chat_prompt,
     build_assignment_review_prompt,
+    clean_ai_text,
     delete_task,
     fallback_assignment_chat,
     fallback_assignment_review,
@@ -1075,6 +1076,7 @@ def assignment_chat():
     except GeminiClientError:
         pass
 
+    answer = clean_ai_text(answer)
     append_chat(attempt_id, "assistant", answer)
     record_student_activity(
         session.get("student_username"),
@@ -1111,6 +1113,7 @@ def assignment_submit():
     except GeminiClientError:
         pass
 
+    ai_review = clean_ai_text(ai_review)
     submission = save_assignment_submission(
         get_student(session.get("student_username")),
         task,

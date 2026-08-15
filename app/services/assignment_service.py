@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import re
 from uuid import uuid4
 
 from app.services.storage import load_json, save_json
@@ -24,6 +25,18 @@ DEFAULT_ASSIGNMENT_DATA = {
 
 def _now():
     return datetime.now(timezone.utc).isoformat()
+
+
+def clean_ai_text(value):
+    text = str(value or "")
+    text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)
+    text = re.sub(r"__(.*?)__", r"\1", text)
+    text = re.sub(r"\*(.*?)\*", r"\1", text)
+    text = re.sub(r"`([^`]+)`", r"\1", text)
+    text = re.sub(r"(?m)^\s{0,3}[-*]\s+", "", text)
+    text = re.sub(r"(?m)^\s{0,3}#{1,6}\s+", "", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
 
 
 def _data():
@@ -276,7 +289,7 @@ Rubric:
 Hội thoại:
 {transcript}
 
-Trả lời ngắn, thân thiện, tối đa 5 câu.
+Trả lời ngắn, thân thiện, tối đa 5 câu. Không dùng markdown, không dùng dấu **, không tạo tiêu đề in đậm.
 """.strip()
 
 

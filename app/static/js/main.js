@@ -1,6 +1,18 @@
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const isLandingPage = document.body.classList.contains("landing-page");
 
+function cleanAiText(value) {
+    return String(value || "")
+        .replace(/\*\*(.*?)\*\*/g, "$1")
+        .replace(/__(.*?)__/g, "$1")
+        .replace(/\*(.*?)\*/g, "$1")
+        .replace(/`([^`]+)`/g, "$1")
+        .replace(/^\s{0,3}[-*]\s+/gm, "")
+        .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+}
+
 function syncThemeToggle() {
     if (!themeToggle) {
         return;
@@ -453,7 +465,7 @@ function appendSocraticMessage(role, content, extraClass = "") {
     label.textContent = role === "user" ? "Em" : "AI";
 
     const body = document.createElement("p");
-    body.textContent = content;
+    body.textContent = role === "user" ? content : cleanAiText(content);
 
     message.append(label, body);
     socraticThread.appendChild(message);
@@ -1051,7 +1063,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
         const article = document.createElement("article");
         article.className = `socratic-message ${role === "student" ? "user" : "ai"}`;
         article.innerHTML = `<span>${role === "student" ? "HS" : "AI"}</span><p></p>`;
-        article.querySelector("p").textContent = content;
+        article.querySelector("p").textContent = role === "student" ? content : cleanAiText(content);
         chatThread.appendChild(article);
         chatThread.scrollTop = chatThread.scrollHeight;
         assignmentState.chat.push({ role, content });
@@ -1203,7 +1215,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
             }
             window.clearInterval(assignmentState.timerId);
             assignmentMeta.textContent = "Đã nộp bài.";
-            assignmentAiReview.textContent = data.submission.ai_review;
+            assignmentAiReview.textContent = cleanAiText(data.submission.ai_review);
             assignmentResult.hidden = false;
             closeAssignmentChat();
             assignmentForm.querySelectorAll("textarea, button").forEach((node) => {
