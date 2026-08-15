@@ -22,6 +22,64 @@ DEFAULT_ASSIGNMENT_DATA = {
     "consents": {},
 }
 
+DEMO_EXTRA_TASK = {
+    "id": "task-source-checking-short-essay",
+    "title": "Kiểm chứng nguồn trước khi tin AI",
+    "teacher_username": "teacher01",
+    "teacher_name": "Giáo viên phản biện",
+    "prompt": "Viết 180-220 từ giải thích vì sao học sinh cần kiểm chứng ít nhất 2 nguồn trước khi dùng câu trả lời AI trong bài học.",
+    "rubric": "Nêu luận điểm rõ: 20 điểm\nCó ví dụ lớp học cụ thể: 25 điểm\nChỉ ra rủi ro khi tin AI quá nhanh: 25 điểm\nĐề xuất cách kiểm chứng nguồn: 20 điểm\nDiễn đạt mạch lạc: 10 điểm",
+    "active": True,
+    "created_at": "demo-extra",
+}
+
+DEMO_EXTRA_ATTEMPT = {
+    "id": "attempt-demo-source-checking-student01",
+    "task_id": "task-source-checking-short-essay",
+    "task_title": "Kiểm chứng nguồn trước khi tin AI",
+    "student_username": "student01",
+    "student_name": "Học sinh demo",
+    "teacher_username": "teacher01",
+    "teacher_name": "Giáo viên phản biện",
+    "started_at": "2026-08-15T12:05:00+00:00",
+    "submitted_at": "2026-08-15T12:23:20+00:00",
+    "chat": [
+        {
+            "role": "student",
+            "content": "Em nên kiểm chứng nguồn bằng cách nào cho nhanh?",
+            "created_at": "2026-08-15T12:08:00+00:00",
+        },
+        {
+            "role": "assistant",
+            "content": "Em có thể đối chiếu với sách giáo khoa, trang chính thống và một nguồn độc lập. Nếu hai nguồn không khớp, hãy ghi rõ phần còn nghi ngờ.",
+            "created_at": "2026-08-15T12:08:18+00:00",
+        },
+    ],
+}
+
+DEMO_EXTRA_SUBMISSION = {
+    "id": "submission-demo-source-checking-student01",
+    "task_id": "task-source-checking-short-essay",
+    "task_title": "Kiểm chứng nguồn trước khi tin AI",
+    "teacher_username": "teacher01",
+    "teacher_name": "Giáo viên phản biện",
+    "student_username": "student01",
+    "student_name": "Học sinh demo",
+    "prompt": DEMO_EXTRA_TASK["prompt"],
+    "rubric": DEMO_EXTRA_TASK["rubric"],
+    "answer": "Theo em, học sinh không nên tin ngay câu trả lời của AI vì AI có thể nói rất tự tin nhưng vẫn sai dữ kiện. Khi làm bài, em cần kiểm chứng ít nhất hai nguồn như sách giáo khoa, trang của cơ quan giáo dục hoặc tài liệu do giáo viên gợi ý. Ví dụ nếu AI nói một sự kiện lịch sử xảy ra vào một năm cụ thể, em sẽ kiểm tra lại trong sách và một trang đáng tin cậy trước khi đưa vào bài. Việc này giúp em tránh sao chép thông tin sai, đồng thời hiểu rõ hơn vì sao dữ kiện đó đúng. AI vẫn hữu ích để gợi ý hướng nghĩ, nhưng quyết định cuối cùng phải do học sinh tự kiểm tra và chịu trách nhiệm.",
+    "ai_review": "Bài có luận điểm rõ và ví dụ phù hợp. Cần bổ sung thêm một câu về cách ghi lại nguồn đã kiểm chứng để giáo viên dễ theo dõi.",
+    "ai_meta": {"model": "demo", "key_label": "demo"},
+    "teacher_score": "",
+    "teacher_review": "",
+    "status": "pending_teacher_review",
+    "attempt_id": DEMO_EXTRA_ATTEMPT["id"],
+    "started_at": DEMO_EXTRA_ATTEMPT["started_at"],
+    "submitted_at": DEMO_EXTRA_ATTEMPT["submitted_at"],
+    "duration_seconds": 1100,
+    "chat": DEMO_EXTRA_ATTEMPT["chat"],
+}
+
 
 def _now():
     return datetime.now(timezone.utc).isoformat()
@@ -45,6 +103,18 @@ def _data():
     data.setdefault("attempts", [])
     data.setdefault("submissions", [])
     data.setdefault("consents", {})
+    changed = False
+    if not any(task.get("id") == DEMO_EXTRA_TASK["id"] for task in data["tasks"]):
+        data["tasks"].append(dict(DEMO_EXTRA_TASK))
+        changed = True
+    if not any(attempt.get("id") == DEMO_EXTRA_ATTEMPT["id"] for attempt in data["attempts"]):
+        data["attempts"].append(dict(DEMO_EXTRA_ATTEMPT))
+        changed = True
+    if not any(submission.get("id") == DEMO_EXTRA_SUBMISSION["id"] for submission in data["submissions"]):
+        data["submissions"].append(dict(DEMO_EXTRA_SUBMISSION))
+        changed = True
+    if changed:
+        save_json("assignments.json", data)
     return data
 
 

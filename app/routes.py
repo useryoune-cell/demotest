@@ -117,6 +117,15 @@ from app.services.socratic_service import (
 main_bp = Blueprint("main", __name__)
 TEACHER_MODULE_SLUG = "che-do-giao-vien"
 CRITIC_ASSISTANT_SLUG = "tro-li-phan-bien"
+TEACHER_PAGES = {
+    "overview": {"label": "Tổng quan", "icon": "layout-dashboard"},
+    "debate": {"label": "Đấu trường", "icon": "swords"},
+    "compare": {"label": "So sánh AI", "icon": "copy-check"},
+    "assignments": {"label": "Nhiệm vụ", "icon": "clipboard-check"},
+    "submissions": {"label": "Bài nộp", "icon": "shield-check"},
+    "students": {"label": "Học sinh", "icon": "users"},
+    "reports": {"label": "Báo cáo", "icon": "bar-chart-3"},
+}
 CRITIC_ASSISTANT_CHILD_SLUGS = [
     "so-sanh-ba-cau-tra-loi",
     "prompt-phan-bien",
@@ -655,11 +664,21 @@ def teacher_logout():
 @main_bp.get("/teacher")
 @teacher_required
 def teacher_dashboard():
+    return teacher_page("overview")
+
+
+@main_bp.get("/teacher/<page>")
+@teacher_required
+def teacher_page(page):
+    if page not in TEACHER_PAGES:
+        abort(404)
     username = session.get("teacher_username")
     config = debate_config()
     return render_template(
         "pages/teacher_dashboard.html",
         modules=MODULES,
+        teacher_pages=TEACHER_PAGES,
+        teacher_page=page,
         overview=teacher_overview(),
         teacher=get_teacher(username),
         reports=reports_for_teacher(username),
@@ -680,7 +699,7 @@ def teacher_debate_mode():
         request.form.get("mode", "random"),
         fixed_topic_id=request.form.get("fixed_topic_id"),
     )
-    return redirect(url_for("main.teacher_dashboard") + "#teacherDebate")
+    return redirect(url_for("main.teacher_page", page="debate"))
 
 
 @main_bp.post("/teacher/debate/topics")
@@ -690,7 +709,7 @@ def teacher_debate_topic_save():
         upsert_debate_topic(request.form)
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherDebate")
+    return redirect(url_for("main.teacher_page", page="debate"))
 
 
 @main_bp.post("/teacher/debate/topics/<topic_id>/delete")
@@ -700,7 +719,7 @@ def teacher_debate_topic_delete(topic_id):
         delete_debate_topic(topic_id)
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherDebate")
+    return redirect(url_for("main.teacher_page", page="debate"))
 
 
 @main_bp.post("/teacher/compare/packages")
@@ -710,7 +729,7 @@ def teacher_compare_package_save():
         upsert_compare_package(request.form, get_teacher(session.get("teacher_username")))
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherCompare")
+    return redirect(url_for("main.teacher_page", page="compare"))
 
 
 @main_bp.post("/teacher/compare/packages/<package_id>/delete")
@@ -720,7 +739,7 @@ def teacher_compare_package_delete(package_id):
         delete_compare_package(package_id)
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherCompare")
+    return redirect(url_for("main.teacher_page", page="compare"))
 
 
 @main_bp.post("/teacher/assignments/tasks")
@@ -730,7 +749,7 @@ def teacher_assignment_task_save():
         upsert_task(request.form, get_teacher(session.get("teacher_username")))
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherAssignments")
+    return redirect(url_for("main.teacher_page", page="assignments"))
 
 
 @main_bp.post("/teacher/assignments/tasks/<task_id>/delete")
@@ -740,7 +759,7 @@ def teacher_assignment_task_delete(task_id):
         delete_task(task_id)
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherAssignments")
+    return redirect(url_for("main.teacher_page", page="assignments"))
 
 
 @main_bp.post("/teacher/assignments/submissions/<submission_id>/review")
@@ -754,7 +773,7 @@ def teacher_assignment_submission_review(submission_id):
         )
     except ValueError:
         pass
-    return redirect(url_for("main.teacher_dashboard") + "#teacherAssignmentSubmissions")
+    return redirect(url_for("main.teacher_page", page="submissions"))
 
 
 @main_bp.route("/admin/login", methods=["GET", "POST"])

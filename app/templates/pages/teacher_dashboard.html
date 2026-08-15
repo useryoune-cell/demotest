@@ -1,42 +1,67 @@
 {% extends "base.html" %}
 
-{% block title %}Chế độ giáo viên · AI Critical Thinking Lab{% endblock %}
+{% block title %}Giáo viên · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
 <div class="app-shell teacher-shell">
     <aside class="app-sidebar" aria-label="Điều hướng giáo viên">
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Học sinh</span></a>
-        <a class="sidebar-item active" href="{{ url_for('main.teacher_dashboard') }}"><i data-lucide="layout-dashboard"></i><span>Tổng quan</span></a>
-        <a class="sidebar-item" href="#teacherCompare"><i data-lucide="copy-check"></i><span>So sánh AI</span></a>
-        <a class="sidebar-item" href="#teacherAssignments"><i data-lucide="clipboard-check"></i><span>Nhiệm vụ</span></a>
-        <a class="sidebar-item" href="#teacherReview"><i data-lucide="shield-check"></i><span>Duyệt nội dung</span></a>
-        <a class="sidebar-item" href="#teacherStudents"><i data-lucide="users"></i><span>Học sinh</span></a>
-        <a class="sidebar-item" href="#teacherReport"><i data-lucide="bar-chart-3"></i><span>Báo cáo</span></a>
+        {% for key, item in teacher_pages.items() %}
+        <a class="sidebar-item {% if teacher_page == key %}active{% endif %}" href="{{ url_for('main.teacher_page', page=key) }}">
+            <i data-lucide="{{ item.icon }}"></i><span>{{ item.label }}</span>
+        </a>
+        {% endfor %}
         <a class="sidebar-item" href="{{ url_for('main.teacher_logout') }}"><i data-lucide="log-out"></i><span>Thoát</span></a>
     </aside>
 
-    <section class="app-content">
+    <section class="app-content teacher-page-content">
         <div class="teacher-top">
-            <div>
-                <h1>Tổng quan tiến độ học sinh</h1>
-            </div>
-            <button class="button primary" type="button"><i data-lucide="plus"></i><span>Tạo nhiệm vụ</span></button>
+            <div><h1>{{ teacher_pages[teacher_page].label }}</h1></div>
+            {% if teacher_page == "assignments" %}
+            <a class="button primary" href="#newAssignment"><i data-lucide="plus"></i><span>Tạo nhiệm vụ</span></a>
+            {% elif teacher_page == "compare" %}
+            <a class="button primary" href="#newComparePackage"><i data-lucide="plus"></i><span>Tạo gói</span></a>
+            {% elif teacher_page == "debate" %}
+            <a class="button primary" href="#newDebateTopic"><i data-lucide="plus"></i><span>Tạo chủ đề</span></a>
+            {% endif %}
         </div>
 
+        {% if teacher_page == "overview" %}
         <div class="teacher-kpis">
             <article><span>Hoàn thành</span><strong>{{ overview.completion }}%</strong></article>
             <article><span>Phụ thuộc gợi ý</span><strong>{{ overview.dependency }}%</strong></article>
-            <article><span>Chờ duyệt</span><strong>{{ overview.pending_reviews }}</strong></article>
+            <article><span>Chờ duyệt</span><strong>{{ assignment_submissions|selectattr("teacher_score", "equalto", "")|list|length }}</strong></article>
             <article><span>Nhật ký mới</span><strong>{{ overview.new_reflections }}</strong></article>
         </div>
 
-        <section class="app-panel teacher-debate-panel" id="teacherDebate">
-            <div class="panel-heading">
-                <div>
-                    <h2>Chủ đề và tiêu chí chấm</h2>
+        <div class="teacher-grid">
+            <section class="app-panel">
+                <div class="panel-heading"><div><h2>8 năng lực trung bình</h2></div></div>
+                <div class="skill-bars">
+                    {% for skill, score in overview.skills %}
+                    <div class="skill-row">
+                        <span>{{ skill }}</span>
+                        <strong>{{ score }}</strong>
+                        <div class="progress-track"><span style="width: {{ score }}%"></span></div>
+                    </div>
+                    {% endfor %}
                 </div>
-            </div>
+            </section>
 
+            <section class="app-panel">
+                <div class="panel-heading"><div><h2>Việc cần xử lý</h2></div></div>
+                <div class="review-list">
+                    <article><span>Nhiệm vụ</span><strong>{{ assignment_submissions|selectattr("teacher_score", "equalto", "")|list|length }} bài nộp chờ chấm</strong></article>
+                    <article><span>So sánh AI</span><strong>{{ compare_submissions|length }} lượt làm bài gần nhất</strong></article>
+                    <article><span>Đấu trường</span><strong>{{ debate_config.topics|length }} chủ đề đang cấu hình</strong></article>
+                </div>
+            </section>
+        </div>
+        {% endif %}
+
+        {% if teacher_page == "debate" %}
+        <section class="app-panel teacher-debate-panel">
+            <div class="panel-heading"><div><h2>Chế độ ra chủ đề</h2></div></div>
             <form class="admin-form debate-mode-form" method="post" action="{{ url_for('main.teacher_debate_mode') }}">
                 <div>
                     <label class="field-label" for="debateMode">Cách ra chủ đề</label>
@@ -54,34 +79,25 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu chế độ</span></button>
+                <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu</span></button>
             </form>
+        </section>
 
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Chủ đề và tiêu chí</h2></div></div>
             <div class="teacher-topic-list">
                 {% for topic in debate_config.topics %}
                 <article class="teacher-topic-card">
                     <details class="teacher-topic-editor">
-                        <summary>
-                            <span>Chủ đề {{ loop.index }}</span>
-                            <strong>{{ topic.title }}</strong>
-                            <em>{{ topic.side_a }} / {{ topic.side_b }}</em>
-                        </summary>
+                        <summary><span>Chủ đề {{ loop.index }}</span><strong>{{ topic.title }}</strong><em>{{ topic.side_a }} / {{ topic.side_b }}</em></summary>
                         <form class="admin-form" method="post" action="{{ url_for('main.teacher_debate_topic_save') }}">
                             <input type="hidden" name="topic_id" value="{{ topic.id }}">
-                            <label class="field-label" for="topicTitle{{ loop.index }}">Chủ đề</label>
-                            <input id="topicTitle{{ loop.index }}" name="title" value="{{ topic.title }}" required>
+                            <input name="title" value="{{ topic.title }}" required>
                             <div class="topic-side-grid">
-                                <div>
-                                    <label class="field-label" for="topicSideA{{ loop.index }}">Phe A</label>
-                                    <input id="topicSideA{{ loop.index }}" name="side_a" value="{{ topic.side_a }}" required>
-                                </div>
-                                <div>
-                                    <label class="field-label" for="topicSideB{{ loop.index }}">Phe B</label>
-                                    <input id="topicSideB{{ loop.index }}" name="side_b" value="{{ topic.side_b }}" required>
-                                </div>
+                                <input name="side_a" value="{{ topic.side_a }}" required>
+                                <input name="side_b" value="{{ topic.side_b }}" required>
                             </div>
-                            <label class="field-label" for="topicCriteria{{ loop.index }}">Tiêu chí chấm</label>
-                            <textarea id="topicCriteria{{ loop.index }}" name="criteria" rows="5">{{ criteria_to_text(topic.criteria) }}</textarea>
+                            <textarea name="criteria" rows="5">{{ criteria_to_text(topic.criteria) }}</textarea>
                             <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu chủ đề</span></button>
                         </form>
                         <form method="post" action="{{ url_for('main.teacher_debate_topic_delete', topic_id=topic.id) }}">
@@ -92,7 +108,7 @@
                 {% endfor %}
             </div>
 
-            <details class="teacher-topic-add">
+            <details class="teacher-topic-add" id="newDebateTopic">
                 <summary><i data-lucide="plus"></i><span>Thêm chủ đề</span></summary>
                 <form class="admin-form teacher-topic-new" method="post" action="{{ url_for('main.teacher_debate_topic_save') }}">
                     <input name="title" placeholder="Chủ đề" required>
@@ -105,13 +121,12 @@
                 </form>
             </details>
         </section>
+        {% endif %}
 
-        <section class="app-panel teacher-compare-panel" id="teacherCompare">
-            <div class="panel-heading">
-                <div><h2>Gói so sánh ba câu trả lời AI</h2></div>
-            </div>
-
-            <details class="teacher-topic-add">
+        {% if teacher_page == "compare" %}
+        <section class="app-panel teacher-compare-panel">
+            <div class="panel-heading"><div><h2>Gói so sánh ba câu trả lời AI</h2></div></div>
+            <details class="teacher-topic-add" id="newComparePackage">
                 <summary><i data-lucide="plus"></i><span>Thêm gói bài</span></summary>
                 <form class="admin-form teacher-topic-new compare-package-form" method="post" action="{{ url_for('main.teacher_compare_package_save') }}">
                     <input name="title" placeholder="Tên gói bài" required>
@@ -120,13 +135,7 @@
                     <textarea name="answer_b" rows="4" placeholder="Câu trả lời AI B" required></textarea>
                     <textarea name="answer_c" rows="4" placeholder="Câu trả lời AI C" required></textarea>
                     <div class="topic-side-grid">
-                        <label class="field-label" for="compareBestNew">Đáp án tốt nhất
-                            <select id="compareBestNew" name="best">
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                            </select>
-                        </label>
+                        <select name="best"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select>
                         <label class="compare-active-check"><input type="checkbox" name="active" checked> Đang mở</label>
                     </div>
                     <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu gói</span></button>
@@ -137,31 +146,20 @@
                 {% for package in compare_packages %}
                 <article class="teacher-topic-card">
                     <details class="teacher-topic-editor">
-                        <summary>
-                            <span>{{ "Đang mở" if package.active else "Đã ẩn" }}</span>
-                            <strong>{{ package.title }}</strong>
-                            <em>{{ package.teacher_name }}</em>
-                        </summary>
+                        <summary><span>{{ "Đang mở" if package.active else "Đã ẩn" }}</span><strong>{{ package.title }}</strong><em>{{ package.teacher_name }}</em></summary>
                         <form class="admin-form compare-package-form" method="post" action="{{ url_for('main.teacher_compare_package_save') }}">
                             <input type="hidden" name="package_id" value="{{ package.id }}">
-                            <label class="field-label" for="compareTitle{{ loop.index }}">Tên gói</label>
-                            <input id="compareTitle{{ loop.index }}" name="title" value="{{ package.title }}" required>
-                            <label class="field-label" for="compareQuestion{{ loop.index }}">Câu hỏi</label>
-                            <textarea id="compareQuestion{{ loop.index }}" name="question" rows="3" required>{{ package.question }}</textarea>
-                            <label class="field-label" for="compareA{{ loop.index }}">Câu trả lời AI A</label>
-                            <textarea id="compareA{{ loop.index }}" name="answer_a" rows="4" required>{{ package.answers[0].text }}</textarea>
-                            <label class="field-label" for="compareB{{ loop.index }}">Câu trả lời AI B</label>
-                            <textarea id="compareB{{ loop.index }}" name="answer_b" rows="4" required>{{ package.answers[1].text }}</textarea>
-                            <label class="field-label" for="compareC{{ loop.index }}">Câu trả lời AI C</label>
-                            <textarea id="compareC{{ loop.index }}" name="answer_c" rows="4" required>{{ package.answers[2].text }}</textarea>
+                            <input name="title" value="{{ package.title }}" required>
+                            <textarea name="question" rows="3" required>{{ package.question }}</textarea>
+                            <textarea name="answer_a" rows="4" required>{{ package.answers[0].text }}</textarea>
+                            <textarea name="answer_b" rows="4" required>{{ package.answers[1].text }}</textarea>
+                            <textarea name="answer_c" rows="4" required>{{ package.answers[2].text }}</textarea>
                             <div class="topic-side-grid">
-                                <label class="field-label" for="compareBest{{ loop.index }}">Đáp án tốt nhất
-                                    <select id="compareBest{{ loop.index }}" name="best">
-                                        <option value="A" {% if package.best == "A" %}selected{% endif %}>A</option>
-                                        <option value="B" {% if package.best == "B" %}selected{% endif %}>B</option>
-                                        <option value="C" {% if package.best == "C" %}selected{% endif %}>C</option>
-                                    </select>
-                                </label>
+                                <select name="best">
+                                    <option value="A" {% if package.best == "A" %}selected{% endif %}>A</option>
+                                    <option value="B" {% if package.best == "B" %}selected{% endif %}>B</option>
+                                    <option value="C" {% if package.best == "C" %}selected{% endif %}>C</option>
+                                </select>
                                 <label class="compare-active-check"><input type="checkbox" name="active" {% if package.active %}checked{% endif %}> Đang mở</label>
                             </div>
                             <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu</span></button>
@@ -173,34 +171,18 @@
                 </article>
                 {% endfor %}
             </div>
-
-            <div class="compare-submission-list">
-                <div class="panel-heading"><div><h2>Bài nộp gần nhất</h2></div></div>
-                {% if compare_submissions %}
-                    {% for submission in compare_submissions %}
-                    <article>
-                        <span>{{ submission.created_at[:10] }} · {{ submission.score }}/100</span>
-                        <strong>{{ submission.student_name }} · {{ submission.package_title }}</strong>
-                        <p>Chọn câu {{ submission.selected }}. {{ submission.criteria|truncate(130) }}</p>
-                    </article>
-                    {% endfor %}
-                {% else %}
-                    <p class="muted-note">Chưa có bài nộp.</p>
-                {% endif %}
-            </div>
         </section>
+        {% endif %}
 
-        <section class="app-panel teacher-assignment-panel" id="teacherAssignments">
-            <div class="panel-heading">
-                <div><h2>Nhiệm vụ cụ thể</h2></div>
-            </div>
-
-            <details class="teacher-topic-add">
+        {% if teacher_page == "assignments" %}
+        <section class="app-panel teacher-assignment-panel">
+            <div class="panel-heading"><div><h2>Nhiệm vụ cụ thể</h2></div></div>
+            <details class="teacher-topic-add" id="newAssignment">
                 <summary><i data-lucide="plus"></i><span>Thêm nhiệm vụ</span></summary>
                 <form class="admin-form teacher-topic-new assignment-task-form" method="post" action="{{ url_for('main.teacher_assignment_task_save') }}">
                     <input name="title" placeholder="Tên nhiệm vụ" required>
                     <textarea name="prompt" rows="4" placeholder="Đề bài học sinh cần làm" required></textarea>
-                    <textarea name="rubric" rows="5" placeholder="Rubric chấm điểm do giáo viên đưa" required></textarea>
+                    <textarea name="rubric" rows="5" placeholder="Rubric chấm điểm" required></textarea>
                     <label class="compare-active-check"><input type="checkbox" name="active" checked> Đang mở</label>
                     <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu nhiệm vụ</span></button>
                 </form>
@@ -210,19 +192,12 @@
                 {% for task in assignment_tasks %}
                 <article class="teacher-topic-card">
                     <details class="teacher-topic-editor">
-                        <summary>
-                            <span>{{ "Đang mở" if task.active else "Đã ẩn" }}</span>
-                            <strong>{{ task.title }}</strong>
-                            <em>{{ task.teacher_name }}</em>
-                        </summary>
+                        <summary><span>{{ "Đang mở" if task.active else "Đã ẩn" }}</span><strong>{{ task.title }}</strong><em>{{ task.teacher_name }}</em></summary>
                         <form class="admin-form assignment-task-form" method="post" action="{{ url_for('main.teacher_assignment_task_save') }}">
                             <input type="hidden" name="task_id" value="{{ task.id }}">
-                            <label class="field-label" for="taskTitle{{ loop.index }}">Tên nhiệm vụ</label>
-                            <input id="taskTitle{{ loop.index }}" name="title" value="{{ task.title }}" required>
-                            <label class="field-label" for="taskPrompt{{ loop.index }}">Đề bài</label>
-                            <textarea id="taskPrompt{{ loop.index }}" name="prompt" rows="4" required>{{ task.prompt }}</textarea>
-                            <label class="field-label" for="taskRubric{{ loop.index }}">Rubric</label>
-                            <textarea id="taskRubric{{ loop.index }}" name="rubric" rows="5" required>{{ task.rubric }}</textarea>
+                            <input name="title" value="{{ task.title }}" required>
+                            <textarea name="prompt" rows="4" required>{{ task.prompt }}</textarea>
+                            <textarea name="rubric" rows="5" required>{{ task.rubric }}</textarea>
                             <label class="compare-active-check"><input type="checkbox" name="active" {% if task.active %}checked{% endif %}> Đang mở</label>
                             <button class="button primary" type="submit"><i data-lucide="save"></i><span>Lưu</span></button>
                         </form>
@@ -233,21 +208,20 @@
                 </article>
                 {% endfor %}
             </div>
+        </section>
+        {% endif %}
 
-            <div class="assignment-submission-list" id="teacherAssignmentSubmissions">
-                <div class="panel-heading"><div><h2>Bài nộp cần chốt</h2></div></div>
+        {% if teacher_page == "submissions" %}
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Bài nộp cần chốt</h2></div></div>
+            <div class="assignment-submission-list">
                 {% if assignment_submissions %}
                     {% for submission in assignment_submissions %}
                     <article>
                         <details class="teacher-topic-editor">
-                            <summary>
-                                <span>{{ submission.teacher_score or "Chờ chấm" }}</span>
-                                <strong>{{ submission.student_name }} · {{ submission.task_title }}</strong>
-                                <em>{{ format_duration(submission.duration_seconds) }} · {{ submission.submitted_at[:10] }}</em>
-                            </summary>
+                            <summary><span>{{ submission.teacher_score or "Chờ chấm" }}</span><strong>{{ submission.student_name }} · {{ submission.task_title }}</strong><em>{{ format_duration(submission.duration_seconds) }} · {{ submission.submitted_at[:10] }}</em></summary>
                             <div class="assignment-review-body">
                                 <h3>Bài làm</h3>
-                                <p>Bắt đầu: {{ submission.started_at[:19].replace("T", " ") }} · Nộp: {{ submission.submitted_at[:19].replace("T", " ") }} · Thời lượng: {{ format_duration(submission.duration_seconds) }}</p>
                                 <p>{{ submission.answer }}</p>
                                 <h3>AI nhận xét sơ bộ</h3>
                                 <p>{{ submission.ai_review }}</p>
@@ -258,10 +232,8 @@
                                     {% endfor %}
                                 </div>
                                 <form class="admin-form" method="post" action="{{ url_for('main.teacher_assignment_submission_review', submission_id=submission.id) }}">
-                                    <label class="field-label" for="teacherScore{{ loop.index }}">Điểm cuối</label>
-                                    <input id="teacherScore{{ loop.index }}" name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Ví dụ: 8/10">
-                                    <label class="field-label" for="teacherReview{{ loop.index }}">Nhận xét giáo viên</label>
-                                    <textarea id="teacherReview{{ loop.index }}" name="teacher_review" rows="4">{{ submission.teacher_review }}</textarea>
+                                    <input name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Điểm cuối">
+                                    <textarea name="teacher_review" rows="4" placeholder="Nhận xét giáo viên">{{ submission.teacher_review }}</textarea>
                                     <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chốt đánh giá</span></button>
                                 </form>
                             </div>
@@ -273,77 +245,49 @@
                 {% endif %}
             </div>
         </section>
+        {% endif %}
 
-        <div class="teacher-grid">
-            <section class="app-panel" id="teacherReport">
-                <div class="panel-heading"><div><h2>8 năng lực trung bình</h2></div></div>
-                <div class="skill-bars">
-                    {% for skill, score in overview.skills %}
-                    <div class="skill-row">
-                        <span>{{ skill }}</span>
-                        <strong>{{ score }}</strong>
-                        <div class="progress-track"><span style="width: {{ score }}%"></span></div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <section class="app-panel" id="teacherReview">
-                <div class="panel-heading"><div><h2>Hàng chờ nhiệm vụ</h2></div></div>
-                <div class="review-list">
-                    {% for item in overview.reviews %}
-                    <article><span>{{ item.type }}</span><strong>{{ item.module }} · {{ item.detail }}</strong></article>
-                    {% endfor %}
-                </div>
-            </section>
-        </div>
-
-        <div class="teacher-grid lower">
-            <section class="app-panel" id="teacherStudents">
-                <div class="panel-heading"><div><h2>Theo dõi cá nhân</h2></div></div>
-                <div class="student-table">
-                    <div class="student-table-head"><span>Học sinh</span><span>Tiến độ</span><span>Phụ thuộc</span><span>Rủi ro</span></div>
-                    {% for student in overview.students %}
-                    <article>
-                        <strong>{{ student.name }}</strong>
-                        <span>{{ student.progress }}%</span>
-                        <span>{{ student.dependency }}%</span>
-                        <em>{{ student.risk }}</em>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <section class="app-panel" id="teacherTasks">
-                <div class="panel-heading"><div><h2>Lỗi thường gặp</h2></div></div>
-                <div class="common-error-list">
-                    {% for error in overview.common_errors %}
-                    <article><i data-lucide="alert-circle"></i><span>{{ error }}</span></article>
-                    {% endfor %}
-                </div>
-                <div class="teacher-actions">
-                    <button type="button"><i data-lucide="send"></i><span>Giao Thám tử AI</span></button>
-                    <button type="button"><i data-lucide="radar"></i><span>Xem hồ sơ học sinh</span></button>
-                </div>
-            </section>
-        </div>
-
-        <section class="app-panel teacher-report-inbox">
-            <div class="panel-heading"><div><h2>Hộp thư giáo viên</h2></div></div>
-            <div class="report-list">
-                {% if reports %}
-                    {% for report in reports %}
-                    <article>
-                        <span>{{ report.created_at[:10] }}</span>
-                        <strong>{{ report.title }}</strong>
-                        <p>{{ report.body }}</p>
-                    </article>
-                    {% endfor %}
-                {% else %}
-                    <p class="muted-note">Chưa có báo cáo.</p>
-                {% endif %}
+        {% if teacher_page == "students" %}
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Theo dõi học sinh</h2></div></div>
+            <div class="student-table">
+                <div class="student-table-head"><span>Học sinh</span><span>Tiến độ</span><span>Phụ thuộc</span><span>Rủi ro</span></div>
+                {% for student in overview.students %}
+                <article><strong>{{ student.name }}</strong><span>{{ student.progress }}%</span><span>{{ student.dependency }}%</span><em>{{ student.risk }}</em></article>
+                {% endfor %}
             </div>
         </section>
+        {% endif %}
+
+        {% if teacher_page == "reports" %}
+        <div class="teacher-grid">
+            <section class="app-panel">
+                <div class="panel-heading"><div><h2>Bài so sánh gần nhất</h2></div></div>
+                <div class="compare-submission-list">
+                    {% if compare_submissions %}
+                        {% for submission in compare_submissions %}
+                        <article><span>{{ submission.created_at[:10] }} · {{ submission.score }}/100</span><strong>{{ submission.student_name }} · {{ submission.package_title }}</strong><p>Chọn câu {{ submission.selected }}. {{ submission.criteria|truncate(130) }}</p></article>
+                        {% endfor %}
+                    {% else %}
+                        <p class="muted-note">Chưa có bài nộp.</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="app-panel teacher-report-inbox">
+                <div class="panel-heading"><div><h2>Hộp thư giáo viên</h2></div></div>
+                <div class="report-list">
+                    {% if reports %}
+                        {% for report in reports %}
+                        <article><span>{{ report.created_at[:10] }}</span><strong>{{ report.title }}</strong><p>{{ report.body }}</p></article>
+                        {% endfor %}
+                    {% else %}
+                        <p class="muted-note">Chưa có báo cáo.</p>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+        {% endif %}
     </section>
 </div>
 {% endblock %}

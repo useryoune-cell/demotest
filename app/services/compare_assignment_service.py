@@ -33,11 +33,62 @@ DEFAULT_COMPARE_DATA = {
     "submissions": [],
 }
 
+DEMO_EXTRA_PACKAGE = {
+    "id": "compare-climate-ai-source",
+    "title": "Nhận diện câu trả lời AI thiếu nguồn",
+    "teacher_username": "teacher01",
+    "teacher_name": "Giáo viên phản biện",
+    "question": "Khi hỏi AI về biến đổi khí hậu ở Việt Nam, câu trả lời nào đáng dùng nhất cho bài thuyết trình lớp 8?",
+    "answers": [
+        {
+            "label": "A",
+            "text": "Biến đổi khí hậu làm thời tiết cực đoan hơn. Học sinh nên kiểm chứng bằng báo cáo của cơ quan khí tượng hoặc tài liệu giáo viên cung cấp trước khi dùng số liệu.",
+        },
+        {
+            "label": "B",
+            "text": "Biến đổi khí hậu chắc chắn sẽ làm mọi thành phố ven biển biến mất trong vài năm tới, vì nhiều người trên mạng đã nói như vậy.",
+        },
+        {
+            "label": "C",
+            "text": "Khí hậu thay đổi là chuyện bình thường nên không cần quan tâm đến nguồn hay dữ liệu khi trình bày.",
+        },
+    ],
+    "best": "A",
+    "active": True,
+    "created_at": "demo-extra",
+}
+
+DEMO_EXTRA_SUBMISSION = {
+    "id": "compare-submission-demo-student01-source",
+    "student_username": "student01",
+    "student_name": "Học sinh demo",
+    "package_id": "compare-climate-ai-source",
+    "package_title": "Nhận diện câu trả lời AI thiếu nguồn",
+    "teacher_username": "teacher01",
+    "teacher_name": "Giáo viên phản biện",
+    "question": DEMO_EXTRA_PACKAGE["question"],
+    "selected": "A",
+    "criteria": "Em chọn A vì câu này không phóng đại, có nhắc đến kiểm chứng bằng nguồn đáng tin và phù hợp để đưa vào bài thuyết trình.",
+    "synthesis": "Câu trả lời tốt cần vừa nêu ý chính vừa chỉ ra cách kiểm tra số liệu trước khi dùng.",
+    "score": 88,
+    "correct": True,
+    "created_at": "2026-08-15T12:30:00+00:00",
+}
+
 
 def _data():
     data = load_json("compare_assignments.json", DEFAULT_COMPARE_DATA)
     data.setdefault("packages", [])
     data.setdefault("submissions", [])
+    changed = False
+    if not any(package.get("id") == DEMO_EXTRA_PACKAGE["id"] for package in data["packages"]):
+        data["packages"].append(dict(DEMO_EXTRA_PACKAGE))
+        changed = True
+    if not any(submission.get("id") == DEMO_EXTRA_SUBMISSION["id"] for submission in data["submissions"]):
+        data["submissions"].append(dict(DEMO_EXTRA_SUBMISSION))
+        changed = True
+    if changed:
+        save_json("compare_assignments.json", data)
     return data
 
 
