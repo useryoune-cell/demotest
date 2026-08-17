@@ -80,6 +80,10 @@ def _data():
     data = load_json("compare_assignments.json", DEFAULT_COMPARE_DATA)
     data.setdefault("packages", [])
     data.setdefault("submissions", [])
+    for submission in data["submissions"]:
+        submission.setdefault("teacher_score", "")
+        submission.setdefault("teacher_review", "")
+        submission.setdefault("status", "pending_teacher_review")
     changed = False
     if not any(package.get("id") == DEMO_EXTRA_PACKAGE["id"] for package in data["packages"]):
         data["packages"].append(dict(DEMO_EXTRA_PACKAGE))
@@ -197,6 +201,9 @@ def save_compare_submission(student, package, selected, criteria, synthesis, sco
         "synthesis": str(synthesis or "").strip(),
         "score": score,
         "correct": bool(correct),
+        "teacher_score": "",
+        "teacher_review": "",
+        "status": "pending_teacher_review",
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     data["submissions"].append(entry)
@@ -207,3 +214,16 @@ def save_compare_submission(student, package, selected, criteria, synthesis, sco
 def list_compare_submissions(limit=30):
     submissions = _data().get("submissions", [])
     return list(reversed(submissions[-limit:]))
+
+
+def update_compare_submission_review(submission_id, score, review):
+    data = _data()
+    submission = next((item for item in data["submissions"] if item.get("id") == submission_id), None)
+    if not submission:
+        raise ValueError("Không tìm thấy bài so sánh.")
+    submission["teacher_score"] = str(score or "").strip()
+    submission["teacher_review"] = str(review or "").strip()
+    submission["status"] = "teacher_reviewed"
+    submission["reviewed_at"] = datetime.now(timezone.utc).isoformat()
+    _save(data)
+    return submission

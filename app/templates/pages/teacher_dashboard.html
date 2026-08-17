@@ -274,6 +274,29 @@
                 {% endfor %}
             </div>
         </section>
+
+        <section class="app-panel teacher-compare-panel">
+            <div class="panel-heading"><div><h2>Bài học sinh đã nộp</h2></div></div>
+            <div class="compare-submission-list">
+                {% if compare_submissions %}
+                    {% for submission in compare_submissions %}
+                    <article>
+                        <span>{{ submission.created_at[:10] }} · {{ submission.teacher_score or submission.score }}/100</span>
+                        <strong>{{ submission.student_name }} · {{ submission.package_title }}</strong>
+                        <p>Chọn câu {{ submission.selected }}. {{ submission.criteria|truncate(140) }}</p>
+                        <form class="admin-form" method="post" action="{{ url_for('main.teacher_compare_submission_review', submission_id=submission.id) }}">
+                            <input type="hidden" name="next" value="{{ url_for('main.teacher_page', page='compare') }}">
+                            <input name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Điểm cuối">
+                            <textarea name="teacher_review" rows="3" placeholder="Nhận xét giáo viên">{{ submission.teacher_review }}</textarea>
+                            <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chốt đánh giá</span></button>
+                        </form>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <p class="muted-note">Chưa có bài nộp.</p>
+                {% endif %}
+            </div>
+        </section>
         {% endif %}
 
         {% if teacher_page == "assignments" %}
@@ -344,6 +367,81 @@
                     {% endfor %}
                 {% else %}
                     <p class="muted-note">Chưa có bài nộp.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Bài so sánh AI</h2></div></div>
+            <div class="assignment-submission-list">
+                {% if compare_submissions %}
+                    {% for submission in compare_submissions %}
+                    <article>
+                        <details class="teacher-topic-editor">
+                            <summary><span>{{ submission.teacher_score or submission.score }}</span><strong>{{ submission.student_name }} · {{ submission.package_title }}</strong><em>{{ submission.created_at[:10] }}</em></summary>
+                            <div class="assignment-review-body">
+                                <h3>Câu hỏi</h3>
+                                <p>{{ submission.question }}</p>
+                                <h3>Bài làm học sinh</h3>
+                                <p>Chọn câu {{ submission.selected }}. {{ "Đúng đáp án gợi ý" if submission.correct else "Khác đáp án gợi ý" }}.</p>
+                                <p>{{ submission.criteria }}</p>
+                                <h3>Câu trả lời học sinh viết lại</h3>
+                                <p>{{ submission.synthesis }}</p>
+                                <form class="admin-form" method="post" action="{{ url_for('main.teacher_compare_submission_review', submission_id=submission.id) }}">
+                                    <input name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Điểm cuối">
+                                    <textarea name="teacher_review" rows="4" placeholder="Nhận xét giáo viên">{{ submission.teacher_review }}</textarea>
+                                    <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chốt đánh giá</span></button>
+                                </form>
+                            </div>
+                        </details>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <p class="muted-note">Chưa có bài so sánh AI.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="app-panel">
+            <div class="panel-heading"><div><h2>Bài module giáo viên ra đề</h2></div></div>
+            <div class="assignment-submission-list">
+                {% if teacher_content_submissions %}
+                    {% for submission in teacher_content_submissions %}
+                    <article>
+                        <details class="teacher-topic-editor">
+                            <summary><span>{{ submission.teacher_score or submission.score }}</span><strong>{{ submission.student_name }} · {{ submission.module_title }}</strong><em>{{ submission.submitted_at[:10] }}</em></summary>
+                            <div class="assignment-review-body">
+                                {% if submission.kind == "argument" %}
+                                <h3>{{ submission.package_title }}</h3>
+                                <p>{{ submission.question }}</p>
+                                <h3>Kết quả phân loại</h3>
+                                <p>{{ submission.correct }}/{{ submission.total }} mảnh đúng. AI chấm sơ bộ {{ submission.ai_score }}/100.</p>
+                                <div class="assignment-chat-log">
+                                    {% for placement in submission.placements %}
+                                    <p><strong>{{ placement.bucket_label }}:</strong> {{ placement.piece_text }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <h3>{{ submission.case_code }} · {{ submission.case_title }}</h3>
+                                <p>{{ submission.task }}</p>
+                                <h3>Bài làm học sinh</h3>
+                                <p><strong>Đoạn đáng nghi:</strong> {{ submission.suspicious_text }}</p>
+                                <p><strong>Loại lỗi:</strong> {{ submission.error_type }}</p>
+                                <p><strong>Giải thích:</strong> {{ submission.explanation }}</p>
+                                <p><strong>Bằng chứng:</strong> {{ submission.evidence }}</p>
+                                <p><strong>Viết lại:</strong> {{ submission.rewrite }}</p>
+                                {% endif %}
+                                <form class="admin-form" method="post" action="{{ url_for('main.teacher_content_submission_review', submission_id=submission.id) }}">
+                                    <input name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Điểm cuối">
+                                    <textarea name="teacher_review" rows="4" placeholder="Nhận xét giáo viên">{{ submission.teacher_review }}</textarea>
+                                    <button class="button primary" type="submit"><i data-lucide="check"></i><span>Chốt đánh giá</span></button>
+                                </form>
+                            </div>
+                        </details>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <p class="muted-note">Chưa có bài nộp từ Bản đồ lập luận hoặc Thám tử AI.</p>
                 {% endif %}
             </div>
         </section>

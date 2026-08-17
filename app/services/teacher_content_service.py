@@ -98,6 +98,8 @@ def _content():
     data = load_json("teacher_content.json", {"argument_packages": [], "detective_cases": []})
     data.setdefault("argument_packages", [])
     data.setdefault("detective_cases", [])
+    data.setdefault("argument_submissions", [])
+    data.setdefault("detective_submissions", [])
     changed = False
     for package in DEFAULT_ARGUMENT_PACKAGES:
         if not any(item.get("id") == package["id"] for item in data["argument_packages"]):
@@ -196,6 +198,51 @@ def score_argument_package(package_id, placements):
     return {"score": round(correct / total * 100), "correct": correct, "total": len(pieces), "details": details}
 
 
+def save_argument_submission(student, package, placements, result):
+    if not student or not package:
+        return None
+    data = _content()
+    placement_text = []
+    bucket_labels = {bucket["key"]: bucket["label"] for bucket in ARGUMENT_BUCKETS}
+    pieces = {piece["id"]: piece for piece in package.get("pieces", [])}
+    for piece_id, bucket_key in (placements or {}).items():
+        piece = pieces.get(piece_id, {})
+        placement_text.append(
+            {
+                "piece_id": piece_id,
+                "piece_text": piece.get("text", ""),
+                "bucket": bucket_key,
+                "bucket_label": bucket_labels.get(bucket_key, bucket_key),
+            }
+        )
+    entry = {
+        "id": str(uuid4()),
+        "kind": "argument",
+        "module_title": "Bản đồ lập luận",
+        "student_username": student.get("username", ""),
+        "student_name": student.get("name", student.get("username", "")),
+        "teacher_username": package.get("teacher_username", ""),
+        "teacher_name": package.get("teacher_name", ""),
+        "package_id": package.get("id", ""),
+        "package_title": package.get("title", ""),
+        "question": package.get("question", ""),
+        "source_text": package.get("source_text", ""),
+        "placements": placement_text,
+        "ai_score": result.get("score", 0),
+        "score": result.get("score", 0),
+        "correct": result.get("correct", 0),
+        "total": result.get("total", 0),
+        "details": result.get("details", []),
+        "teacher_score": "",
+        "teacher_review": "",
+        "status": "pending_teacher_review",
+        "submitted_at": _now(),
+    }
+    data["argument_submissions"].append(entry)
+    _save(data)
+    return entry
+
+
 def list_detective_cases(active_only=False):
     cases = sorted(_content()["detective_cases"], key=lambda item: str(item.get("code", "")))
     return [item for item in cases if item.get("active")] if active_only else cases
@@ -267,3 +314,62 @@ def score_detective_case(code, suspicious_text, error_type, explanation, evidenc
     points += min(15, len(str(evidence or "").strip()) // 4)
     points += min(15, len(str(rewrite or "").strip()) // 5)
     return {"score": min(points, 100), "expected": case, "passed": points >= 60}
+
+
+def save_detective_submission(student, case, payload, result):
+    if not student or not case:
+        return None
+    data = _content()
+    entry = {
+        "id": str(uuid4()),
+        "kind": "detective",
+        "module_title": "Thám tử AI",
+        "student_username": student.get("username", ""),
+        "student_name": student.get("name", student.get("username", "")),
+        "teacher_username": case.get("teacher_username", ""),
+        "teacher_name": case.get("teacher_name", ""),
+        "case_id": case.get("id", ""),
+        "case_code": case.get("code", ""),
+        "case_title": case.get("title", ""),
+        "task": case.get("task", ""),
+        "text": case.get("text", ""),
+        "suspicious_text": str((payload or {}).get("suspicious_text") or "").strip(),
+        "error_type": str((payload or {}).get("error_type") or "").strip(),
+        "explanation": str((payload or {}).get("explanation") or "").strip(),
+        "evidence": str((payload or {}).get("evidence") or "").strip(),
+        "rewrite": str((payload or {}).get("rewrite") or "").strip(),
+        "expected_error_type": case.get("error_type", ""),
+        "expected_suspicious_text": case.get("suspicious_text", ""),
+        "ai_score": result.get("score", 0),
+        "score": result.get("score", 0),
+        "teacher_score": "",
+        "teacher_review": "",
+        "status": "pending_teacher_review",
+        "submitted_at": _now(),
+    }
+    data["detective_submissions"].append(entry)
+    _save(data)
+    return entry
+
+
+def list_teacher_content_submissions(limit=60):
+    data = _content()
+    submissions = []
+    submissions.extend(data.get("argument_submissions", []))
+    submissions.extend(data.get("detective_submissions", []))
+    submissions.sort(key=lambda item: item.get("submitted_at", ""), reverse=True)
+    return submissions[:limit]
+
+
+def update_teacher_content_review(submission_id, score, review):
+    data = _content()
+    for key in ("argument_submissions", "detective_submissions"):
+        submission = next((item for item in data.get(key, []) if item.get("id") == submission_id), None)
+        if submission:
+            submission["teacher_score"] = str(score or "").strip()
+            submission["teacher_review"] = str(review or "").strip()
+            submission["status"] = "teacher_reviewed"
+            submission["reviewed_at"] = _now()
+            _save(data)
+            return submission
+    raise ValueError("Không tìm thấy bài nộp.")

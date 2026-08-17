@@ -33,17 +33,6 @@
             <article class="app-panel assignment-task-card">
                 <div class="panel-heading"><div><h2>Đề bài</h2></div></div>
                 <p>{{ task.prompt }}</p>
-                <h3>Rubric</h3>
-                <div class="assignment-rubric-checklist" aria-label="Rubric tự rà soát">
-                    {% for item in task.rubric.splitlines() %}
-                        {% if item.strip() %}
-                        <label>
-                            <input type="checkbox">
-                            <span>{{ item }}</span>
-                        </label>
-                        {% endif %}
-                    {% endfor %}
-                </div>
             </article>
 
             <form class="app-panel assignment-form" id="assignmentForm">

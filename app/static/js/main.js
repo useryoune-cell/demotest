@@ -958,17 +958,48 @@ const compareForm = document.getElementById("compareForm");
 if (compareForm) {
     compareForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        const selected = compareForm.querySelector('input[name="bestAnswer"]:checked').value;
+        const selectedInput = compareForm.querySelector('input[name="bestAnswer"]:checked');
+        const meta = document.getElementById("compareMeta");
+        const submitButton = compareForm.querySelector('button[type="submit"]');
+        const selected = selectedInput ? selectedInput.value : "";
         const criteria = document.getElementById("compareCriteria").value.trim();
         const synthesis = document.getElementById("compareSynthesis").value.trim();
         const packageId = compareForm.dataset.packageId || "";
-        const response = await fetch("/api/modules/compare/score", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ package_id: packageId, selected, criteria, synthesis }),
-        });
-        const data = await response.json();
-        document.getElementById("compareMeta").textContent = data.feedback || "Đã lưu bài làm.";
+        if (!selected) {
+            meta.textContent = "Em cần chọn một câu trả lời AI.";
+            return;
+        }
+        if (criteria.length < 20) {
+            meta.textContent = "Lý do chọn cần rõ hơn, tối thiểu 20 ký tự.";
+            return;
+        }
+        if (synthesis.length < 30) {
+            meta.textContent = "Câu trả lời viết lại cần tối thiểu 30 ký tự.";
+            return;
+        }
+        meta.textContent = "Đang lưu bài làm...";
+        if (submitButton) {
+            submitButton.disabled = true;
+        }
+        try {
+            const response = await fetch("/api/modules/compare/score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ package_id: packageId, selected, criteria, synthesis }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                meta.textContent = data.error || "Chưa lưu được bài làm.";
+                return;
+            }
+            meta.textContent = data.feedback || "Đã gửi bài về giáo viên.";
+        } catch (error) {
+            meta.textContent = "Mạng đang lỗi, em thử lưu lại sau nhé.";
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
+        }
     });
 }
 

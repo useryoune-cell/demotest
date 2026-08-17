@@ -58,6 +58,7 @@ from app.services.compare_assignment_service import (
     list_compare_packages,
     list_compare_submissions,
     save_compare_submission,
+    update_compare_submission_review,
     upsert_compare_package,
 )
 from app.services.debate_config_service import (
@@ -107,6 +108,10 @@ from app.services.teacher_content_service import (
     public_detective_case,
     score_argument_package,
     score_detective_case,
+    save_argument_submission,
+    save_detective_submission,
+    list_teacher_content_submissions,
+    update_teacher_content_review,
     upsert_argument_package,
     upsert_detective_case,
 )
@@ -180,16 +185,15 @@ CRITIC_ASSISTANT_CHILD_MODULES = [
 ]
 _DISPLAY_MODULES = []
 for module in STUDENT_MODULES:
-    if module["slug"] in CRITIC_ASSISTANT_CHILD_SLUGS or module["slug"] in HIDDEN_STUDENT_MODULE_SLUGS:
+    if module["slug"] in HIDDEN_STUDENT_MODULE_SLUGS:
         continue
     _DISPLAY_MODULES.append(_module_with_existing_image(module))
-    if module["slug"] == "chatbot-socratic":
-        _DISPLAY_MODULES.append(_module_with_existing_image(CRITIC_ASSISTANT_MODULE))
 _DISPLAY_MODULES.sort(
     key=lambda module: {
-        "tro-li-phan-bien": 0,
-        "nhiem-vu": 1,
-        "chatbot-socratic": 2,
+        "nhiem-vu": 0,
+        "chatbot-socratic": 1,
+        "so-sanh-ba-cau-tra-loi": 2,
+        "prompt-phan-bien": 3,
     }.get(module["slug"], 10)
 )
 STUDENT_NAV_MODULES = [{**module, "number": f"{index:02d}"} for index, module in enumerate(_DISPLAY_MODULES, start=1)]
@@ -509,12 +513,14 @@ def module_detail(slug):
         )
     if slug == "so-sanh-ba-cau-tra-loi":
         packages = list_compare_packages(active_only=True)
+        package_id = request.args.get("package")
+        item = next((package for package in packages if package["id"] == package_id), None) if package_id else None
         return render_template(
             "pages/compare_answers.html",
             module=module,
             modules=STUDENT_NAV_MODULES,
             packages=packages,
-            item=get_compare_package(request.args.get("package")),
+            item=item,
         )
     if slug == "nhiem-vu":
         if request.args.get("task"):
@@ -714,6 +720,7 @@ def teacher_page(page):
         criteria_to_text=criteria_to_text,
         compare_packages=list_compare_packages(),
         compare_submissions=list_compare_submissions(),
+        teacher_content_submissions=list_teacher_content_submissions(),
         argument_packages=list_argument_packages(),
         argument_buckets=ARGUMENT_BUCKETS,
         pieces_to_text=pieces_to_text,
@@ -839,6 +846,34 @@ def teacher_assignment_submission_review(submission_id):
         )
     except ValueError:
         pass
+    return redirect(url_for("main.teacher_page", page="submissions"))
+
+
+@main_bp.post("/teacher/compare/submissions/<submission_id>/review")
+@teacher_required
+def teacher_compare_submission_review(submission_id):
+    try:
+        update_compare_submission_review(
+            submission_id,
+            score=request.form.get("teacher_score"),
+            review=request.form.get("teacher_review"),
+        )
+    except ValueError:
+        abort(404)
+    return redirect(request.form.get("next") or url_for("main.teacher_page", page="submissions"))
+
+
+@main_bp.post("/teacher/content-submissions/<submission_id>/review")
+@teacher_required
+def teacher_content_submission_review(submission_id):
+    try:
+        update_teacher_content_review(
+            submission_id,
+            score=request.form.get("teacher_score"),
+            review=request.form.get("teacher_review"),
+        )
+    except ValueError:
+        abort(404)
     return redirect(url_for("main.teacher_page", page="submissions"))
 
 
@@ -1257,6 +1292,12 @@ def compare_score():
     selected = str(payload.get("selected") or "").strip().upper()
     criteria = str(payload.get("criteria") or "").strip()
     synthesis = str(payload.get("synthesis") or "").strip()
+    if selected not in {"A", "B", "C"}:
+        return jsonify({"error": "Em cần chọn một câu trả lời AI để đánh giá."}), 400
+    if len(criteria) < 20:
+        return jsonify({"error": "Lý do chọn cần rõ hơn, tối thiểu 20 ký tự."}), 400
+    if len(synthesis) < 30:
+        return jsonify({"error": "Câu trả lời viết lại cần tối thiểu 30 ký tự."}), 400
     correct = selected == item["best"]
     criteria_points = min(30, len(criteria) // 8)
     synthesis_points = min(40, len(synthesis) // 10)
@@ -1349,6 +1390,9 @@ def detective_station():
 @student_required
 def detective_score():
     payload = request.json or {}
+    case = get_detective_case(payload.get("code", "A"), active_only=True)
+    if not case:
+        return jsonify({"error": "Chưa có vụ án đang mở."}), 404
     result = score_detective_case(
         code=payload.get("code", "A"),
         suspicious_text=payload.get("suspicious_text", ""),
@@ -1357,7 +1401,14 @@ def detective_score():
         evidence=payload.get("evidence", ""),
         rewrite=payload.get("rewrite", ""),
     )
+    submission = save_detective_submission(
+        get_student(session.get("student_username")),
+        case,
+        payload,
+        result,
+    )
     record_student_activity(session.get("student_username"), "tham-tu-ai", "score", score=result.get("score"))
+    result["submission_id"] = submission["id"] if submission else ""
     return jsonify(result)
 
 
@@ -1371,8 +1422,19 @@ def argument_map_item():
 @student_required
 def argument_map_score():
     payload = request.json or {}
-    result = score_argument_package(payload.get("map_id"), payload.get("placements") or {})
+    package = get_argument_package(payload.get("map_id"), active_only=True) or get_argument_package(active_only=True)
+    if not package:
+        return jsonify({"error": "Chưa có gói bản đồ đang mở."}), 404
+    placements = payload.get("placements") or {}
+    result = score_argument_package(package.get("id"), placements)
+    submission = save_argument_submission(
+        get_student(session.get("student_username")),
+        package,
+        placements,
+        result,
+    )
     record_student_activity(session.get("student_username"), "ban-do-lap-luan", "score", score=result.get("score"))
+    result["submission_id"] = submission["id"] if submission else ""
     return jsonify(result)
 
 

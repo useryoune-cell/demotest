@@ -2058,15 +2058,22 @@ p {
 }
 
 .compare-package-card.active {
-    border-color: rgba(207, 61, 50, 0.5);
-    background: rgba(207, 61, 50, 0.08);
+    border-color: rgba(180, 122, 22, 0.48);
+    background: rgba(245, 210, 107, 0.2);
 }
 
 .compare-package-card span,
+.compare-package-card em,
 .compare-submission-list span,
 .compare-submission-list p {
     margin: 0;
     color: var(--muted);
+}
+
+.compare-package-card em {
+    font-style: normal;
+    font-weight: 800;
+    color: #a76713;
 }
 
 .teacher-compare-panel {
@@ -9385,4 +9392,89 @@ body:has(.app-shell.module-shell):not(.landing-page):not(.game-page) .assignment
     background: rgba(255, 255, 255, 0.86) !important;
     background-image: none !important;
     border-color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Compact ecosystem home: all feature cards should be visible on the first desktop viewport. */
+@media (min-width: 961px) {
+    .ecosystem-home {
+        min-height: 100vh;
+        padding: 24px clamp(28px, 4vw, 72px) 24px;
+    }
+
+    .ecosystem-header {
+        margin-bottom: 16px;
+    }
+
+    .ecosystem-header h1 {
+        font-size: clamp(2rem, 2.85vw, 2.9rem);
+        line-height: 1.04;
+    }
+
+    .ecosystem-role-grid {
+        max-width: 760px;
+        gap: 16px;
+        margin-bottom: 18px;
+    }
+
+    .ecosystem-role-card {
+        min-height: 58px;
+        padding: 10px 14px;
+        border-radius: 12px;
+    }
+
+    .ecosystem-role-card svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .ecosystem-role-card strong {
+        font-size: 0.98rem;
+    }
+
+    .ecosystem-role-actions a,
+    .ecosystem-admin-link {
+        min-height: 34px;
+        padding: 0 12px;
+        font-size: 0.86rem;
+    }
+
+    .ecosystem-grid {
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 16px 24px;
+        width: 100%;
+        max-width: min(1120px, calc(100vw - 96px));
+    }
+
+    .ecosystem-card {
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 8px;
+        min-height: 0;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .ecosystem-image-frame {
+        aspect-ratio: 2 / 3;
+        max-height: clamp(300px, 35.75vh, 394px);
+        border-radius: 8px;
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(225, 240, 250, 0.72)),
+            #f5f9fc;
+    }
+
+    .ecosystem-image-frame img {
+        object-fit: cover;
+        transform: none;
+    }
+
+    .ecosystem-card:hover .ecosystem-image-frame img,
+    .ecosystem-card:focus-visible .ecosystem-image-frame img {
+        transform: scale(1.03);
+    }
+
+    .ecosystem-card strong {
+        min-height: 30px;
+        font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+        line-height: 1.18;
+    }
 }
