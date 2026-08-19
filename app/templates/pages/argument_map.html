@@ -3,6 +3,13 @@
 {% block title %}Bản đồ lập luận · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
+{% set bucket_icons = {
+    "claim": "ti-flag",
+    "evidence": "ti-file-check",
+    "assumption": "ti-question-mark",
+    "counter": "ti-message-question",
+    "conclusion": "ti-flag-2"
+} %}
 <div class="app-shell module-shell">
     <aside class="app-sidebar" aria-label="Danh sách mô-đun">
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
@@ -13,27 +20,27 @@
         {% endfor %}
     </aside>
 
-    <section class="app-content">
+    <section class="app-content argument-page">
         <div class="module-detail-hero">
             <div>
-                <p class="eyebrow dark">{{ module.area }}</p>
-                <h1>{{ module.title }}</h1>
+                <h1><i class="ti ti-map-2"></i><span>{{ module.title }}</span></h1>
             </div>
-            <button class="button primary" type="button" id="scoreArgumentMap"><i data-lucide="check"></i><span>Chấm bản đồ</span></button>
+            <button class="button primary" type="button" id="scoreArgumentMap"><i class="ti ti-check"></i><span>Chấm bản đồ</span></button>
         </div>
 
-        <section class="app-panel argument-source">
+        <section class="argument-source">
             <p class="eyebrow dark">Câu hỏi</p>
             <h2>{{ argument_map.question }}</h2>
-            <p>{{ argument_map.source_text }}</p>
+            {% if argument_map.source_text %}
+            <p class="argument-source-text">{{ argument_map.source_text }}</p>
+            {% endif %}
         </section>
 
         <section class="argument-workspace" data-map-id="{{ argument_map.id }}">
             <aside class="piece-tray">
                 <div class="panel-heading">
                     <div>
-                        <p class="eyebrow dark">Mảnh nội dung</p>
-                        <h2>Phân loại</h2>
+                        <h2><i class="ti ti-list"></i><span>Phân loại</span></h2>
                     </div>
                 </div>
                 <div class="argument-pieces" id="argumentPieces">
@@ -48,7 +55,7 @@
             <section class="argument-canvas" aria-label="Canvas bản đồ lập luận">
                 {% for bucket in argument_map.buckets %}
                 <div class="argument-bucket" data-bucket-key="{{ bucket.key }}">
-                    <h3>{{ bucket.label }}</h3>
+                    <h3><i class="ti {{ bucket_icons.get(bucket.key, 'ti-circle') }}"></i><span>{{ bucket.label }}</span></h3>
                     <div class="bucket-dropzone"></div>
                 </div>
                 {% endfor %}

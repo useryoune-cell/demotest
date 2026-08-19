@@ -476,7 +476,9 @@ function appendSocraticMessage(role, content, extraClass = "") {
 function setSocraticStage(stageIndex) {
     socraticState.stageIndex = stageIndex;
     stagePills.forEach((pill) => {
-        pill.classList.toggle("active", Number(pill.dataset.stageIndex) === stageIndex);
+        const pillIndex = Number(pill.dataset.stageIndex);
+        pill.classList.toggle("active", pillIndex === stageIndex);
+        pill.classList.toggle("completed", pillIndex < stageIndex);
     });
 }
 
@@ -956,9 +958,21 @@ if (trustInitial) {
 
 const compareForm = document.getElementById("compareForm");
 if (compareForm) {
+    const compareChoiceInput = compareForm.querySelector('input[name="bestAnswer"]');
+    const compareChoiceButtons = compareForm.querySelectorAll("[data-answer-value]");
+
+    compareChoiceButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            if (compareChoiceInput) {
+                compareChoiceInput.value = button.dataset.answerValue || "";
+            }
+            compareChoiceButtons.forEach((item) => item.classList.toggle("active", item === button));
+        });
+    });
+
     compareForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        const selectedInput = compareForm.querySelector('input[name="bestAnswer"]:checked');
+        const selectedInput = compareForm.querySelector('input[name="bestAnswer"]');
         const meta = document.getElementById("compareMeta");
         const submitButton = compareForm.querySelector('button[type="submit"]');
         const selected = selectedInput ? selectedInput.value : "";
@@ -1328,10 +1342,16 @@ const detectiveSuspicious = document.getElementById("detectiveSuspicious");
 const detectiveNodes = document.querySelectorAll("[data-station-code]");
 
 async function loadDetectiveStation(code) {
-    const response = await fetch(`/api/modules/detective/station?code=${code}`);
+    const field = encodeURIComponent(detectiveTask?.dataset.field || "");
+    const response = await fetch(`/api/modules/detective/station?code=${encodeURIComponent(code)}&field=${field}`);
     const data = await response.json();
+    if (!response.ok) {
+        detectiveMeta.textContent = data.error || "Chưa tải được vụ án.";
+        return;
+    }
     const station = data.station;
     detectiveTask.dataset.code = station.code;
+    detectiveTask.dataset.field = station.field_key || detectiveTask.dataset.field || "";
     detectiveTaskLabel.textContent = `${station.code} · ${station.title}`;
     detectiveTaskTitle.textContent = station.task;
     detectiveText.textContent = station.text;
@@ -1364,6 +1384,7 @@ if (detectiveForm) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 code: detectiveTask.dataset.code,
+                field: detectiveTask.dataset.field || "",
                 suspicious_text: detectiveSuspicious.value,
                 error_type: document.getElementById("detectiveType").value,
                 explanation: document.getElementById("detectiveExplanation").value,
@@ -1372,24 +1393,25 @@ if (detectiveForm) {
             }),
         });
         const data = await response.json();
+        if (!response.ok) {
+            detectiveMeta.textContent = data.error || "Chưa chấm được bài.";
+            return;
+        }
         detectiveMeta.textContent = `${data.score}/100 · Lỗi chuẩn: ${data.expected.error_type}`;
         if (data.passed) {
             const current = [...detectiveNodes].find((node) => node.dataset.stationCode === detectiveTask.dataset.code);
             const next = current?.nextElementSibling;
             current.classList.add("completed");
             current.innerHTML = `<span>${current.dataset.stationCode}</span><small>${current.querySelector("small")?.textContent || "Hoàn thành"}</small>`;
-            if (window.lucide) {
-                const icon = document.createElement("i");
-                icon.setAttribute("data-lucide", "check");
-                current.appendChild(icon);
-                window.lucide.createIcons();
-            }
+            const icon = document.createElement("i");
+            icon.className = "ti ti-check";
+            current.appendChild(icon);
             if (next) {
                 next.disabled = false;
                 next.classList.add("active");
-                next.querySelector("i")?.setAttribute("data-lucide", "car");
-                if (window.lucide) {
-                    window.lucide.createIcons();
+                const nextIcon = next.querySelector("i");
+                if (nextIcon) {
+                    nextIcon.className = "ti ti-file-off";
                 }
             }
         } else {

@@ -104,12 +104,23 @@ def _clean_answer(value):
     return str(value or "").strip()
 
 
+def _clean_trust(value):
+    value = str(value or "unclear").strip()
+    return value if value in {"source", "unclear", "no_source"} else "unclear"
+
+
 def _normalize_package(package):
     answers = package.get("answers") or []
     normalized_answers = []
     for index, label in enumerate(("A", "B", "C")):
         item = answers[index] if index < len(answers) else {}
-        normalized_answers.append({"label": label, "text": _clean_answer(item.get("text"))})
+        normalized_answers.append(
+            {
+                "label": label,
+                "text": _clean_answer(item.get("text")),
+                "trust": _clean_trust(item.get("trust")),
+            }
+        )
     package["answers"] = normalized_answers
     package["best"] = str(package.get("best") or "A").strip().upper()
     if package["best"] not in {"A", "B", "C"}:
@@ -140,9 +151,21 @@ def upsert_compare_package(form, teacher):
     title = str(form.get("title") or "").strip()
     question = str(form.get("question") or "").strip()
     answers = [
-        {"label": "A", "text": _clean_answer(form.get("answer_a"))},
-        {"label": "B", "text": _clean_answer(form.get("answer_b"))},
-        {"label": "C", "text": _clean_answer(form.get("answer_c"))},
+        {
+            "label": "A",
+            "text": _clean_answer(form.get("answer_a")),
+            "trust": _clean_trust(form.get("trust_a")),
+        },
+        {
+            "label": "B",
+            "text": _clean_answer(form.get("answer_b")),
+            "trust": _clean_trust(form.get("trust_b")),
+        },
+        {
+            "label": "C",
+            "text": _clean_answer(form.get("answer_c")),
+            "trust": _clean_trust(form.get("trust_c")),
+        },
     ]
     if not title or not question or any(not answer["text"] for answer in answers):
         raise ValueError("Gói bài cần có tiêu đề, câu hỏi và đủ 3 câu trả lời AI.")

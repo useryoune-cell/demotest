@@ -3,6 +3,21 @@
 {% block title %}Chatbot Socratic · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
+{% set stage_icons = {
+    "PROBE": "ti-help-circle",
+    "CLAIM": "ti-bulb",
+    "EVIDENCE": "ti-file-check",
+    "COUNTER": "ti-swords",
+    "REVISE": "ti-refresh",
+    "SYNTHESIZE": "ti-stack-2"
+} %}
+{% set board_icons = {
+    "claims": "ti-bulb",
+    "evidence": "ti-file-check",
+    "unclear": "ti-question-mark",
+    "counterpoints": "ti-message-question",
+    "revisions": "ti-edit"
+} %}
 <div class="app-shell module-shell">
     <aside class="app-sidebar" aria-label="Danh sách mô-đun">
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
@@ -17,22 +32,22 @@
         {% endfor %}
     </aside>
 
-    <section class="app-content">
+    <section class="app-content socratic-page">
         <div class="module-detail-hero socratic-hero">
             <div>
                 <p class="eyebrow dark">{{ module.area }}</p>
                 <h1>{{ module.title }}</h1>
             </div>
             <a class="button primary" href="{{ url_for('main.module_detail', slug='nhat-ky-phan-tu-ai') }}" id="finishSocraticLink">
-                <i data-lucide="book-open-check"></i>
+                <i class="ti ti-book-2"></i>
                 <span>Kết thúc & Phản tư</span>
             </a>
         </div>
 
         <section class="socratic-stagebar" aria-label="Tiến trình Socratic">
             {% for stage in stages %}
-            <button class="stage-pill {% if loop.index0 == 0 %}active{% endif %}" type="button" data-stage-index="{{ loop.index0 }}">
-                <span>{{ stage.key }}</span>
+            <button class="stage-pill stage-{{ stage.key|lower }} {% if loop.index0 == 0 %}active{% endif %}" type="button" data-stage-index="{{ loop.index0 }}">
+                <span><i class="ti {{ stage_icons.get(stage.key, 'ti-circle') }}"></i>{{ stage.key }}</span>
                 <small>{{ stage.label }}</small>
             </button>
             {% endfor %}
@@ -59,7 +74,7 @@
                 <form class="socratic-form" id="socraticForm">
                     <textarea id="socraticInput" rows="3" placeholder="Nhập câu hỏi..."></textarea>
                     <button class="button primary" type="submit">
-                        <i data-lucide="send"></i>
+                        <i class="ti ti-send"></i>
                         <span>Gửi</span>
                     </button>
                 </form>
@@ -76,7 +91,7 @@
                 <div class="board-columns">
                     {% for key, label in board_keys.items() %}
                     <section class="board-section" data-board-key="{{ key }}">
-                        <h3>{{ label }}</h3>
+                        <h3><i class="ti {{ board_icons.get(key, 'ti-circle') }}"></i><span>{{ label }}</span></h3>
                         <div class="board-items"></div>
                     </section>
                     {% endfor %}

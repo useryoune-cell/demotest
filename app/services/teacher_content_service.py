@@ -13,6 +13,7 @@ ARGUMENT_BUCKETS = [
     {"key": "counter", "label": "Phản biện"},
     {"key": "conclusion", "label": "Kết luận"},
 ]
+DETECTIVE_DEFAULT_FIELD = "Kiểm chứng thông tin AI"
 
 DEFAULT_ARGUMENT_PACKAGES = [
     {
@@ -56,6 +57,7 @@ DEFAULT_DETECTIVE_CASES = [
         "id": "detective-station-a",
         "code": "A",
         "title": "Dữ kiện sai",
+        "field": DETECTIVE_DEFAULT_FIELD,
         "teacher_username": "teacher01",
         "teacher_name": "Giáo viên phản biện",
         "task": "Tìm dữ kiện sai trong câu trả lời AI.",
@@ -71,6 +73,7 @@ DEFAULT_DETECTIVE_CASES = [
         "id": "detective-station-b",
         "code": "B",
         "title": "Nguồn không tồn tại",
+        "field": "Kiểm chứng nguồn AI",
         "teacher_username": "teacher01",
         "teacher_name": "Giáo viên phản biện",
         "task": "Kiểm tra nguồn được AI viện dẫn.",
@@ -94,6 +97,16 @@ def _normalize(value):
     return "".join(char for char in text if unicodedata.category(char) != "Mn")
 
 
+def _field_name(value):
+    return str(value or DETECTIVE_DEFAULT_FIELD).strip() or DETECTIVE_DEFAULT_FIELD
+
+
+def _field_key(value):
+    normalized = _normalize(_field_name(value))
+    chars = [char if char.isalnum() else "-" for char in normalized]
+    return "-".join("".join(chars).split("-")).strip("-") or "kiem-chung-thong-tin-ai"
+
+
 def _content():
     data = load_json("teacher_content.json", {"argument_packages": [], "detective_cases": []})
     data.setdefault("argument_packages", [])
@@ -108,6 +121,10 @@ def _content():
     for case in DEFAULT_DETECTIVE_CASES:
         if not any(item.get("id") == case["id"] for item in data["detective_cases"]):
             data["detective_cases"].append(deepcopy(case))
+            changed = True
+    for case in data["detective_cases"]:
+        if not case.get("field"):
+            case["field"] = "Kiểm chứng nguồn AI" if "nguon" in _normalize(case.get("error_type")) else DETECTIVE_DEFAULT_FIELD
             changed = True
     if changed:
         save_json("teacher_content.json", data)
@@ -243,14 +260,29 @@ def save_argument_submission(student, package, placements, result):
     return entry
 
 
-def list_detective_cases(active_only=False):
-    cases = sorted(_content()["detective_cases"], key=lambda item: str(item.get("code", "")))
-    return [item for item in cases if item.get("active")] if active_only else cases
+def list_detective_cases(active_only=False, field_key=None):
+    cases = sorted(_content()["detective_cases"], key=lambda item: (_field_name(item.get("field")), str(item.get("code", ""))))
+    if active_only:
+        cases = [item for item in cases if item.get("active")]
+    if field_key:
+        cases = [item for item in cases if _field_key(item.get("field")) == _field_key(field_key)]
+    return cases
 
 
-def get_detective_case(code="A", active_only=False):
+def list_detective_fields(active_only=False):
+    fields = {}
+    for case in list_detective_cases(active_only=active_only):
+        name = _field_name(case.get("field"))
+        key = _field_key(name)
+        if key not in fields:
+            fields[key] = {"key": key, "name": name, "count": 0}
+        fields[key]["count"] += 1
+    return list(fields.values())
+
+
+def get_detective_case(code="A", active_only=False, field_key=None):
     code = str(code or "A").upper()
-    cases = list_detective_cases(active_only=active_only)
+    cases = list_detective_cases(active_only=active_only, field_key=field_key)
     for case in cases:
         if str(case.get("code", "")).upper() == code:
             return case
@@ -258,7 +290,14 @@ def get_detective_case(code="A", active_only=False):
 
 
 def public_detective_case(case):
-    return {"code": case["code"], "title": case["title"], "task": case["task"], "text": case["text"]}
+    return {
+        "code": case["code"],
+        "field": _field_name(case.get("field")),
+        "field_key": _field_key(case.get("field")),
+        "title": case["title"],
+        "task": case["task"],
+        "text": case["text"],
+    }
 
 
 def upsert_detective_case(form, teacher):
@@ -267,6 +306,7 @@ def upsert_detective_case(form, teacher):
     code = str(form.get("code") or "").strip().upper()[:2]
     fields = {
         "code": code,
+        "field": _field_name(form.get("field")),
         "title": str(form.get("title") or "").strip(),
         "task": str(form.get("task") or "").strip(),
         "text": str(form.get("text") or "").strip(),
@@ -299,14 +339,16 @@ def delete_detective_case(case_id):
     _save(data)
 
 
-def score_detective_case(code, suspicious_text, error_type, explanation, evidence, rewrite):
-    case = get_detective_case(code, active_only=True)
+def score_detective_case(code, suspicious_text, error_type, explanation, evidence, rewrite, field_key=None):
+    case = get_detective_case(code, active_only=True, field_key=field_key)
+    if not case:
+        return {"score": 0, "expected": {}, "passed": False}
     suspicious = _normalize(str(suspicious_text or "").strip())
     expected_suspicious = _normalize(case.get("suspicious_text", ""))
     selected_type = _normalize(str(error_type or "").strip())
     expected_type = _normalize(case.get("error_type", ""))
     points = 0
-    if expected_suspicious in suspicious or suspicious in expected_suspicious:
+    if suspicious and expected_suspicious and (expected_suspicious in suspicious or suspicious in expected_suspicious):
         points += 25
     if selected_type == expected_type:
         points += 25

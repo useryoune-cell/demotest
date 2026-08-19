@@ -3,6 +3,11 @@
 {% block title %}So sánh ba câu trả lời AI · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
+{% set trust_badges = {
+    "source": {"label": "Có nguồn", "icon": "ti-shield-check"},
+    "unclear": {"label": "Mơ hồ", "icon": "ti-alert-triangle"},
+    "no_source": {"label": "Không nguồn", "icon": "ti-shield-x"}
+} %}
 <div class="app-shell module-shell">
     <aside class="app-sidebar" aria-label="Danh sách mô-đun">
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
@@ -13,7 +18,7 @@
         {% endfor %}
     </aside>
 
-    <section class="app-content">
+    <section class="app-content compare-page">
         <div class="module-detail-hero">
             <div>
                 <h1>{{ module.title }}</h1>
@@ -23,7 +28,7 @@
             </div>
             {% if item %}
             <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">
-                <i data-lucide="folder-open"></i><span>Đổi đề</span>
+                <i class="ti ti-folder"></i><span>Đổi đề</span>
             </a>
             {% endif %}
         </div>
@@ -52,28 +57,34 @@
         {% if item %}
         <section class="compare-grid">
             {% for answer in item.answers %}
-            <article class="compare-card" data-answer-label="{{ answer.label }}">
+            {% set badge = trust_badges.get(answer.trust, trust_badges["unclear"]) %}
+            <article class="compare-card compare-card-{{ answer.label|lower }}" data-answer-label="{{ answer.label }}">
+                <span class="trust-badge trust-{{ answer.trust or 'unclear' }}"><i class="ti {{ badge.icon }}"></i>{{ badge.label }}</span>
                 <span class="module-number">{{ answer.label }}</span>
                 <p>{{ answer.text }}</p>
             </article>
             {% endfor %}
         </section>
 
-        <form class="app-panel compare-form" id="compareForm" data-package-id="{{ item.id }}">
+        <form class="compare-form" id="compareForm" data-package-id="{{ item.id }}">
             <div class="panel-heading">
-                <div><h2>Tự nhận định và lập luận</h2></div>
+                <div><h2><i class="ti ti-pencil"></i><span>Tự nhận định và lập luận</span></h2></div>
                 <span class="response-meta" id="compareMeta" aria-live="polite"></span>
             </div>
             <div class="choice-row">
+                <input type="hidden" name="bestAnswer" value="{{ item.answers[0].label if item.answers else '' }}">
                 {% for answer in item.answers %}
-                <label><input type="radio" name="bestAnswer" value="{{ answer.label }}" {% if loop.first %}checked{% endif %}> Câu {{ answer.label }}</label>
+                <button class="compare-choice-button {% if loop.first %}active{% endif %}" type="button" data-answer-value="{{ answer.label }}">
+                    <i class="ti ti-check"></i>
+                    <span>Câu {{ answer.label }}</span>
+                </button>
                 {% endfor %}
             </div>
             <label class="field-label" for="compareCriteria">Vì sao em chọn câu đó?</label>
             <textarea id="compareCriteria" rows="4" minlength="20" required placeholder="Nhập lý do chọn..."></textarea>
             <label class="field-label" for="compareSynthesis">Câu trả lời em tự viết lại</label>
             <textarea id="compareSynthesis" rows="5" minlength="30" required></textarea>
-            <button class="button primary" type="submit"><i data-lucide="check"></i><span>Lưu đánh giá</span></button>
+            <button class="button primary" type="submit"><i class="ti ti-send"></i><span>Lưu đánh giá</span></button>
         </form>
         {% endif %}
     </section>

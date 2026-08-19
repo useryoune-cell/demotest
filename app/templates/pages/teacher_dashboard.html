@@ -137,6 +137,7 @@
                         <input name="code" placeholder="Mã trạm, ví dụ C" required>
                         <input name="title" placeholder="Tên lỗi" required>
                     </div>
+                    <input name="field" placeholder="Lĩnh vực, ví dụ Kiểm chứng nguồn AI" required>
                     <input name="task" placeholder="Nhiệm vụ học sinh cần làm" required>
                     <textarea name="text" rows="4" placeholder="Câu trả lời AI có lỗi" required></textarea>
                     <div class="topic-side-grid">
@@ -154,13 +155,14 @@
                 {% for case in detective_cases %}
                 <article class="teacher-topic-card">
                     <details class="teacher-topic-editor">
-                        <summary><span>{{ case.code }}</span><strong>{{ case.title }}</strong><em>{{ "Đang mở" if case.active else "Đã ẩn" }}</em></summary>
+                        <summary><span>{{ case.code }}</span><strong>{{ case.title }}</strong><em>{{ case.field }} · {{ "Đang mở" if case.active else "Đã ẩn" }}</em></summary>
                         <form class="admin-form" method="post" action="{{ url_for('main.teacher_detective_case_save') }}">
                             <input type="hidden" name="case_id" value="{{ case.id }}">
                             <div class="topic-side-grid">
                                 <input name="code" value="{{ case.code }}" required>
                                 <input name="title" value="{{ case.title }}" required>
                             </div>
+                            <input name="field" value="{{ case.field }}" required>
                             <input name="task" value="{{ case.task }}" required>
                             <textarea name="text" rows="4" required>{{ case.text }}</textarea>
                             <div class="topic-side-grid">
@@ -234,8 +236,23 @@
                     <input name="title" placeholder="Tên gói bài" required>
                     <textarea name="question" rows="3" placeholder="Câu hỏi học sinh cần đánh giá" required></textarea>
                     <textarea name="answer_a" rows="4" placeholder="Câu trả lời AI A" required></textarea>
+                    <select name="trust_a" aria-label="Độ tin cậy câu A">
+                        <option value="unclear">Mơ hồ</option>
+                        <option value="source">Có nguồn</option>
+                        <option value="no_source">Không nguồn</option>
+                    </select>
                     <textarea name="answer_b" rows="4" placeholder="Câu trả lời AI B" required></textarea>
+                    <select name="trust_b" aria-label="Độ tin cậy câu B">
+                        <option value="unclear">Mơ hồ</option>
+                        <option value="source">Có nguồn</option>
+                        <option value="no_source">Không nguồn</option>
+                    </select>
                     <textarea name="answer_c" rows="4" placeholder="Câu trả lời AI C" required></textarea>
+                    <select name="trust_c" aria-label="Độ tin cậy câu C">
+                        <option value="unclear">Mơ hồ</option>
+                        <option value="source">Có nguồn</option>
+                        <option value="no_source">Không nguồn</option>
+                    </select>
                     <div class="topic-side-grid">
                         <select name="best"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select>
                         <label class="compare-active-check"><input type="checkbox" name="active" checked> Đang mở</label>
@@ -254,8 +271,23 @@
                             <input name="title" value="{{ package.title }}" required>
                             <textarea name="question" rows="3" required>{{ package.question }}</textarea>
                             <textarea name="answer_a" rows="4" required>{{ package.answers[0].text }}</textarea>
+                            <select name="trust_a" aria-label="Độ tin cậy câu A">
+                                <option value="unclear" {% if package.answers[0].trust == "unclear" %}selected{% endif %}>Mơ hồ</option>
+                                <option value="source" {% if package.answers[0].trust == "source" %}selected{% endif %}>Có nguồn</option>
+                                <option value="no_source" {% if package.answers[0].trust == "no_source" %}selected{% endif %}>Không nguồn</option>
+                            </select>
                             <textarea name="answer_b" rows="4" required>{{ package.answers[1].text }}</textarea>
+                            <select name="trust_b" aria-label="Độ tin cậy câu B">
+                                <option value="unclear" {% if package.answers[1].trust == "unclear" %}selected{% endif %}>Mơ hồ</option>
+                                <option value="source" {% if package.answers[1].trust == "source" %}selected{% endif %}>Có nguồn</option>
+                                <option value="no_source" {% if package.answers[1].trust == "no_source" %}selected{% endif %}>Không nguồn</option>
+                            </select>
                             <textarea name="answer_c" rows="4" required>{{ package.answers[2].text }}</textarea>
+                            <select name="trust_c" aria-label="Độ tin cậy câu C">
+                                <option value="unclear" {% if package.answers[2].trust == "unclear" %}selected{% endif %}>Mơ hồ</option>
+                                <option value="source" {% if package.answers[2].trust == "source" %}selected{% endif %}>Có nguồn</option>
+                                <option value="no_source" {% if package.answers[2].trust == "no_source" %}selected{% endif %}>Không nguồn</option>
+                            </select>
                             <div class="topic-side-grid">
                                 <select name="best">
                                     <option value="A" {% if package.best == "A" %}selected{% endif %}>A</option>

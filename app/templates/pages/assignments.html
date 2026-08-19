@@ -23,12 +23,23 @@
         <section class="assignment-task-grid" aria-label="Danh sách nhiệm vụ">
             {% if tasks %}
                 {% for task in tasks %}
+                {% set task_text = (task.title ~ " " ~ task.prompt)|lower %}
+                {% set task_icon = "ti-pencil" %}
+                {% if "kiểm chứng" in task_text or "nguồn" in task_text %}
+                    {% set task_icon = "ti-file-search" %}
+                {% elif "lười" in task_text or "suy nghĩ" in task_text or "tư duy" in task_text %}
+                    {% set task_icon = "ti-brain" %}
+                {% elif "so sánh" in task_text %}
+                    {% set task_icon = "ti-arrows-left-right" %}
+                {% elif "prompt" in task_text %}
+                    {% set task_icon = "ti-terminal-2" %}
+                {% endif %}
                 <a class="assignment-task-box" href="{{ url_for('main.assignment_work', task_id=task.id) }}">
-                    <span class="assignment-task-icon"><i data-lucide="clipboard-check"></i></span>
+                    <span class="assignment-task-icon"><i class="ti {{ task_icon }}"></i></span>
                     <strong>{{ task.title }}</strong>
                     <em>{{ task.teacher_name }}</em>
                     <p>{{ task.prompt|truncate(140) }}</p>
-                    <span class="assignment-task-action">Vào làm bài <i data-lucide="arrow-right"></i></span>
+                    <span class="assignment-task-action">Vào làm bài <i class="ti ti-arrow-right"></i></span>
                 </a>
                 {% endfor %}
             {% else %}

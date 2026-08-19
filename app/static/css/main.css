@@ -1,22 +1,43 @@
 :root {
-    --ink: #f7f0df;
-    --muted: #b8ac94;
-    --soft: #17130c;
-    --line: rgba(212, 175, 92, 0.24);
-    --paper: #0b0905;
-    --white: #151008;
-    --indigo: #d4af5c;
-    --indigo-dark: #8f6b25;
-    --teal: #c99a45;
-    --coral: #e3343f;
-    --sun: #f0c86a;
-    --night: #070603;
-    --gold: #d4af5c;
-    --gold-soft: #f0d98a;
-    --champagne: #f7f0df;
-    --red: #e3343f;
-    --panel: rgba(22, 17, 9, 0.92);
-    --panel-soft: #21180d;
+    --bg-page: #FAFAF7;
+    --bg-card: #FFFFFF;
+    --text-primary: #2B2B33;
+    --text-secondary: #6B6B72;
+    --accent-primary: #E85D4C;
+    --accent-secondary: #3B5BDB;
+    --success: #2F9E67;
+    --warning: #F0A93A;
+    --danger: #E24B4A;
+    --step-probe-bg: #E6F1FB;
+    --step-probe-text: #0C447C;
+    --step-claim-bg: #EEEDFE;
+    --step-claim-text: #3C3489;
+    --step-evidence-bg: #E1F5EE;
+    --step-evidence-text: #085041;
+    --step-counter-bg: #FAEEDA;
+    --step-counter-text: #633806;
+    --step-revise-bg: #FAECE7;
+    --step-revise-text: #712B13;
+    --step-synth-bg: #FCEBEB;
+    --step-synth-text: #791F1F;
+    --ink: var(--text-primary);
+    --muted: var(--text-secondary);
+    --soft: #F0F0EA;
+    --line: rgba(43, 43, 51, 0.12);
+    --paper: var(--bg-page);
+    --white: var(--bg-card);
+    --indigo: var(--accent-secondary);
+    --indigo-dark: #243A9F;
+    --teal: var(--success);
+    --coral: var(--accent-primary);
+    --sun: var(--warning);
+    --night: #17171D;
+    --gold: var(--warning);
+    --gold-soft: #F7D88E;
+    --champagne: #FFF6E5;
+    --red: var(--danger);
+    --panel: rgba(255, 255, 255, 0.94);
+    --panel-soft: #F4F4EF;
 }
 
 * {
@@ -9477,4 +9498,1876 @@ body:has(.app-shell.module-shell):not(.landing-page):not(.game-page) .assignment
         font-size: clamp(0.78rem, 0.9vw, 0.92rem);
         line-height: 1.18;
     }
+}
+
+/* Palette refresh: flat critical-thinking UI, no decorative wash backgrounds. */
+html,
+body,
+html.theme-dark body,
+body:not(.landing-page):not(.game-page),
+html.theme-dark body:not(.landing-page):not(.game-page),
+body.module-focus-page:not(.landing-page):not(.game-page),
+html.theme-dark body.module-focus-page:not(.landing-page):not(.game-page),
+body:has(.app-shell.module-shell):not(.landing-page):not(.game-page),
+html.theme-dark body:has(.app-shell.module-shell):not(.landing-page):not(.game-page) {
+    --ink: var(--text-primary) !important;
+    --muted: var(--text-secondary) !important;
+    --soft: #F0F0EA !important;
+    --line: rgba(43, 43, 51, 0.12) !important;
+    --paper: var(--bg-page) !important;
+    --white: var(--bg-card) !important;
+    --indigo: var(--accent-secondary) !important;
+    --indigo-dark: #243A9F !important;
+    --teal: var(--success) !important;
+    --coral: var(--accent-primary) !important;
+    --sun: var(--warning) !important;
+    --night: #17171D !important;
+    --gold: var(--warning) !important;
+    --gold-soft: #F7D88E !important;
+    --champagne: #FFF6E5 !important;
+    --red: var(--danger) !important;
+    --panel: rgba(255, 255, 255, 0.94) !important;
+    --panel-soft: #F4F4EF !important;
+    background: var(--bg-page) !important;
+    background-color: var(--bg-page) !important;
+    background-image: none !important;
+    color: var(--text-primary) !important;
+}
+
+body::before,
+body::after,
+.ecosystem-home::before,
+.ecosystem-home::after,
+.student-hero::before,
+.student-hero::after,
+.module-detail-hero::before,
+.module-detail-hero::after,
+.app-shell::before,
+.app-shell::after {
+    display: none !important;
+    content: none !important;
+}
+
+.site-header,
+body:not(.landing-page):not(.game-page) .site-header,
+html.theme-dark body:not(.landing-page):not(.game-page) .site-header {
+    background: rgba(255, 255, 255, 0.94) !important;
+    background-image: none !important;
+    border-bottom-color: rgba(43, 43, 51, 0.12) !important;
+    color: var(--text-primary) !important;
+}
+
+.brand,
+.main-nav,
+.header-actions,
+.app-sidebar,
+.sidebar-item,
+.module-focus-back,
+.ecosystem-header,
+.module-detail-hero,
+.app-panel {
+    color: var(--text-primary) !important;
+}
+
+.main-nav a,
+.muted-note,
+.response-meta,
+.module-detail-hero p:not(.eyebrow),
+.app-panel p,
+.app-panel em,
+.compare-package-card span,
+.compare-package-card em,
+.assignment-task-box em,
+.assignment-task-box p {
+    color: var(--text-secondary) !important;
+}
+
+.app-panel,
+.module-detail-hero,
+.student-hero,
+.teacher-top,
+.module-card,
+.app-module-card,
+.recommended-card,
+.activity-frame,
+.socratic-chat-panel,
+.thinking-board,
+.flow-step,
+.board-section,
+.reflection-entry,
+.ai-answer-box,
+.evidence-box,
+.locked-state,
+.decision-button,
+.compare-card,
+.compare-form,
+.compare-package-panel,
+.compare-package-card,
+.assignment-task-box,
+.assignment-empty,
+.assignment-task-card,
+.assignment-form,
+.assignment-result,
+.assignment-consent-card,
+.teacher-topic-card,
+.teacher-assignment-panel,
+.teacher-compare-panel,
+html.theme-dark body:not(.landing-page):not(.game-page) .app-panel,
+html.theme-dark body:not(.landing-page):not(.game-page) .module-detail-hero,
+html.theme-dark body:not(.landing-page):not(.game-page) .socratic-chat-panel,
+html.theme-dark body:not(.landing-page):not(.game-page) .thinking-board,
+html.theme-dark body:not(.landing-page):not(.game-page) .compare-card,
+html.theme-dark body:not(.landing-page):not(.game-page) .assignment-task-box,
+html.theme-dark body:not(.landing-page):not(.game-page) .assignment-task-card,
+html.theme-dark body:not(.landing-page):not(.game-page) .assignment-form {
+    background: var(--bg-card) !important;
+    background-image: none !important;
+    border: 1px solid rgba(43, 43, 51, 0.12) !important;
+    border-radius: 12px !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 14px 32px rgba(43, 43, 51, 0.08) !important;
+}
+
+input,
+select,
+textarea,
+body:not(.landing-page) input,
+body:not(.landing-page) select,
+body:not(.landing-page) textarea,
+html.theme-dark body:not(.landing-page):not(.game-page) input,
+html.theme-dark body:not(.landing-page):not(.game-page) select,
+html.theme-dark body:not(.landing-page):not(.game-page) textarea {
+    background: var(--bg-card) !important;
+    border: 1px solid rgba(43, 43, 51, 0.18) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+body:not(.landing-page) input::placeholder,
+body:not(.landing-page) textarea::placeholder {
+    color: rgba(107, 107, 114, 0.72) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent-secondary) !important;
+    box-shadow: 0 0 0 3px rgba(59, 91, 219, 0.14) !important;
+    outline: none !important;
+}
+
+.button,
+.header-cta,
+.module-focus-back,
+.sidebar-item,
+.ecosystem-role-actions a,
+.ecosystem-admin-link {
+    border-radius: 8px !important;
+}
+
+.button.primary,
+.header-cta,
+body:not(.landing-page):not(.game-page) .button.primary,
+body:not(.landing-page):not(.game-page) .header-cta,
+html.theme-dark body:not(.landing-page):not(.game-page) .button.primary,
+html.theme-dark body:not(.landing-page):not(.game-page) .header-cta {
+    background: var(--accent-primary) !important;
+    background-image: none !important;
+    border: 1px solid var(--accent-primary) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 10px 22px rgba(232, 93, 76, 0.22) !important;
+}
+
+.button.primary *,
+.header-cta * {
+    color: inherit !important;
+}
+
+.button.secondary,
+.module-focus-back,
+body:not(.landing-page):not(.game-page) .button.secondary,
+html.theme-dark body:not(.landing-page):not(.game-page) .button.secondary,
+body.module-focus-page .module-focus-back {
+    background: transparent !important;
+    background-image: none !important;
+    border: 1px solid var(--text-secondary) !important;
+    color: var(--text-secondary) !important;
+    box-shadow: none !important;
+}
+
+.text-link,
+.main-nav a:hover,
+.compare-package-card:hover,
+.compare-package-card:focus-visible,
+.assignment-task-action,
+.assignment-task-action i {
+    color: var(--accent-secondary) !important;
+}
+
+.module-number {
+    background: rgba(59, 91, 219, 0.10) !important;
+    color: var(--accent-secondary) !important;
+    border-color: rgba(59, 91, 219, 0.26) !important;
+}
+
+.assignment-task-icon {
+    display: grid !important;
+    place-items: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: rgba(59, 91, 219, 0.10) !important;
+    color: var(--accent-secondary) !important;
+}
+
+.assignment-task-icon .ti {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.assignment-task-box.active,
+.assignment-page .compare-package-card.active {
+    background: #FFF7E0 !important;
+    border-color: rgba(240, 169, 58, 0.48) !important;
+}
+
+.socratic-stagebar {
+    align-items: stretch;
+}
+
+.stage-pill,
+body:not(.landing-page):not(.game-page) .stage-pill,
+html.theme-dark body:not(.landing-page):not(.game-page) .stage-pill {
+    position: relative;
+    background: var(--step-probe-bg) !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    color: var(--step-probe-text) !important;
+    box-shadow: none !important;
+}
+
+.stage-pill span {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+}
+
+.stage-pill .ti {
+    font-size: 16px;
+}
+
+.stage-claim {
+    background: var(--step-claim-bg) !important;
+    color: var(--step-claim-text) !important;
+}
+
+.stage-evidence {
+    background: var(--step-evidence-bg) !important;
+    color: var(--step-evidence-text) !important;
+}
+
+.stage-counter {
+    background: var(--step-counter-bg) !important;
+    color: var(--step-counter-text) !important;
+}
+
+.stage-revise {
+    background: var(--step-revise-bg) !important;
+    color: var(--step-revise-text) !important;
+}
+
+.stage-synthesize {
+    background: var(--step-synth-bg) !important;
+    color: var(--step-synth-text) !important;
+}
+
+.stage-pill.active,
+body:not(.landing-page):not(.game-page) .stage-pill.active,
+html.theme-dark body:not(.landing-page):not(.game-page) .stage-pill.active {
+    border-width: 2px !important;
+    box-shadow: 0 10px 22px rgba(43, 43, 51, 0.10) !important;
+}
+
+.stage-probe.active {
+    border-color: var(--step-probe-text) !important;
+}
+
+.stage-claim.active {
+    border-color: var(--step-claim-text) !important;
+}
+
+.stage-evidence.active {
+    border-color: var(--step-evidence-text) !important;
+}
+
+.stage-counter.active {
+    border-color: var(--step-counter-text) !important;
+}
+
+.stage-revise.active {
+    border-color: var(--step-revise-text) !important;
+}
+
+.stage-synthesize.active {
+    border-color: var(--step-synth-text) !important;
+}
+
+.stage-pill.completed::after {
+    content: "\ea5e";
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(47, 158, 103, 0.12);
+    color: var(--success);
+    font-family: "tabler-icons";
+    font-size: 14px;
+    line-height: 1;
+}
+
+.board-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary) !important;
+}
+
+.board-section h3 .ti {
+    color: var(--accent-secondary);
+    font-size: 18px;
+}
+
+.trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    margin-bottom: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.trust-badge .ti {
+    font-size: 16px;
+}
+
+.trust-source {
+    background: rgba(47, 158, 103, 0.10);
+    color: var(--success);
+}
+
+.trust-unclear {
+    background: rgba(240, 169, 58, 0.12);
+    color: #8A5A08;
+}
+
+.trust-no_source {
+    background: rgba(226, 75, 74, 0.10);
+    color: var(--danger);
+}
+
+.assignment-timer i,
+.assignment-timer strong {
+    color: var(--accent-secondary) !important;
+}
+
+.assignment-timer.warning i,
+.assignment-timer.warning strong,
+.assignment-timer.warning span,
+.assignment-timer.warning small {
+    color: #B55A05 !important;
+}
+
+.assignment-consent-card .assignment-accept,
+.assignment-consent-card .assignment-accept span,
+.assignment-consent-card .assignment-accept i {
+    background: var(--success) !important;
+    border-color: var(--success) !important;
+    color: #FFFFFF !important;
+}
+
+.assignment-consent-card .button.secondary {
+    background: transparent !important;
+    border-color: rgba(107, 107, 114, 0.55) !important;
+    color: var(--text-secondary) !important;
+}
+
+.assignment-submit-bar .button.primary {
+    background: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
+}
+
+.assignment-chat-toggle {
+    background: var(--accent-secondary) !important;
+    border-color: var(--accent-secondary) !important;
+    color: #FFFFFF !important;
+}
+
+.assignment-chat-form button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: auto !important;
+    min-width: 78px !important;
+    height: 38px !important;
+    padding: 0 14px !important;
+    background: var(--accent-secondary) !important;
+    border-color: var(--accent-secondary) !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+}
+
+.compare-package-card em {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.compare-package-card em::after {
+    content: "\ea1c";
+    font-family: "tabler-icons";
+    font-size: 16px;
+}
+
+/* Contrast pass: keep the palette, give the UI more visual weight. */
+body,
+body:not(.landing-page):not(.game-page),
+html.theme-dark body:not(.landing-page):not(.game-page),
+body.module-focus-page:not(.landing-page):not(.game-page),
+html.theme-dark body.module-focus-page:not(.landing-page):not(.game-page) {
+    --text-secondary: #55555E;
+    --line: rgba(43, 43, 51, 0.18) !important;
+    background: #F6F4EC !important;
+    color: var(--text-primary) !important;
+}
+
+.site-header,
+body:not(.landing-page):not(.game-page) .site-header,
+html.theme-dark body:not(.landing-page):not(.game-page) .site-header {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-bottom-color: rgba(43, 43, 51, 0.18) !important;
+    box-shadow: 0 8px 22px rgba(43, 43, 51, 0.07) !important;
+}
+
+.app-panel,
+.module-detail-hero,
+.student-hero,
+.teacher-top,
+.module-card,
+.app-module-card,
+.ecosystem-card,
+.ecosystem-role-card,
+.recommended-card,
+.activity-frame,
+.socratic-chat-panel,
+.thinking-board,
+.flow-step,
+.board-section,
+.reflection-entry,
+.ai-answer-box,
+.evidence-box,
+.locked-state,
+.decision-button,
+.compare-card,
+.compare-form,
+.compare-package-panel,
+.compare-package-card,
+.assignment-task-box,
+.assignment-empty,
+.assignment-task-card,
+.assignment-form,
+.assignment-result,
+.teacher-topic-card,
+.teacher-assignment-panel,
+.teacher-compare-panel {
+    background: #FFFFFF !important;
+    border-color: rgba(43, 43, 51, 0.18) !important;
+    box-shadow: 0 18px 38px rgba(43, 43, 51, 0.12) !important;
+}
+
+.app-panel h1,
+.app-panel h2,
+.app-panel h3,
+.module-detail-hero h1,
+.student-hero h1,
+.teacher-top h1,
+.ecosystem-header h1,
+.ecosystem-card strong,
+.assignment-task-box strong,
+.compare-card strong,
+.panel-heading h2 {
+    color: #202027 !important;
+}
+
+.main-nav a,
+.muted-note,
+.response-meta,
+.module-detail-hero p:not(.eyebrow),
+.app-panel p,
+.app-panel em,
+.compare-package-card span,
+.compare-package-card em,
+.assignment-task-box em,
+.assignment-task-box p {
+    color: #55555E !important;
+}
+
+.button.primary,
+.header-cta,
+body:not(.landing-page):not(.game-page) .button.primary,
+body:not(.landing-page):not(.game-page) .header-cta,
+html.theme-dark body:not(.landing-page):not(.game-page) .button.primary,
+html.theme-dark body:not(.landing-page):not(.game-page) .header-cta {
+    background: #D94838 !important;
+    border-color: #D94838 !important;
+    box-shadow: 0 12px 26px rgba(217, 72, 56, 0.30) !important;
+}
+
+.button.secondary,
+.module-focus-back,
+body:not(.landing-page):not(.game-page) .button.secondary,
+html.theme-dark body:not(.landing-page):not(.game-page) .button.secondary,
+body.module-focus-page .module-focus-back {
+    border-color: rgba(43, 43, 51, 0.42) !important;
+    color: #4E4E56 !important;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active,
+.filter-tab.active,
+.socratic-mode-button.active,
+.decision-button.active,
+.flow-step.active {
+    background: rgba(59, 91, 219, 0.13) !important;
+    border-color: rgba(59, 91, 219, 0.34) !important;
+    color: #263FB8 !important;
+}
+
+.module-number,
+.assignment-task-icon {
+    background: rgba(59, 91, 219, 0.16) !important;
+    border-color: rgba(59, 91, 219, 0.34) !important;
+    color: #2F49BF !important;
+}
+
+.assignment-task-box:hover,
+.assignment-task-box:focus-visible,
+.compare-package-card:hover,
+.compare-package-card:focus-visible,
+.ecosystem-card:hover,
+.ecosystem-card:focus-visible {
+    border-color: rgba(59, 91, 219, 0.42) !important;
+    box-shadow: 0 22px 46px rgba(43, 43, 51, 0.16) !important;
+}
+
+.stage-pill,
+body:not(.landing-page):not(.game-page) .stage-pill,
+html.theme-dark body:not(.landing-page):not(.game-page) .stage-pill {
+    border-color: rgba(43, 43, 51, 0.12) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.66) !important;
+}
+
+.stage-pill.active,
+body:not(.landing-page):not(.game-page) .stage-pill.active,
+html.theme-dark body:not(.landing-page):not(.game-page) .stage-pill.active {
+    box-shadow: 0 12px 26px rgba(43, 43, 51, 0.14) !important;
+}
+
+.trust-badge {
+    padding: 6px 10px;
+    border: 1px solid currentColor;
+}
+
+.trust-source {
+    background: rgba(47, 158, 103, 0.16);
+    color: #217A50;
+}
+
+.trust-unclear {
+    background: rgba(240, 169, 58, 0.18);
+    color: #765007;
+}
+
+.trust-no_source {
+    background: rgba(226, 75, 74, 0.16);
+    color: #C92A2A;
+}
+
+input,
+select,
+textarea,
+body:not(.landing-page) input,
+body:not(.landing-page) select,
+body:not(.landing-page) textarea {
+    border-color: rgba(43, 43, 51, 0.24) !important;
+    box-shadow: inset 0 1px 0 rgba(43, 43, 51, 0.03) !important;
+}
+
+/* Compare answers page: high-contrast answer cards and selection controls. */
+.compare-grid {
+    gap: 16px !important;
+}
+
+.compare-card,
+body:not(.landing-page) .compare-card,
+html.theme-dark body:not(.landing-page) .compare-card {
+    position: relative;
+    min-height: 0 !important;
+    padding: 52px 14px 14px !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.compare-card-a,
+body:not(.landing-page) .compare-card-a,
+html.theme-dark body:not(.landing-page) .compare-card-a {
+    background: #B5D4F4 !important;
+    color: #042C53 !important;
+}
+
+.compare-card-b,
+body:not(.landing-page) .compare-card-b,
+html.theme-dark body:not(.landing-page) .compare-card-b {
+    background: #CECBF6 !important;
+    color: #26215C !important;
+}
+
+.compare-card-c,
+body:not(.landing-page) .compare-card-c,
+html.theme-dark body:not(.landing-page) .compare-card-c {
+    background: #F5C4B3 !important;
+    color: #4A1B0C !important;
+}
+
+.compare-card p,
+body:not(.landing-page) .compare-card p,
+html.theme-dark body:not(.landing-page) .compare-card p {
+    margin: 0 !important;
+    color: inherit !important;
+    font-size: 0.96rem;
+    line-height: 1.62;
+}
+
+.compare-card .module-number,
+body:not(.landing-page) .compare-card .module-number,
+html.theme-dark body:not(.landing-page) .compare-card .module-number {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.compare-card-a .module-number {
+    background: #0C447C !important;
+    color: #E6F1FB !important;
+}
+
+.compare-card-b .module-number {
+    background: #3C3489 !important;
+    color: #EEEDFE !important;
+}
+
+.compare-card-c .module-number {
+    background: #712B13 !important;
+    color: #FAECE7 !important;
+}
+
+.compare-card .trust-badge,
+body:not(.landing-page) .compare-card .trust-badge,
+html.theme-dark body:not(.landing-page) .compare-card .trust-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    margin: 0 !important;
+    padding: 5px 9px !important;
+    border: 0 !important;
+    border-radius: 20px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 1;
+}
+
+.compare-card .trust-badge .ti {
+    font-size: 13px;
+}
+
+.compare-card-a .trust-badge {
+    background: #0C447C !important;
+    color: #E6F1FB !important;
+}
+
+.compare-card-b .trust-badge {
+    background: #3C3489 !important;
+    color: #EEEDFE !important;
+}
+
+.compare-card-c .trust-badge {
+    background: #712B13 !important;
+    color: #FAECE7 !important;
+}
+
+.compare-form .panel-heading h2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.compare-form .panel-heading h2 .ti {
+    color: #185FA5;
+    font-size: 18px;
+}
+
+.compare-form .choice-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px !important;
+}
+
+.compare-choice-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid rgba(43, 43, 51, 0.22);
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #2B2B33;
+    cursor: pointer;
+    font: 500 0.95rem/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.compare-choice-button .ti {
+    display: none;
+    font-size: 16px;
+}
+
+.compare-choice-button.active {
+    border: 2px solid #185FA5;
+    background: #E6F1FB;
+    color: #0C447C;
+}
+
+.compare-choice-button.active .ti {
+    display: inline-block;
+}
+
+.compare-form .field-label {
+    margin-top: 2px;
+    color: #6B6B72 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.compare-form textarea {
+    border-radius: 8px !important;
+}
+
+.compare-form .button.primary[type="submit"],
+body:not(.landing-page):not(.game-page) .compare-form .button.primary[type="submit"],
+html.theme-dark body:not(.landing-page):not(.game-page) .compare-form .button.primary[type="submit"] {
+    width: 100%;
+    justify-content: center;
+    background: #D97757 !important;
+    border-color: #D97757 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+}
+
+@media (max-width: 480px) {
+    .compare-grid,
+    .compare-form .choice-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Compare page mockup alignment. */
+body:has(.compare-grid) .app-content {
+    max-width: 760px !important;
+    margin-inline: auto !important;
+}
+
+body:has(.compare-grid) .module-detail-hero {
+    margin-bottom: 18px !important;
+}
+
+.compare-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    width: min(100%, 680px) !important;
+    margin: 0 0 22px !important;
+}
+
+.compare-card,
+body:not(.landing-page) .compare-card,
+html.theme-dark body:not(.landing-page) .compare-card {
+    min-height: 162px !important;
+    padding: 52px 14px 16px !important;
+}
+
+.compare-card p,
+body:not(.landing-page) .compare-card p,
+html.theme-dark body:not(.landing-page) .compare-card p {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+}
+
+.compare-form,
+body:not(.landing-page) .compare-form,
+html.theme-dark body:not(.landing-page) .compare-form,
+body:not(.landing-page):not(.game-page) .compare-form {
+    width: min(100%, 680px) !important;
+    margin: 0 !important;
+    padding: 22px 0 0 !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(43, 43, 51, 0.16) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.compare-form .panel-heading {
+    margin-bottom: 12px !important;
+}
+
+.compare-form .panel-heading h2 {
+    margin: 0 !important;
+    color: #141418 !important;
+    font-size: 21px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+}
+
+.compare-form .choice-row {
+    margin-bottom: 14px !important;
+}
+
+.compare-choice-button {
+    min-height: 38px !important;
+    font-size: 14px !important;
+}
+
+.compare-form .field-label {
+    display: block !important;
+    margin: 0 0 6px !important;
+}
+
+.compare-form textarea {
+    margin-bottom: 16px !important;
+    min-height: 80px;
+    background: #FFFFFF !important;
+    font-size: 16px !important;
+}
+
+.compare-form textarea::placeholder {
+    color: #7A7A80 !important;
+    font-weight: 500;
+}
+
+.compare-form .button.primary[type="submit"],
+body:not(.landing-page):not(.game-page) .compare-form .button.primary[type="submit"],
+html.theme-dark body:not(.landing-page):not(.game-page) .compare-form .button.primary[type="submit"] {
+    min-height: 40px !important;
+    margin-top: 2px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+}
+
+@media (max-width: 480px) {
+    body:has(.compare-grid) .app-content {
+        max-width: 100% !important;
+    }
+
+    .compare-grid {
+        width: 100% !important;
+    }
+}
+
+/* Hard scoped compare page: beat legacy app card rules. */
+body.module-focus-page .app-shell.module-shell .app-content.compare-page {
+    width: min(100%, 760px) !important;
+    max-width: 760px !important;
+    margin-inline: auto !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+    width: min(100%, 680px) !important;
+    margin: 0 0 22px !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card {
+    position: relative !important;
+    min-height: 162px !important;
+    padding: 52px 14px 16px !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    background-image: none !important;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card.compare-card-a {
+    background: #B5D4F4 !important;
+    color: #042C53 !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card.compare-card-b {
+    background: #CECBF6 !important;
+    color: #26215C !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card.compare-card-c {
+    background: #F5C4B3 !important;
+    color: #4A1B0C !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card p {
+    margin: 0 !important;
+    color: inherit !important;
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card .module-number {
+    position: absolute !important;
+    top: 14px !important;
+    left: 14px !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 26px !important;
+    height: 26px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card-a .module-number {
+    background: #0C447C !important;
+    color: #E6F1FB !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card-b .module-number {
+    background: #3C3489 !important;
+    color: #EEEDFE !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card-c .module-number {
+    background: #712B13 !important;
+    color: #FAECE7 !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card .trust-badge {
+    position: absolute !important;
+    top: 14px !important;
+    right: 14px !important;
+    margin: 0 !important;
+    padding: 5px 9px !important;
+    border: 0 !important;
+    border-radius: 20px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card-a .trust-badge {
+    background: #0C447C !important;
+    color: #E6F1FB !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card-b .trust-badge {
+    background: #3C3489 !important;
+    color: #EEEDFE !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-card-c .trust-badge {
+    background: #712B13 !important;
+    color: #FAECE7 !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-form {
+    display: grid !important;
+    gap: 0 !important;
+    width: min(100%, 680px) !important;
+    margin: 0 !important;
+    padding: 22px 0 0 !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(43, 43, 51, 0.16) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-form .panel-heading {
+    margin-bottom: 12px !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-form .choice-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+}
+
+body.module-focus-page .app-content.compare-page .compare-form .button.primary[type="submit"] {
+    width: 100% !important;
+    justify-content: center !important;
+    background: #D97757 !important;
+    border-color: #D97757 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 480px) {
+    body.module-focus-page .app-content.compare-page .compare-grid,
+    body.module-focus-page .app-content.compare-page .compare-form .choice-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Socratic page color pass only: keep layout, repaint controls and thinking board. */
+body.module-focus-page .app-content.socratic-page .module-detail-hero.socratic-hero {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .module-detail-hero h1 {
+    color: #151515 !important;
+}
+
+body.module-focus-page .app-content.socratic-page #finishSocraticLink,
+body.module-focus-page .app-content.socratic-page .socratic-form .button.primary {
+    background: #C56340 !important;
+    border-color: #C56340 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-stagebar {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .stage-pill,
+html.theme-dark body.module-focus-page .app-content.socratic-page .stage-pill {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: #84827E !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .stage-pill span,
+body.module-focus-page .app-content.socratic-page .stage-pill small {
+    color: inherit !important;
+}
+
+body.module-focus-page .app-content.socratic-page .stage-pill.active {
+    background: #7B301B !important;
+    border-color: #7B301B !important;
+    color: #FFF8F2 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .stage-pill.completed::after {
+    background: rgba(255, 248, 242, 0.18) !important;
+    color: #FFF8F2 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-chat-panel,
+body.module-focus-page .app-content.socratic-page .thinking-board {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-mode-switch {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-mode-button {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(43, 43, 51, 0.22) !important;
+    color: #171717 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-mode-button.active {
+    background: #FFF5EF !important;
+    border: 2px solid #A53B1E !important;
+    color: #8A3219 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .chat-thread {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-message.ai {
+    background: transparent !important;
+    border: 0 !important;
+    color: #151515 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-message.ai span {
+    color: #4D4D4D !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-message.user {
+    background: #E6F1FB !important;
+    border-color: #B5D4F4 !important;
+    color: #042C53 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-form textarea {
+    background: #FFFFFF !important;
+    border-color: rgba(43, 43, 51, 0.16) !important;
+    color: #151515 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-form textarea::placeholder {
+    color: #858585 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .thinking-board .panel-heading {
+    margin-bottom: 10px !important;
+}
+
+body.module-focus-page .app-content.socratic-page .thinking-board .eyebrow {
+    display: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .thinking-board h2 {
+    color: #151515 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section {
+    border: 0 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section h3 {
+    margin: 0 !important;
+    color: inherit !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section h3 .ti {
+    color: inherit !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="claims"] {
+    background: #B5D4F4 !important;
+    color: #042C53 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="evidence"] {
+    background: #A9DEC9 !important;
+    color: #085041 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="unclear"] {
+    background: #F5C96F !important;
+    color: #633806 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="counterpoints"] {
+    background: #EAB8CF !important;
+    color: #5B1734 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="revisions"] {
+    background: #C7C2F3 !important;
+    color: #26215C !important;
+}
+
+/* Stronger Socratic colors: match the saturated reference, not washed cards. */
+body.module-focus-page .app-content.socratic-page .stage-pill.active {
+    background: #7A2F18 !important;
+    border-color: #7A2F18 !important;
+    color: #FFF4ED !important;
+}
+
+body.module-focus-page .app-content.socratic-page .socratic-mode-button.active {
+    background: #FFF1EA !important;
+    border-color: #A33B1E !important;
+    color: #823017 !important;
+}
+
+body.module-focus-page .app-content.socratic-page #finishSocraticLink,
+body.module-focus-page .app-content.socratic-page .socratic-form .button.primary {
+    background: #C56340 !important;
+    border-color: #C56340 !important;
+    color: #FFFFFF !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section {
+    min-height: 0 !important;
+    padding: 10px 14px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section h3 {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-items:empty,
+body.module-focus-page .app-content.socratic-page .board-item.empty {
+    display: none !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="claims"] {
+    background: #A8C9EE !important;
+    color: #073665 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="evidence"] {
+    background: #93D7BE !important;
+    color: #064739 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="unclear"] {
+    background: #F3C35F !important;
+    color: #5A3204 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="counterpoints"] {
+    background: #E7ABC5 !important;
+    color: #561630 !important;
+}
+
+body.module-focus-page .app-content.socratic-page .board-section[data-board-key="revisions"] {
+    background: #BEB7EF !important;
+    color: #282160 !important;
+}
+
+/* Socratic stagebar hard reset: remove the old notebook grid completely. */
+body.module-focus-page:not(.game-page) .app-content.socratic-page .socratic-stagebar,
+body:not(.landing-page):not(.game-page) .app-content.socratic-page .socratic-stagebar,
+html.theme-dark body:not(.landing-page):not(.game-page) .app-content.socratic-page .socratic-stagebar {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+body.module-focus-page:not(.game-page) .app-content.socratic-page .stage-pill,
+body:not(.landing-page):not(.game-page) .app-content.socratic-page .stage-pill,
+html.theme-dark body:not(.landing-page):not(.game-page) .app-content.socratic-page .stage-pill {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    color: #86837E !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page:not(.game-page) .app-content.socratic-page .stage-pill.active,
+body:not(.landing-page):not(.game-page) .app-content.socratic-page .stage-pill.active,
+html.theme-dark body:not(.landing-page):not(.game-page) .app-content.socratic-page .stage-pill.active {
+    background: #7A2F18 !important;
+    background-color: #7A2F18 !important;
+    background-image: none !important;
+    border-color: #7A2F18 !important;
+    color: #FFF4ED !important;
+}
+
+/* Argument map redesign: compact classification board with dashed color buckets. */
+body.module-focus-page .app-content.argument-page {
+    max-width: 860px !important;
+    margin-inline: auto !important;
+}
+
+body.module-focus-page .app-content.argument-page .module-detail-hero {
+    margin-bottom: 26px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.argument-page .module-detail-hero h1 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    color: #151515 !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+}
+
+body.module-focus-page .app-content.argument-page .module-detail-hero h1 .ti {
+    color: #4B7F18 !important;
+    font-size: 24px !important;
+}
+
+body.module-focus-page .app-content.argument-page #scoreArgumentMap {
+    min-height: 44px !important;
+    padding: 0 18px !important;
+    background: #C56340 !important;
+    border-color: #C56340 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-source {
+    margin: 0 0 28px !important;
+    padding: 0 0 0 14px !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-source .eyebrow {
+    margin: 0 0 8px !important;
+    color: #185FA5 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-source h2 {
+    margin: 0 !important;
+    color: #151515 !important;
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+    font-weight: 800 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-source-text {
+    display: none !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-workspace {
+    display: grid !important;
+    grid-template-columns: 260px minmax(0, 1fr) !important;
+    gap: 18px !important;
+    align-items: start !important;
+}
+
+body.module-focus-page .app-content.argument-page .piece-tray,
+body.module-focus-page .app-content.argument-page .argument-canvas {
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.argument-page .piece-tray .panel-heading {
+    margin: 0 0 12px !important;
+}
+
+body.module-focus-page .app-content.argument-page .piece-tray h2 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin: 0 !important;
+    color: #151515 !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+}
+
+body.module-focus-page .app-content.argument-page .piece-tray h2 .ti {
+    color: #5B5B61 !important;
+    font-size: 17px !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-pieces {
+    gap: 10px !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-piece {
+    position: relative !important;
+    min-height: 0 !important;
+    padding: 11px 12px 11px 34px !important;
+    border: 1px solid rgba(43, 43, 51, 0.18) !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    color: #151515 !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.45 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-piece::before {
+    content: "\ec42";
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    color: #9A9A9F;
+    font-family: "tabler-icons";
+    font-size: 15px;
+    transform: translateY(-50%);
+}
+
+body.module-focus-page .app-content.argument-page .argument-piece.correct {
+    border-color: #2F9E67 !important;
+    background: #E1F5EE !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-piece.wrong {
+    border-color: #E24B4A !important;
+    background: #FCEBEB !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-canvas {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket {
+    min-height: 110px !important;
+    padding: 14px !important;
+    border-width: 2px !important;
+    border-style: dashed !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket h3 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin: 0 0 10px !important;
+    color: inherit !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket h3 .ti {
+    color: inherit !important;
+    font-size: 16px !important;
+}
+
+body.module-focus-page .app-content.argument-page .bucket-dropzone {
+    min-height: 66px !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="claim"] {
+    background: #E6F1FB !important;
+    border-color: #3B82F6 !important;
+    color: #1D4E89 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="evidence"] {
+    background: #E1F5EE !important;
+    border-color: #2F9E67 !important;
+    color: #0B5C48 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="assumption"] {
+    background: #EEEDFE !important;
+    border-color: #7466F1 !important;
+    color: #3C3489 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="counter"] {
+    background: #FAECEF !important;
+    border-color: #E24B7A !important;
+    color: #89344F !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="conclusion"] {
+    grid-column: 1 / -1 !important;
+    background: #EBF6DF !important;
+    border-color: #69A611 !important;
+    color: #3F6E0A !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket.is-over {
+    filter: saturate(1.12) brightness(0.98);
+    outline: 3px solid rgba(43, 43, 51, 0.08) !important;
+}
+
+@media (max-width: 760px) {
+    body.module-focus-page .app-content.argument-page .argument-workspace,
+    body.module-focus-page .app-content.argument-page .argument-canvas {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="conclusion"] {
+        grid-column: auto !important;
+    }
+}
+
+/* Argument map size pass: make the board fill desktop space better. */
+@media (min-width: 1000px) {
+    body.module-focus-page .app-shell.module-shell .app-content.argument-page {
+        width: min(100%, 1040px) !important;
+        max-width: 1040px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-workspace {
+        grid-template-columns: 310px minmax(0, 1fr) !important;
+        gap: 22px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-canvas {
+        gap: 14px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-bucket {
+        min-height: 138px !important;
+        padding: 18px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="conclusion"] {
+        min-height: 136px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .bucket-dropzone {
+        min-height: 86px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-piece {
+        min-height: 62px !important;
+        padding: 13px 14px 13px 38px !important;
+        font-size: 14px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-piece::before {
+        left: 14px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .piece-tray h2 {
+        font-size: 24px !important;
+    }
+
+    body.module-focus-page .app-content.argument-page .argument-bucket h3 {
+        font-size: 15px !important;
+    }
+}
+
+/* Detective page: red evidence board and stepped verification form. */
+body.module-focus-page .app-content.detective-page {
+    max-width: 1040px !important;
+    margin-inline: auto !important;
+}
+
+body.module-focus-page .app-content.detective-page .module-detail-hero {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.detective-page .module-detail-hero h1 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page .module-detail-hero h1 .ti {
+    color: #A32D2D !important;
+}
+
+body.module-focus-page .app-content.detective-page .module-detail-hero .button.secondary {
+    border-color: #F09595 !important;
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-map {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin-bottom: 18px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node {
+    min-height: 74px !important;
+    padding: 12px !important;
+    place-items: start !important;
+    border: 1px solid rgba(43, 43, 51, 0.14) !important;
+    border-radius: 12px !important;
+    background: #F1F1F2 !important;
+    color: #6B6B72 !important;
+    opacity: 0.6 !important;
+    box-shadow: none !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node::after {
+    display: none !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node span {
+    width: 28px !important;
+    height: 28px !important;
+    background: rgba(121, 31, 31, 0.10) !important;
+    color: #791F1F !important;
+    font-size: 13px !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node small {
+    color: inherit !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    text-align: left !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node .ti {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    font-size: 18px;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node.active,
+body.module-focus-page .app-content.detective-page .detective-node.current {
+    border-color: #A32D2D !important;
+    background: #791F1F !important;
+    color: #FAECE7 !important;
+    opacity: 1 !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node.active span,
+body.module-focus-page .app-content.detective-page .detective-node.current span {
+    background: #FAECE7 !important;
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-node.completed:not(.current) {
+    opacity: 0.6 !important;
+    background: #F1F1F2 !important;
+    border-color: rgba(43, 43, 51, 0.14) !important;
+    color: #6B6B72 !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr) !important;
+    gap: 18px !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-task,
+body.module-focus-page .app-content.detective-page .detective-form {
+    border-color: rgba(163, 45, 45, 0.18) !important;
+    box-shadow: 0 16px 34px rgba(121, 31, 31, 0.08) !important;
+}
+
+body.module-focus-page .app-content.detective-page #detectiveTaskLabel {
+    display: inline-flex !important;
+    width: fit-content !important;
+    margin-bottom: 12px !important;
+    padding: 6px 11px !important;
+    border-radius: 999px !important;
+    background: #791F1F !important;
+    color: #FAECE7 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+}
+
+body.module-focus-page .app-content.detective-page #detectiveTaskTitle {
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page #detectiveText {
+    padding: 4px 0 4px 14px !important;
+    border: 0 !important;
+    border-left: 3px solid #A32D2D !important;
+    border-radius: 0 8px 8px 0 !important;
+    background: transparent !important;
+    color: #2B2B33 !important;
+    box-shadow: none !important;
+    line-height: 1.65 !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-hint {
+    display: flex !important;
+    gap: 10px !important;
+    margin-top: 16px !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+    background: #FAECE7 !important;
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-hint .ti {
+    margin-top: 2px !important;
+    color: #A32D2D !important;
+    font-size: 20px !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-hint strong {
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-hint p {
+    margin: 3px 0 0 !important;
+    color: #791F1F !important;
+    line-height: 1.45 !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form {
+    counter-reset: detective-step !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form .panel-heading h2 {
+    color: #791F1F !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form .field-label {
+    counter-increment: detective-step !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #791F1F !important;
+    font-weight: 700 !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form .field-label::before {
+    content: counter(detective-step);
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #791F1F;
+    color: #FAECE7;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form textarea {
+    border-color: rgba(240, 149, 149, 0.72) !important;
+}
+
+body.module-focus-page .app-content.detective-page #detectiveType {
+    border-color: #F09595 !important;
+    color: #791F1F !important;
+    font-weight: 500 !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form textarea:focus,
+body.module-focus-page .app-content.detective-page #detectiveType:focus {
+    border-color: #A32D2D !important;
+    box-shadow: 0 0 0 3px rgba(163, 45, 45, 0.12) !important;
+}
+
+body.module-focus-page .app-content.detective-page .detective-form .button.primary {
+    background: #791F1F !important;
+    border-color: #791F1F !important;
+    color: #FAECE7 !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 760px) {
+    body.module-focus-page .app-content.detective-page .detective-map,
+    body.module-focus-page .app-content.detective-page .detective-layout {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Argument map stronger color pass. */
+body.module-focus-page .app-content.argument-page .module-detail-hero h1 {
+    color: #2B2B33 !important;
+}
+
+body.module-focus-page .app-content.argument-page .module-detail-hero h1 .ti {
+    color: #3F7D0A !important;
+}
+
+body.module-focus-page .app-content.argument-page #scoreArgumentMap {
+    background: #B95736 !important;
+    border-color: #B95736 !important;
+    color: #FFFFFF !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-source .eyebrow {
+    color: #0C447C !important;
+}
+
+body.module-focus-page .app-content.argument-page .piece-tray h2 {
+    color: #2B2B33 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-piece {
+    border-color: rgba(43, 43, 51, 0.26) !important;
+    background: #FFFFFF !important;
+    color: #111114 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket {
+    border-width: 2px !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="claim"] {
+    background: #BFDDF8 !important;
+    border-color: #2F6FE8 !important;
+    color: #0A3B76 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="evidence"] {
+    background: #BEEAD8 !important;
+    border-color: #168A55 !important;
+    color: #064B38 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="assumption"] {
+    background: #D8D4FA !important;
+    border-color: #6758F0 !important;
+    color: #332B83 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="counter"] {
+    background: #F4C9D8 !important;
+    border-color: #D9366C !important;
+    color: #7A2442 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket[data-bucket-key="conclusion"] {
+    background: #DCEFC5 !important;
+    border-color: #5F9F00 !important;
+    color: #376700 !important;
+}
+
+body.module-focus-page .app-content.argument-page .argument-bucket h3 {
+    color: inherit !important;
+    font-weight: 900 !important;
 }

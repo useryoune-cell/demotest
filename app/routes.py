@@ -104,6 +104,7 @@ from app.services.teacher_content_service import (
     get_detective_case,
     list_argument_packages,
     list_detective_cases,
+    list_detective_fields,
     pieces_to_text,
     public_detective_case,
     score_argument_package,
@@ -541,14 +542,26 @@ def module_detail(slug):
             item=get_error_item(1),
         )
     if slug == "tham-tu-ai":
-        stations = list_detective_cases(active_only=True)
-        station = get_detective_case(active_only=True)
+        detective_fields = list_detective_fields(active_only=True)
+        field_key = request.args.get("field")
+        if not field_key:
+            return render_template(
+                "pages/detective_fields.html",
+                module=module,
+                modules=STUDENT_NAV_MODULES,
+                fields=detective_fields,
+            )
+        stations = list_detective_cases(active_only=True, field_key=field_key)
+        station = get_detective_case(active_only=True, field_key=field_key)
+        if not station:
+            return redirect(url_for("main.module_detail", slug="tham-tu-ai"))
         return render_template(
             "pages/ai_detective.html",
             module=module,
             modules=STUDENT_NAV_MODULES,
             stations=stations,
             station=station,
+            field_key=field_key,
         )
     if slug == "ban-do-lap-luan":
         if request.args.get("map"):
@@ -1379,10 +1392,13 @@ def error_score():
 @main_bp.get("/api/modules/detective/station")
 @student_required
 def detective_station():
-    code = request.args.get("code", "A")
-    station = get_detective_case(code, active_only=True)
+    code = request.args.get("code")
+    field_key = request.args.get("field")
+    station = get_detective_case(code or "A", active_only=True, field_key=field_key)
     if not station:
         return jsonify({"error": "Chưa có vụ án đang mở."}), 404
+    if code and str(station.get("code", "")).upper() != str(code).strip().upper():
+        return jsonify({"error": "Không tìm thấy vụ án trong lĩnh vực này."}), 404
     return jsonify({"station": public_detective_case(station)})
 
 
@@ -1390,9 +1406,23 @@ def detective_station():
 @student_required
 def detective_score():
     payload = request.json or {}
-    case = get_detective_case(payload.get("code", "A"), active_only=True)
+    field_key = payload.get("field")
+    code = str(payload.get("code") or "").strip().upper()
+    case = get_detective_case(code or "A", active_only=True, field_key=field_key)
     if not case:
         return jsonify({"error": "Chưa có vụ án đang mở."}), 404
+    if code and str(case.get("code", "")).upper() != code:
+        return jsonify({"error": "Không tìm thấy vụ án trong lĩnh vực này."}), 404
+    required_fields = {
+        "suspicious_text": "Em cần chọn hoặc nhập đoạn đáng nghi.",
+        "error_type": "Em cần chọn loại lỗi.",
+        "explanation": "Em cần giải thích vì sao đáng nghi.",
+        "evidence": "Em cần nhập nguồn hoặc bằng chứng kiểm chứng.",
+        "rewrite": "Em cần viết lại câu trả lời chính xác hơn.",
+    }
+    for key, message in required_fields.items():
+        if not str(payload.get(key) or "").strip():
+            return jsonify({"error": message}), 400
     result = score_detective_case(
         code=payload.get("code", "A"),
         suspicious_text=payload.get("suspicious_text", ""),
@@ -1400,6 +1430,7 @@ def detective_score():
         explanation=payload.get("explanation", ""),
         evidence=payload.get("evidence", ""),
         rewrite=payload.get("rewrite", ""),
+        field_key=field_key,
     )
     submission = save_detective_submission(
         get_student(session.get("student_username")),

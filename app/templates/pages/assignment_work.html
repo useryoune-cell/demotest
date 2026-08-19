@@ -20,7 +20,7 @@
                 <p>Nhiệm vụ</p>
             </div>
             <div class="assignment-timer" aria-label="Thời gian làm bài">
-                <i data-lucide="timer"></i>
+                <i class="ti ti-clock"></i>
                 <div>
                     <span>Đã làm được</span>
                     <strong id="assignmentTimer">00:00</strong>
@@ -45,7 +45,7 @@
                     <span class="assignment-counter" id="assignmentCounter">0 từ · 0 ký tự</span>
                 </div>
                 <div class="assignment-submit-bar">
-                    <button class="button primary" type="submit"><i data-lucide="send"></i><span>Nộp bài</span></button>
+                    <button class="button primary" type="submit"><i class="ti ti-send"></i><span>Nộp bài</span></button>
                 </div>
             </form>
         </section>
@@ -63,7 +63,7 @@
                 <h2 id="assignmentConsentTitle">Bài làm của bạn được giám sát</h2>
                 <p>Hệ thống ghi nhận thời gian làm bài, nội dung nộp và cuộc trò chuyện với AI để gửi về giáo viên.</p>
                 <div>
-                    <button class="button primary assignment-accept" type="button" id="acceptAssignmentConsent"><i data-lucide="check"></i><span>Chấp nhận</span></button>
+                    <button class="button primary assignment-accept" type="button" id="acceptAssignmentConsent"><i class="ti ti-shield-check"></i><span>Chấp nhận</span></button>
                     <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Từ chối</a>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 </div>
                 <form class="assignment-chat-form" id="assignmentChatForm">
                     <textarea id="assignmentChatInput" rows="3" placeholder="Nhập câu hỏi..."></textarea>
-                    <button type="submit" aria-label="Gửi"><i data-lucide="send"></i></button>
+                    <button type="submit" aria-label="Gửi"><i class="ti ti-send"></i><span>Gửi</span></button>
                 </form>
             </div>
         </aside>
