@@ -97,7 +97,7 @@ MODULES = [
         "area": "Khởi động nhận thức",
         "area_key": "starter",
         "icon": "file-pen-line",
-        "image": "images/modules/prompt-phan-bien.png",
+        "image": "images/modules/promptai.jpg",
         "description": "Chấm prompt theo rubric đa góc nhìn, bằng chứng, phản biện và kiểm chứng.",
         "status": "MVP đang chạy",
         "progress": 57,

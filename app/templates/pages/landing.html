@@ -34,7 +34,7 @@
         <a class="ecosystem-card" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">
             <span class="ecosystem-image-frame">
                 {% if module.image %}
-                <img src="{{ url_for('static', filename=module.image, v='module-avatar-vertical-2') }}" alt="">
+                <img src="{{ url_for('static', filename=module.image, v='module-avatar-vertical-3') }}" alt="">
                 <span class="ecosystem-icon-fallback" hidden><i data-lucide="{{ module.icon }}"></i></span>
                 {% else %}
                 <span class="ecosystem-icon-fallback"><i data-lucide="{{ module.icon }}"></i></span>

@@ -157,7 +157,7 @@ CRITIC_ASSISTANT_MODULE = {
     "area": "Phòng luyện phản biện",
     "area_key": "training",
     "icon": "sparkles",
-    "image": "images/modules/tro-li-phan-bien.png",
+    "image": "images/modules/phanbien.png",
     "description": "Bộ trợ lí luyện đánh giá câu trả lời AI và viết prompt phản biện.",
     "status": "4 công cụ",
     "progress": 58,
@@ -189,12 +189,14 @@ for module in STUDENT_MODULES:
     if module["slug"] in HIDDEN_STUDENT_MODULE_SLUGS:
         continue
     _DISPLAY_MODULES.append(_module_with_existing_image(module))
+_DISPLAY_MODULES.append(_module_with_existing_image(CRITIC_ASSISTANT_MODULE))
 _DISPLAY_MODULES.sort(
     key=lambda module: {
         "nhiem-vu": 0,
-        "chatbot-socratic": 1,
-        "so-sanh-ba-cau-tra-loi": 2,
-        "prompt-phan-bien": 3,
+        CRITIC_ASSISTANT_SLUG: 1,
+        "chatbot-socratic": 2,
+        "so-sanh-ba-cau-tra-loi": 3,
+        "prompt-phan-bien": 4,
     }.get(module["slug"], 10)
 )
 STUDENT_NAV_MODULES = [{**module, "number": f"{index:02d}"} for index, module in enumerate(_DISPLAY_MODULES, start=1)]
