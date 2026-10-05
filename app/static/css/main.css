@@ -9477,10 +9477,10 @@ body:has(.app-shell.module-shell):not(.landing-page):not(.game-page) .assignment
     }
 
     .ecosystem-grid {
-        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
         gap: 16px 24px;
         width: 100%;
-        max-width: min(1120px, calc(100vw - 96px));
+        max-width: min(1240px, calc(100vw - 96px));
     }
 
     .ecosystem-card {

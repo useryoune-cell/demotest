@@ -149,6 +149,7 @@ HIDDEN_STUDENT_MODULE_SLUGS = {
     "tin-hay-khong-tin",
     "con-nguoi-truoc-ai-sau",
     "ai-co-tinh-sai",
+    "dau-truong-lap-luan",
 }
 CRITIC_ASSISTANT_MODULE = {
     "number": "00",
@@ -189,14 +190,12 @@ for module in STUDENT_MODULES:
     if module["slug"] in HIDDEN_STUDENT_MODULE_SLUGS:
         continue
     _DISPLAY_MODULES.append(_module_with_existing_image(module))
-_DISPLAY_MODULES.append(_module_with_existing_image(CRITIC_ASSISTANT_MODULE))
 _DISPLAY_MODULES.sort(
     key=lambda module: {
         "nhiem-vu": 0,
-        CRITIC_ASSISTANT_SLUG: 1,
-        "chatbot-socratic": 2,
-        "so-sanh-ba-cau-tra-loi": 3,
-        "prompt-phan-bien": 4,
+        "chatbot-socratic": 1,
+        "so-sanh-ba-cau-tra-loi": 2,
+        "prompt-phan-bien": 3,
     }.get(module["slug"], 10)
 )
 STUDENT_NAV_MODULES = [{**module, "number": f"{index:02d}"} for index, module in enumerate(_DISPLAY_MODULES, start=1)]
