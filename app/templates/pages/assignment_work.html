@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{{ task.title }} · Nhiệm vụ{% endblock %}
+{% block title %}{{ task.title }} · Nhiệm vụ học tập{% endblock %}
 
 {% block content %}
 <div class="app-shell module-shell">
     <aside class="app-sidebar" aria-label="Danh sách mô-đun">
-        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Nhiệm vụ</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Nhiệm vụ học tập</span></a>
         {% for nav_item in modules %}
         <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
             <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
@@ -17,7 +17,7 @@
         <div class="module-detail-hero">
             <div>
                 <h1>{{ task.title }}</h1>
-                <p>Nhiệm vụ</p>
+                <p>Nhiệm vụ học tập</p>
             </div>
             <div class="assignment-timer" aria-label="Thời gian làm bài">
                 <i class="ti ti-clock"></i>

@@ -133,10 +133,10 @@ CRITIC_ASSISTANT_SLUG = "tro-li-phan-bien"
 TEACHER_PAGES = {
     "overview": {"label": "Tổng quan", "icon": "layout-dashboard"},
     "debate": {"label": "Đấu trường", "icon": "swords"},
-    "detective": {"label": "Thám tử AI", "icon": "map"},
+    "detective": {"label": "Thám tử thông tin", "icon": "map"},
     "argument": {"label": "Bản đồ lập luận", "icon": "workflow"},
-    "compare": {"label": "So sánh AI", "icon": "copy-check"},
-    "assignments": {"label": "Nhiệm vụ", "icon": "clipboard-check"},
+    "compare": {"label": "Đánh giá lập luận AI", "icon": "copy-check"},
+    "assignments": {"label": "Nhiệm vụ học tập", "icon": "clipboard-check"},
     "submissions": {"label": "Bài nộp", "icon": "shield-check"},
     "students": {"label": "Học sinh", "icon": "users"},
     "reports": {"label": "Báo cáo", "icon": "bar-chart-3"},

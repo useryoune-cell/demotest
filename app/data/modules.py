@@ -15,7 +15,7 @@ MODULES = [
     {
         "number": "02",
         "slug": "tham-tu-ai",
-        "title": "Thám tử AI",
+        "title": "Thám tử thông tin",
         "area": "Phòng luyện phản biện",
         "area_key": "training",
         "icon": "map",
@@ -54,7 +54,7 @@ MODULES = [
     {
         "number": "05",
         "slug": "so-sanh-ba-cau-tra-loi",
-        "title": "So sánh ba câu trả lời AI",
+        "title": "Đánh giá lập luận AI",
         "area": "Phòng luyện phản biện",
         "area_key": "training",
         "icon": "columns-3",
@@ -67,7 +67,7 @@ MODULES = [
     {
         "number": "06",
         "slug": "nhiem-vu",
-        "title": "Nhiệm vụ",
+        "title": "Nhiệm vụ học tập",
         "area": "Hồ sơ phát triển",
         "area_key": "profile",
         "icon": "clipboard-check",

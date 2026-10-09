@@ -55,8 +55,8 @@
             <section class="app-panel">
                 <div class="panel-heading"><div><h2>Việc cần xử lý</h2></div></div>
                 <div class="review-list">
-                    <article><span>Nhiệm vụ</span><strong>{{ assignment_submissions|selectattr("teacher_score", "equalto", "")|list|length }} bài nộp chờ chấm</strong></article>
-                    <article><span>So sánh AI</span><strong>{{ compare_submissions|length }} lượt làm bài gần nhất</strong></article>
+                    <article><span>Nhiệm vụ học tập</span><strong>{{ assignment_submissions|selectattr("teacher_score", "equalto", "")|list|length }} bài nộp chờ chấm</strong></article>
+                    <article><span>Đánh giá lập luận AI</span><strong>{{ compare_submissions|length }} lượt làm bài gần nhất</strong></article>
                     <article><span>Đấu trường</span><strong>{{ debate_config.topics|length }} chủ đề đang cấu hình</strong></article>
                 </div>
             </section>
@@ -129,7 +129,7 @@
 
         {% if teacher_page == "detective" %}
         <section class="app-panel">
-            <div class="panel-heading"><div><h2>Dữ kiện Thám tử AI</h2></div></div>
+            <div class="panel-heading"><div><h2>Dữ kiện Thám tử thông tin</h2></div></div>
             <details class="teacher-topic-add" id="newDetectiveCase">
                 <summary><i data-lucide="plus"></i><span>Thêm vụ án</span></summary>
                 <form class="admin-form teacher-topic-new" method="post" action="{{ url_for('main.teacher_detective_case_save') }}">
@@ -473,7 +473,7 @@
                     </article>
                     {% endfor %}
                 {% else %}
-                    <p class="muted-note">Chưa có bài nộp từ Bản đồ lập luận hoặc Thám tử AI.</p>
+                    <p class="muted-note">Chưa có bài nộp từ Bản đồ lập luận hoặc Thám tử thông tin.</p>
                 {% endif %}
             </div>
         </section>

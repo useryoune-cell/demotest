@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Thám tử AI · AI Critical Thinking Lab{% endblock %}
+{% block title %}Thám tử thông tin · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
 <div class="app-shell module-shell">
@@ -24,7 +24,7 @@
             </a>
         </div>
 
-        <section class="detective-map" aria-label="Manh mối Thám tử AI">
+        <section class="detective-map" aria-label="Manh mối Thám tử thông tin">
             {% for station_item in stations %}
             <button class="detective-node {% if loop.first %}active current{% endif %}" type="button" data-station-code="{{ station_item.code }}" {% if not loop.first %}disabled{% endif %}>
                 <span>{{ station_item.code }}</span>

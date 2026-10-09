@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Chọn lĩnh vực Thám tử AI · AI Critical Thinking Lab{% endblock %}
+{% block title %}Chọn lĩnh vực Thám tử thông tin · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
 <div class="app-shell module-shell">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <section class="assignment-task-grid" aria-label="Danh sách lĩnh vực Thám tử AI">
+        <section class="assignment-task-grid" aria-label="Danh sách lĩnh vực Thám tử thông tin">
             {% if fields %}
                 {% for field in fields %}
                 <a class="assignment-task-box" href="{{ url_for('main.module_detail', slug=module.slug, field=field.key) }}">
