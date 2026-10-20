@@ -11386,3 +11386,17 @@ body.module-focus-page .app-content.argument-page .argument-bucket h3 {
     color: inherit !important;
     font-weight: 900 !important;
 }
+/* Formative feedback and account controls */
+.account-menu { position: relative; min-width: 140px; }
+.account-menu summary { cursor: pointer; padding: 10px; font-weight: 700; }
+.account-menu[open] { background: var(--surface, #fff); color: var(--text, #17212b); border-radius: 12px; box-shadow: 0 8px 24px #0002; z-index: 100; }
+.account-menu a { display: block; padding: 10px 14px; }
+.learning-feedback { padding: 24px; margin: 20px 0; background: var(--surface, #fff); color: var(--text, #17212b); border: 1px solid #ccd7dc; border-radius: 16px; overflow-wrap: anywhere; }
+.learning-feedback article { padding: 14px 0; border-bottom: 1px solid #ccd7dc; }
+.learning-feedback p, #argumentFeedback, #argumentReflection { white-space: pre-line; line-height: 1.75; }
+.learning-feedback button { margin: 12px 12px 0 0; }
+.learning-profile { max-width: 920px; margin: auto; }
+.learning-profile .app-panel, .chatbot-rating { margin: 20px 0; }
+.learning-profile label { display: grid; gap: 8px; }
+.skill-row meter { display: block; width: 100%; height: 20px; grid-column: 1 / -1; }
+.chatbot-rating { display: grid; gap: 12px; }

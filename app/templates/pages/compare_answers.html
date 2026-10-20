@@ -72,9 +72,9 @@
                 <span class="response-meta" id="compareMeta" aria-live="polite"></span>
             </div>
             <div class="choice-row">
-                <input type="hidden" name="bestAnswer" value="{{ item.answers[0].label if item.answers else '' }}">
+                <input type="hidden" name="bestAnswer" value="">
                 {% for answer in item.answers %}
-                <button class="compare-choice-button {% if loop.first %}active{% endif %}" type="button" data-answer-value="{{ answer.label }}">
+                <button class="compare-choice-button" type="button" data-answer-value="{{ answer.label }}">
                     <i class="ti ti-check"></i>
                     <span>Câu {{ answer.label }}</span>
                 </button>

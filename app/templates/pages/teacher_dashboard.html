@@ -31,36 +31,7 @@
         </div>
 
         {% if teacher_page == "overview" %}
-        <div class="teacher-kpis">
-            <article><span>Hoàn thành</span><strong>{{ overview.completion }}%</strong></article>
-            <article><span>Phụ thuộc gợi ý</span><strong>{{ overview.dependency }}%</strong></article>
-            <article><span>Chờ duyệt</span><strong>{{ assignment_submissions|selectattr("teacher_score", "equalto", "")|list|length }}</strong></article>
-            <article><span>Nhật ký mới</span><strong>{{ overview.new_reflections }}</strong></article>
-        </div>
-
-        <div class="teacher-grid">
-            <section class="app-panel">
-                <div class="panel-heading"><div><h2>8 năng lực trung bình</h2></div></div>
-                <div class="skill-bars">
-                    {% for skill, score in overview.skills %}
-                    <div class="skill-row">
-                        <span>{{ skill }}</span>
-                        <strong>{{ score }}</strong>
-                        <div class="progress-track"><span style="width: {{ score }}%"></span></div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-            <section class="app-panel">
-                <div class="panel-heading"><div><h2>Việc cần xử lý</h2></div></div>
-                <div class="review-list">
-                    <article><span>Nhiệm vụ học tập</span><strong>{{ assignment_submissions|selectattr("teacher_score", "equalto", "")|list|length }} bài nộp chờ chấm</strong></article>
-                    <article><span>Đánh giá lập luận AI</span><strong>{{ compare_submissions|length }} lượt làm bài gần nhất</strong></article>
-                    <article><span>Đấu trường</span><strong>{{ debate_config.topics|length }} chủ đề đang cấu hình</strong></article>
-                </div>
-            </section>
-        </div>
+        {% include 'pages/teacher_learning_overview.html' %}
         {% endif %}
 
         {% if teacher_page == "debate" %}
@@ -253,6 +224,8 @@
                         <option value="source">Có nguồn</option>
                         <option value="no_source">Không nguồn</option>
                     </select>
+                    <label>Giải thích đáp án đúng</label>
+                    <textarea name="explanation" rows="4" required placeholder="Vì sao đáp án đúng? Các đáp án khác sai hoặc thiếu căn cứ ở đâu?"></textarea>
                     <div class="topic-side-grid">
                         <select name="best"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select>
                         <label class="compare-active-check"><input type="checkbox" name="active" checked> Đang mở</label>
@@ -289,6 +262,7 @@
                                 <option value="no_source" {% if package.answers[2].trust == "no_source" %}selected{% endif %}>Không nguồn</option>
                             </select>
                             <div class="topic-side-grid">
+                                <label>Giải thích đáp án đúng<textarea name="explanation" rows="4" required>{{ package.get('explanation', '') }}</textarea></label>
                                 <select name="best">
                                     <option value="A" {% if package.best == "A" %}selected{% endif %}>A</option>
                                     <option value="B" {% if package.best == "B" %}selected{% endif %}>B</option>
@@ -316,6 +290,7 @@
                         <span>{{ submission.created_at[:10] }} · {{ submission.teacher_score or submission.score }}/100</span>
                         <strong>{{ submission.student_name }} · {{ submission.package_title }}</strong>
                         <p>Chọn câu {{ submission.selected }}. {{ submission.criteria|truncate(140) }}</p>
+                        {% include 'pages/submission_feedback.html' %}
                         <form class="admin-form" method="post" action="{{ url_for('main.teacher_compare_submission_review', submission_id=submission.id) }}">
                             <input type="hidden" name="next" value="{{ url_for('main.teacher_page', page='compare') }}">
                             <input name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Điểm cuối">
@@ -419,6 +394,7 @@
                                 <p>{{ submission.criteria }}</p>
                                 <h3>Câu trả lời học sinh viết lại</h3>
                                 <p>{{ submission.synthesis }}</p>
+                                {% include 'pages/submission_feedback.html' %}
                                 <form class="admin-form" method="post" action="{{ url_for('main.teacher_compare_submission_review', submission_id=submission.id) }}">
                                     <input name="teacher_score" value="{{ submission.teacher_score }}" placeholder="Điểm cuối">
                                     <textarea name="teacher_review" rows="4" placeholder="Nhận xét giáo viên">{{ submission.teacher_review }}</textarea>
@@ -444,6 +420,7 @@
                             <summary><span>{{ submission.teacher_score or submission.score }}</span><strong>{{ submission.student_name }} · {{ submission.module_title }}</strong><em>{{ submission.submitted_at[:10] }}</em></summary>
                             <div class="assignment-review-body">
                                 {% if submission.kind == "argument" %}
+                                {% include 'pages/submission_feedback.html' %}
                                 <h3>{{ submission.package_title }}</h3>
                                 <p>{{ submission.question }}</p>
                                 <h3>Kết quả phân loại</h3>
@@ -455,6 +432,7 @@
                                 </div>
                                 {% else %}
                                 <h3>{{ submission.case_code }} · {{ submission.case_title }}</h3>
+                                {% include 'pages/submission_feedback.html' %}
                                 <p>{{ submission.task }}</p>
                                 <h3>Bài làm học sinh</h3>
                                 <p><strong>Đoạn đáng nghi:</strong> {{ submission.suspicious_text }}</p>
@@ -483,9 +461,9 @@
         <section class="app-panel">
             <div class="panel-heading"><div><h2>Theo dõi học sinh</h2></div></div>
             <div class="student-table">
-                <div class="student-table-head"><span>Học sinh</span><span>Tiến độ</span><span>Phụ thuộc</span><span>Rủi ro</span></div>
-                {% for student in overview.students %}
-                <article><strong>{{ student.name }}</strong><span>{{ student.progress }}%</span><span>{{ student.dependency }}%</span><em>{{ student.risk }}</em></article>
+                <div class="student-table-head"><span>Học sinh</span><span>Trường</span><span>Lớp</span></div>
+                {% for student in learning.students %}
+                <article><strong>{{ student.name }}</strong><span>{{ student.school }}</span><span>{{ student.class_name }}</span></article>
                 {% endfor %}
             </div>
         </section>

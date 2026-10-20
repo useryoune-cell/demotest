@@ -6,6 +6,7 @@ from flask import (
     abort,
     current_app,
     jsonify,
+    flash,
     redirect,
     render_template,
     request,
@@ -51,6 +52,7 @@ from app.services.assignment_service import (
     start_attempt,
     update_teacher_review,
     upsert_task,
+    owned_attempt,
 )
 from app.services.compare_assignment_service import (
     delete_compare_package,
@@ -60,6 +62,7 @@ from app.services.compare_assignment_service import (
     save_compare_submission,
     update_compare_submission_review,
     upsert_compare_package,
+    evaluate_compare,
 )
 from app.services.debate_config_service import (
     allocate_debate_topic,
@@ -109,6 +112,7 @@ from app.services.teacher_content_service import (
     public_detective_case,
     score_argument_package,
     score_detective_case,
+    evaluate_detection,
     save_argument_submission,
     save_detective_submission,
     list_teacher_content_submissions,
@@ -126,6 +130,9 @@ from app.services.socratic_service import (
     normalize_socratic_mode,
     parse_socratic_response,
 )
+from app.services.learning_analytics import SELF_ASSESSMENT, save_self_assessment, save_chatbot_rating, learning_overview
+from app.services.auth_service import update_student_class
+from app.services.storage import load_json, update_json
 
 main_bp = Blueprint("main", __name__)
 TEACHER_MODULE_SLUG = "che-do-giao-vien"
@@ -264,8 +271,29 @@ def student_required(view):
 def teacher_required(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
-        if session.get("role") != "teacher" or not get_teacher(session.get("teacher_username")):
+        teacher = get_teacher(session.get('teacher_username')) if session.get('role') == 'teacher' else None
+        if not teacher or not teacher.get('active'):
             return _auth_failure("teacher")
+        resources = {
+            'teacher_compare_package_save': (list_compare_packages, 'package_id', True),
+            'teacher_compare_package_delete': (list_compare_packages, 'package_id', False),
+            'teacher_argument_package_save': (list_argument_packages, 'package_id', True),
+            'teacher_argument_package_delete': (list_argument_packages, 'package_id', False),
+            'teacher_detective_case_save': (list_detective_cases, 'case_id', True),
+            'teacher_detective_case_delete': (list_detective_cases, 'case_id', False),
+            'teacher_assignment_task_save': (list_assignment_tasks, 'task_id', True),
+            'teacher_assignment_task_delete': (list_assignment_tasks, 'task_id', False),
+            'teacher_assignment_submission_review': (lambda: list_assignment_submissions(limit=100000), 'submission_id', False),
+            'teacher_compare_submission_review': (lambda: list_compare_submissions(limit=100000), 'submission_id', False),
+            'teacher_content_submission_review': (lambda: list_teacher_content_submissions(limit=100000), 'submission_id', False),
+        }
+        if view.__name__ in resources:
+            loader, key, from_form = resources[view.__name__]
+            resource_id = request.form.get(key) if from_form else kwargs.get(key)
+            if resource_id:
+                item = next((p for p in loader() if p.get('id') == resource_id), None)
+                if not item or item.get('teacher_username') != teacher['username']:
+                    abort(404)
         return view(*args, **kwargs)
 
     return wrapped
@@ -423,7 +451,7 @@ def debate_battle():
 @main_bp.get("/app/modules/dau-truong-lap-luan/result")
 @student_required
 def debate_result_page():
-    result = session.get("last_debate_result")
+    result = load_json('debate_results.json', {}).get(session.get('student_username'))
     if not result:
         return redirect(url_for("main.module_detail", slug="dau-truong-lap-luan"))
     return render_template("pages/debate_result_page.html", **_debate_view_context(result=result))
@@ -643,10 +671,17 @@ def student_register():
     if request.method == "POST":
         guest_username = session.get("student_username") if session.get("student_guest") else ""
         try:
+            school = request.form.get('school', '').strip()
+            class_name = request.form.get('class_name', '').strip()
+            teacher_username = request.form.get('teacher_username', '')
+            selected_teacher = get_teacher(teacher_username)
+            if not school or not class_name or not selected_teacher or not selected_teacher.get('active'):
+                raise ValueError('Cần nhập trường, lớp và chọn giáo viên đang hoạt động.')
             student = create_student(
                 username=request.form.get("username"),
                 password=request.form.get("password"),
                 name=request.form.get("name"),
+                school=school, class_name=class_name, teacher_username=teacher_username,
             )
         except ValueError as exc:
             error = str(exc)
@@ -654,7 +689,7 @@ def student_register():
             _merge_guest_student_data(student, guest_username)
             _set_student_session(student)
             return redirect(url_for("main.app_home"))
-    return render_template("pages/student_register.html", error=error)
+    return render_template("pages/student_register.html", error=error, teachers=list_teachers())
 
 
 @main_bp.route("/student/login", methods=["GET", "POST"])
@@ -727,20 +762,20 @@ def teacher_page(page):
         modules=MODULES,
         teacher_pages=TEACHER_PAGES,
         teacher_page=page,
-        overview=teacher_overview(),
+        learning=learning_overview(username, request.args.get('period', 'week'), request.args.get('school', ''), request.args.get('class_name', '')),
         teacher=get_teacher(username),
         reports=reports_for_teacher(username),
         debate_config=config,
         criteria_to_text=criteria_to_text,
-        compare_packages=list_compare_packages(),
-        compare_submissions=list_compare_submissions(),
-        teacher_content_submissions=list_teacher_content_submissions(),
-        argument_packages=list_argument_packages(),
+        compare_packages=[p for p in list_compare_packages() if p.get('teacher_username') == username],
+        compare_submissions=[p for p in list_compare_submissions(limit=100000) if p.get('teacher_username') == username],
+        teacher_content_submissions=[p for p in list_teacher_content_submissions(limit=100000) if p.get('teacher_username') == username],
+        argument_packages=[p for p in list_argument_packages() if p.get('teacher_username') == username],
         argument_buckets=ARGUMENT_BUCKETS,
         pieces_to_text=pieces_to_text,
-        detective_cases=list_detective_cases(),
-        assignment_tasks=list_assignment_tasks(),
-        assignment_submissions=list_assignment_submissions(),
+        detective_cases=[p for p in list_detective_cases() if p.get('teacher_username') == username],
+        assignment_tasks=[p for p in list_assignment_tasks() if p.get('teacher_username') == username],
+        assignment_submissions=[p for p in list_assignment_submissions(limit=100000) if p.get('teacher_username') == username],
         format_duration=format_duration,
     )
 
@@ -760,8 +795,8 @@ def teacher_debate_mode():
 def teacher_debate_topic_save():
     try:
         upsert_debate_topic(request.form)
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="debate"))
 
 
@@ -770,8 +805,8 @@ def teacher_debate_topic_save():
 def teacher_debate_topic_delete(topic_id):
     try:
         delete_debate_topic(topic_id)
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="debate"))
 
 
@@ -780,8 +815,8 @@ def teacher_debate_topic_delete(topic_id):
 def teacher_detective_case_save():
     try:
         upsert_detective_case(request.form, get_teacher(session.get("teacher_username")))
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="detective"))
 
 
@@ -797,8 +832,8 @@ def teacher_detective_case_delete(case_id):
 def teacher_argument_package_save():
     try:
         upsert_argument_package(request.form, get_teacher(session.get("teacher_username")))
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="argument"))
 
 
@@ -814,8 +849,8 @@ def teacher_argument_package_delete(package_id):
 def teacher_compare_package_save():
     try:
         upsert_compare_package(request.form, get_teacher(session.get("teacher_username")))
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="compare"))
 
 
@@ -824,8 +859,8 @@ def teacher_compare_package_save():
 def teacher_compare_package_delete(package_id):
     try:
         delete_compare_package(package_id)
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="compare"))
 
 
@@ -834,8 +869,8 @@ def teacher_compare_package_delete(package_id):
 def teacher_assignment_task_save():
     try:
         upsert_task(request.form, get_teacher(session.get("teacher_username")))
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="assignments"))
 
 
@@ -844,8 +879,8 @@ def teacher_assignment_task_save():
 def teacher_assignment_task_delete(task_id):
     try:
         delete_task(task_id)
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="assignments"))
 
 
@@ -858,8 +893,8 @@ def teacher_assignment_submission_review(submission_id):
             score=request.form.get("teacher_score"),
             review=request.form.get("teacher_review"),
         )
-    except ValueError:
-        pass
+    except ValueError as exc:
+        flash(str(exc))
     return redirect(url_for("main.teacher_page", page="submissions"))
 
 
@@ -1196,6 +1231,7 @@ def assignment_chat():
         return jsonify({"error": "Nhập câu hỏi trước khi gửi."}), 400
 
     try:
+        attempt = owned_attempt(attempt_id, session['student_username'], task['id'])
         append_chat(attempt_id, "student", question)
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 404
@@ -1204,6 +1240,9 @@ def assignment_chat():
     meta = {"model": "fallback", "key_label": "fallback"}
     try:
         client = GeminiClient.from_app_config(current_app.config)
+        messages = attempt.get('chat', [])[-12:]
+        if not messages or messages[-1].get('content') != question or messages[-1].get('role') == 'assistant':
+            messages.append({'role': 'student', 'content': question})
         result = client.generate_text(build_assignment_chat_prompt(task, messages))
         answer = result.text
         meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
@@ -1235,6 +1274,11 @@ def assignment_submit():
         return jsonify({"error": "Bạn cần chấp nhận điều khoản giám sát trước khi nộp bài."}), 403
     if len(answer) < 20:
         return jsonify({"error": "Bài làm cần dài hơn một chút trước khi nộp."}), 400
+    try:
+        attempt = owned_attempt(attempt_id, session['student_username'], task['id'])
+    except ValueError as exc:
+        return jsonify(error=str(exc)), 400
+    chat_log = attempt.get('chat', [])
 
     duration_label = format_duration(payload.get("duration_seconds"))
     ai_review = fallback_assignment_review(task, answer, chat_log, duration_label)
@@ -1313,10 +1357,8 @@ def compare_score():
     if len(synthesis) < 30:
         return jsonify({"error": "Câu trả lời viết lại cần tối thiểu 30 ký tự."}), 400
     correct = selected == item["best"]
-    criteria_points = min(30, len(criteria) // 8)
-    synthesis_points = min(40, len(synthesis) // 10)
-    score = (30 if correct else 0) + criteria_points + synthesis_points
-    final_score = min(score, 100)
+    result = evaluate_compare(item, selected, criteria, synthesis)
+    final_score = result['score']
     student = get_student(session.get("student_username"))
     submission = save_compare_submission(
         student,
@@ -1326,12 +1368,13 @@ def compare_score():
         synthesis,
         final_score,
         correct,
+        result=result,
     )
     record_student_activity(
         session.get("student_username"),
         "so-sanh-ba-cau-tra-loi",
         "score",
-        score=final_score,
+        score=None if result.get('provisional') else final_score,
         payload={
             "package_id": item["id"],
             "package_title": item["title"],
@@ -1339,13 +1382,7 @@ def compare_score():
             "selected": selected,
         },
     )
-    return jsonify(
-        {
-            "correct": correct,
-            "score": final_score,
-            "feedback": "Đã lưu bài làm. AI chỉ nhận xét mức độ rõ ràng; giáo viên sẽ là người chốt đánh giá cuối cùng.",
-        }
-    )
+    return jsonify(result)
 
 
 @main_bp.get("/api/modules/error/item")
@@ -1370,24 +1407,10 @@ def error_score():
     evidence = str(payload.get("evidence") or "").strip()
     suspicious = str(payload.get("suspicious_text") or "").strip().lower()
 
-    points = 0
-    if chosen_type == item["error_type"]:
-        points += 25
-    if item["suspicious_text"].lower() in suspicious or suspicious in item["suspicious_text"].lower():
-        points += 20
-    points += min(20, len(explanation) // 8)
-    points += min(20, len(rewrite) // 10)
-    points += min(15, len(evidence) // 8)
-
-    final_score = min(points, 100)
-    record_student_activity(session.get("student_username"), "ai-co-tinh-sai", "score", score=final_score)
-    return jsonify(
-        {
-            "score": final_score,
-            "expected": item,
-            "matched_type": chosen_type == item["error_type"],
-        }
-    )
+    result = evaluate_detection({**item, 'text': item['ai_answer'], 'task': item['question'], 'rewrite': item['corrected_answer']},
+                                suspicious, chosen_type, explanation, evidence, rewrite)
+    record_student_activity(session.get('student_username'), 'ai-co-tinh-sai', 'score', score=None if result['provisional'] else result['score'])
+    return jsonify(result)
 
 
 @main_bp.get("/api/modules/detective/station")
@@ -1439,7 +1462,7 @@ def detective_score():
         payload,
         result,
     )
-    record_student_activity(session.get("student_username"), "tham-tu-ai", "score", score=result.get("score"))
+    record_student_activity(session.get("student_username"), "tham-tu-ai", "score", score=None if result.get('provisional') else result.get("score"))
     result["submission_id"] = submission["id"] if submission else ""
     return jsonify(result)
 
@@ -1447,17 +1470,22 @@ def detective_score():
 @main_bp.get("/api/modules/argument-map")
 @student_required
 def argument_map_item():
-    return jsonify({"argument_map": get_argument_package(active_only=True)})
+    package = get_argument_package(active_only=True)
+    if not package:
+        return jsonify(error='Chưa có bản đồ đang mở.'), 404
+    return jsonify(argument_map={**package, 'pieces': [{'id': p['id'], 'text': p['text']} for p in package['pieces']]})
 
 
 @main_bp.post("/api/modules/argument-map/score")
 @student_required
 def argument_map_score():
     payload = request.json or {}
-    package = get_argument_package(payload.get("map_id"), active_only=True) or get_argument_package(active_only=True)
+    package = get_argument_package(payload.get("map_id"), active_only=True)
     if not package:
         return jsonify({"error": "Chưa có gói bản đồ đang mở."}), 404
     placements = payload.get("placements") or {}
+    if not isinstance(placements, dict) or any(not isinstance(v, str) for v in placements.values()):
+        return jsonify(error='Vị trí các mảnh không hợp lệ.'), 400
     result = score_argument_package(package.get("id"), placements)
     submission = save_argument_submission(
         get_student(session.get("student_username")),
@@ -1507,8 +1535,9 @@ def debate_judge():
     result["rank"] = get_rank(new_points)
     result["rank_points"] = new_points
     result["result_url"] = url_for("main.debate_result_page")
-    session["last_debate_result"] = result
-    record_student_activity(session.get("student_username"), "dau-truong-lap-luan", "score", score=result["player"]["total"])
+    update_json('debate_results.json', {}, lambda data: data.update({session['student_username']: result}))
+    session.pop('last_debate_result', None)
+    record_student_activity(session.get("student_username"), "dau-truong-lap-luan", "score", score=None if result.get('provisional') else result["player"]["total"])
     return jsonify(result)
 
 
@@ -1520,8 +1549,8 @@ def prompt_score():
     if len(prompt) < 12:
         return jsonify({"error": "Prompt is too short."}), 400
     result = score_prompt(prompt)
-    result["feedback"] = "AI đã nhận xét sơ bộ để học sinh chỉnh prompt. Giáo viên là người đánh giá cuối cùng."
-    record_student_activity(session.get("student_username"), "prompt-phan-bien", "score", score=result.get("score"))
+    result.setdefault('feedback', result.get('suggestion', ''))
+    record_student_activity(session.get("student_username"), "prompt-phan-bien", "score", score=None if result.get('provisional') else result.get("score"))
     return jsonify(result)
 
 
@@ -1540,4 +1569,46 @@ def profile_data():
 @main_bp.get("/api/teacher/overview")
 @teacher_required
 def teacher_overview_api():
-    return jsonify({"overview": teacher_overview()})
+    return jsonify({'overview': learning_overview(session['teacher_username'], request.args.get('period', 'week'), request.args.get('school', ''), request.args.get('class_name', ''))})
+
+
+@main_bp.route('/app/learning-profile', methods=['GET', 'POST'])
+@student_required
+def learning_profile():
+    student = get_student(session['student_username'])
+    error, saved = '', False
+    if request.method == 'POST':
+        try:
+            if request.form.get('action') == 'class':
+                student = update_student_class(student['username'], request.form.get('school'), request.form.get('class_name'), request.form.get('teacher_username'))
+            else:
+                save_self_assessment(student, request.form)
+            saved = True
+        except ValueError as exc:
+            error = str(exc)
+    return render_template('pages/learning_profile.html', student=student, teachers=list_teachers(), questions=SELF_ASSESSMENT, error=error, saved=saved)
+
+
+@main_bp.post('/api/chatbot/rating')
+@student_required
+def chatbot_rating():
+    payload = request.json or {}
+    module = str(payload.get('module') or '')
+    if module not in {'nhiem-vu', 'chatbot-socratic'}:
+        return jsonify(error='Mô-đun không phù hợp.'), 400
+    try:
+        save_chatbot_rating(get_student(session['student_username']), module, payload.get('rating'), payload.get('comment'))
+    except ValueError as exc:
+        return jsonify(error=str(exc)), 400
+    return jsonify(ok=True)
+
+
+@main_bp.get('/api/modules/detective/solution/<submission_id>')
+@student_required
+def detective_solution(submission_id):
+    rows = list_teacher_content_submissions(limit=100000)
+    row = next((r for r in rows if r.get('id') == submission_id and r.get('student_username') == session['student_username'] and r.get('kind') == 'detective'), None)
+    if not row:
+        abort(404)
+    return jsonify(suspicious_text=row.get('expected_suspicious_text', ''), error_type=row.get('expected_error_type', ''),
+                   evidence=row.get('expected_evidence', ''), rewrite=row.get('expected_rewrite', ''))

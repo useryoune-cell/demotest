@@ -9,6 +9,7 @@
         <h1>Hệ sinh thái giáo dục số</h1>
     </div>
 
+    {% if not session.get('role') %}
     <div class="ecosystem-role-grid" aria-label="Chọn vai trò đăng nhập">
         <section class="ecosystem-role-card">
             <div>
@@ -29,6 +30,8 @@
         </section>
     </div>
 
+    {% endif %}
+    {% if session.get('role') == 'student' %}<p><a href="{{ url_for('main.learning_profile') }}">Cập nhật trường, lớp và tự đánh giá kỹ năng</a></p>{% endif %}
     <div class="ecosystem-grid">
         {% for module in modules %}
         <a class="ecosystem-card" href="{{ url_for('main.module_detail', slug=module.slug) }}" aria-label="{{ module.title }}">

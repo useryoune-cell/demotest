@@ -1,0 +1,10 @@
+{% set review = submission.get('ai_review') %}
+{% if review is mapping %}
+<section class="learning-feedback">
+<h3>Phản hồi học tập đã gửi học sinh</h3>
+{% if review.get('provisional') %}<p>Phần tự luận đang chờ đánh giá; điểm hiển thị chỉ gồm phần đã kiểm tra.</p>{% endif %}
+<p>{{ review.get('feedback', '') }}</p>
+{% for row in review.get('rubric', []) %}<article><strong>{{ row.label }} · {{ row.status }} · {{ row.score }}/{{ row.max }}</strong><p>{{ row.feedback }}</p></article>{% endfor %}
+<p>{{ review.get('reflection', '') }}</p>
+</section>
+{% endif %}

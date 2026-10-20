@@ -158,7 +158,7 @@ def list_students(include_anonymous=False):
     return [student for student in students if not student.get("anonymous")]
 
 
-def create_student(username, password, name):
+def create_student(username, password, name, school="", class_name="", teacher_username=""):
     data = _data()
     username = str(username or "").strip()
     password = str(password or "").strip()
@@ -171,11 +171,28 @@ def create_student(username, password, name):
         "username": username,
         "password": password,
         "name": str(name or username).strip(),
+        "school": str(school or "").strip(),
+        "class_name": str(class_name or "").strip(),
+        "teacher_username": str(teacher_username or "").strip(),
         "avatar_filename": "",
         "active": True,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     _students(data).append(student)
+    _save(data)
+    return student
+
+
+def update_student_class(username, school, class_name, teacher_username):
+    school, class_name = str(school or "").strip(), str(class_name or "").strip()
+    teacher = get_teacher(teacher_username)
+    if not school or not class_name or not teacher or not teacher.get("active"):
+        raise ValueError("Cần chọn trường, lớp và giáo viên đang hoạt động.")
+    data = _data()
+    student = next((s for s in _students(data) if s["username"] == username), None)
+    if not student:
+        raise ValueError("Không tìm thấy học sinh.")
+    student.update(school=school, class_name=class_name, teacher_username=teacher_username)
     _save(data)
     return student
 

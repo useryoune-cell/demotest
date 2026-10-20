@@ -2,6 +2,8 @@
 
 Flask web app for the AI Critical Thinking Lab project.
 
+Implementation and verification of the three improvement phases: [docs/implementation-phases.md](docs/implementation-phases.md).
+
 ## Quick Start
 
 ```powershell

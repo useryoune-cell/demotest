@@ -19,10 +19,11 @@
         })();
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='avatar-contain-1') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='learning-1') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/learning-feedback.css', v='learning-1') }}">
     {% block head %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}{% if request.path.startswith('/app/modules/') %} module-focus-page{% endif %}">
+<body class="{% block body_class %}{% endblock %}{% if session.get('role') %} is-authenticated{% endif %}{% if request.path.startswith('/app/modules/') %} module-focus-page{% endif %}">
     {% if request.path.startswith('/app/modules/') %}
     <a class="module-focus-back" href="{{ url_for('main.app_home') }}">
         <i data-lucide="arrow-left"></i>
@@ -39,7 +40,7 @@
             {% if request.endpoint == "main.landing" %}
             <a href="{{ url_for('main.landing') }}#features">Tính năng</a>
             {% endif %}
-            <a href="{{ url_for('main.login', role='student') }}">Đăng nhập</a>
+            {% if not session.get('role') %}<a href="{{ url_for('main.login', role='student') }}">Đăng nhập</a>{% endif %}
         </nav>
         <div class="header-actions">
             {% if request.endpoint != "main.landing" %}
@@ -47,11 +48,20 @@
                 <i data-lucide="moon"></i>
             </button>
             {% endif %}
-            <a class="header-cta" href="{{ url_for('main.start_learning') }}">Bắt đầu</a>
+            {% if session.get('role') %}
+            <details class="account-menu">
+                <summary>{{ session.get('student_name') or session.get('teacher_name') or session.get('admin_username') }}</summary>
+                {% if session.role == 'student' %}<a href="{{ url_for('main.learning_profile') }}">Trường, lớp và tự đánh giá</a>{% endif %}
+                {% if session.role == 'teacher' %}<a href="{{ url_for('main.teacher_dashboard') }}">Trang giáo viên</a>{% endif %}
+                {% if session.role == 'admin' %}<a href="{{ url_for('main.admin_dashboard') }}">Trang quản trị</a>{% endif %}
+                <a href="{{ url_for('main.' + session.role + '_logout') }}">Đăng xuất</a>
+            </details>
+            {% else %}<a class="header-cta" href="{{ url_for('main.start_learning') }}">Bắt đầu</a>{% endif %}
         </div>
     </header>
 
     <main>
+        {% for message in get_flashed_messages() %}<p class="app-panel" role="alert">{{ message }}</p>{% endfor %}
         {% block content %}{% endblock %}
     </main>
 
@@ -59,7 +69,8 @@
         <span>© 2026 · AI Critical Thinking Lab</span>
     </footer>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js', v='argument-strong-1') }}"></script>
+    <script src="{{ url_for('static', filename='js/learning-feedback.js', v='learning-1') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js', v='learning-1') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

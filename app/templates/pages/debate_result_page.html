@@ -19,7 +19,9 @@
         <section class="solo-result-hero {{ result.winner }}">
             <p class="eyebrow dark">Kết quả Solo Rank</p>
             <h1>
-                {% if result.winner == "player" %}
+                {% if result.get('provisional') %}
+                Đang chờ đánh giá
+                {% elif result.winner == "player" %}
                 Bạn đã thắng
                 {% elif result.winner == "draw" %}
                 Trận hòa
@@ -28,9 +30,9 @@
                 {% endif %}
             </h1>
             <div class="result-scoreline">
-                <span>Bạn <strong>{{ result.player.total }}</strong></span>
+                <span>Bạn <strong>{{ 'Chờ đánh giá' if result.get('provisional') else result.player.total }}</strong></span>
                 <em>VS</em>
-                <span>Đối thủ <strong>{{ result.opponent.total }}</strong></span>
+                <span>Đối thủ <strong>{{ 'Chờ đánh giá' if result.get('provisional') else result.opponent.total }}</strong></span>
             </div>
             <div class="rank-delta {% if result.rank_delta > 0 %}gain{% elif result.rank_delta < 0 %}loss{% else %}safe{% endif %}">
                 {% if result.rank_delta > 0 %}+{% endif %}{{ result.rank_delta }} điểm rank
@@ -88,6 +90,7 @@
                 <article class="rubric-item">
                     <span>{{ item.label }}</span>
                     <strong>{{ item.score }}/{{ item.max }}</strong>
+                    <p>{{ item.get('status', '') }} · {{ item.get('feedback', '') }}</p>
                 </article>
                 {% endfor %}
             </div>

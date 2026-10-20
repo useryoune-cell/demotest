@@ -136,10 +136,26 @@ def _normalize(value):
 
 
 def judge_debate(topic, player_argument, opponent_argument="", mode="solo"):
+    from app.services.learning_feedback import criterion, review_text
     criteria = topic.get("criteria") or []
-    player = score_argument(player_argument, criteria=criteria)
     opponent_text = opponent_argument or _sample_opponent_argument(topic)
-    opponent = score_argument(opponent_text, criteria=criteria)
+    rubric = [criterion('claim', 'Luận điểm', 20, 'Nêu rõ quan điểm, phạm vi và điều kiện áp dụng.'),
+              criterion('evidence', 'Bằng chứng', 25, 'Dùng bằng chứng cụ thể, liên quan và nguồn có thể đối chiếu.'),
+              criterion('reasoning', 'Suy luận', 25, 'Giải thích vì sao bằng chứng hỗ trợ kết luận; chỉ ra giả định.'),
+              criterion('counter', 'Phản biện', 20, 'Xét quan điểm đối lập, ngoại lệ và giới hạn.'),
+              criterion('clarity', 'Độ rõ', 10, 'Trình bày mạch lạc để người đọc kiểm tra được suy luận.')]
+    if criteria:
+        weights = [max(1, int(c.get('max', 10))) for c in criteria]
+        rubric = [criterion(f'criterion_{i}', c.get('label', 'Tiêu chí'), weights[i], 'Đối chiếu chất lượng lập luận với mô tả giáo viên.') for i, c in enumerate(criteria)]
+    def evaluate(text):
+        review = review_text({'topic': topic, 'teacher_criteria': criteria}, {'argument': text}, rubric)
+        maximum = sum(r['max'] for r in review['rubric'])
+        result = {k: 0 for k in ('claim', 'evidence', 'reasoning', 'counter', 'clarity')}
+        result.update({r['key']: r['score'] for r in review['rubric']})
+        return {**result, 'total': round(sum(r['score'] for r in review['rubric']) / maximum * 100),
+                'rubric_scores': review['rubric'], 'review': review}
+    player, opponent = evaluate(player_argument), evaluate(opponent_text)
+    provisional = not (player['review']['ai_available'] and opponent['review']['ai_available'])
 
     if player["total"] == opponent["total"]:
         winner = "draw"
@@ -151,6 +167,8 @@ def judge_debate(topic, player_argument, opponent_argument="", mode="solo"):
         winner = "opponent"
         delta = -30 if mode == "solo" else 0
 
+    if provisional:
+        winner, delta = 'pending', 0
     return {
         "topic": topic,
         "mode": mode,
@@ -159,7 +177,8 @@ def judge_debate(topic, player_argument, opponent_argument="", mode="solo"):
         "opponent_argument": opponent_text,
         "winner": winner,
         "rank_delta": delta,
-        "feedback": _feedback(player, opponent, winner),
+        "feedback": player['review']['feedback'] + ' ' + player['review']['reflection'],
+        'provisional': provisional,
         "criteria": criteria,
         "rubric_scores": player.get("rubric_scores", []),
     }

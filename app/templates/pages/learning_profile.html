@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="app-content learning-profile">
+<h1>Trường, lớp và tự đánh giá</h1>
+{% if error %}<p role="alert">{{ error }}</p>{% endif %}
+{% if saved %}<p role="status">Đã lưu thông tin.</p>{% endif %}
+<form class="app-panel admin-form" method="post">
+<input type="hidden" name="action" value="class">
+<label>Trường <input name="school" value="{{ student.get('school', '') }}" required maxlength="150"></label>
+<label>Lớp <input name="class_name" value="{{ student.get('class_name', '') }}" required maxlength="60"></label>
+<label>Giáo viên <select name="teacher_username" required>{% for t in teachers if t.active %}<option value="{{ t.username }}" {% if student.get('teacher_username') == t.username %}selected{% endif %}>{{ t.name }} ({{ t.username }})</option>{% endfor %}</select></label>
+<button class="button primary">Lưu trường, lớp</button>
+</form>
+<form class="app-panel admin-form" method="post">
+<input type="hidden" name="action" value="self_assessment">
+<h2>Tự đánh giá kỹ năng tư duy phản biện</h2>
+<p>Câu hỏi tự đánh giá do dự án biên soạn, tham khảo 5 nhóm kỹ năng WGCTA. Đây là mức em tự nhận định, không phải bài kiểm tra hay điểm WGCTA chuẩn hóa.</p>
+<p>1: Chưa tự làm được · 2: Cần nhiều hỗ trợ · 3: Làm được khi có gợi ý · 4: Thường tự làm được · 5: Tự làm được và giải thích cho người khác.</p>
+{% for q in questions %}<label>{{ q.label }}: {{ q.question }}<select name="{{ q.key }}" required><option value="">Chọn mức</option>{% for n in range(1,6) %}<option value="{{ n }}">{{ n }}</option>{% endfor %}</select></label>{% endfor %}
+<button class="button primary">Lưu tự đánh giá</button>
+</form>
+</section>
+{% endblock %}

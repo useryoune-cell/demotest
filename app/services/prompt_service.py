@@ -44,30 +44,14 @@ RUBRIC = [
 
 
 def score_prompt(prompt):
-    raw_text = str(prompt or "").strip().lower()
-    text = _normalize(raw_text)
-    results = []
-    total = 0
-    for criterion in RUBRIC:
-        hits = sum(1 for keyword in criterion["keywords"] if _normalize(keyword) in text)
-        length_bonus = 1 if len(text.split()) >= 24 else 0
-        score = min(20, hits * 7 + length_bonus * 3)
-        total += score
-        results.append(
-            {
-                "key": criterion["key"],
-                "label": criterion["label"],
-                "score": score,
-                "max": 20,
-                "hint": _hint_for(criterion["key"], score),
-            }
-        )
-
-    return {
-        "score": min(total, 100),
-        "rubric": results,
-        "suggestion": _overall_suggestion(results),
-    }
+    from app.services.learning_feedback import criterion, review_text, level
+    review = review_text('Đánh giá prompt yêu cầu AI suy nghĩ phản biện; kiểm tra yêu cầu cụ thể thay vì chỉ đếm từ khóa.',
+                         {'prompt': str(prompt or '')}, [criterion(c['key'], c['label'], 20, _hint_for(c['key'], 0)) for c in RUBRIC])
+    for row in review['rubric']:
+        row['hint'] = row['feedback']
+    score = sum(r['score'] for r in review['rubric'])
+    return {**review, 'score': score, 'level': level(score), 'provisional': not review['ai_available'],
+            'suggestion': review['feedback'] + ' ' + review['reflection']}
 
 
 def _hint_for(key, score):

@@ -164,12 +164,14 @@ def _risk_label(progress, dependency, has_activity):
     return "Thấp"
 
 
-def teacher_overview():
+def teacher_overview(teacher_username=None):
     students = []
     profiles = []
     reflection_total = 0
 
     for student in list_students():
+        if teacher_username and student.get('teacher_username') != teacher_username:
+            continue
         username = student.get("username")
         dashboard = student_dashboard(username)
         profile = student_profile(username)
@@ -185,6 +187,8 @@ def teacher_overview():
         students.append(
             {
                 "name": student.get("name") or username,
+                "school": student.get('school', ''),
+                "class_name": student.get('class_name', ''),
                 "progress": progress,
                 "dependency": dependency,
                 "risk": _risk_label(progress, dependency, has_activity),

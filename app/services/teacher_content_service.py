@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.services.storage import load_json, save_json
+from app.services.learning_feedback import criterion, review_text, level
 
 
 ARGUMENT_BUCKETS = [
@@ -144,8 +145,7 @@ def get_argument_package(package_id=None, active_only=False):
     packages = list_argument_packages(active_only=active_only)
     if package_id:
         selected = next((item for item in packages if item.get("id") == package_id), None)
-        if selected:
-            return selected
+        return selected
     return packages[0] if packages else None
 
 
@@ -172,8 +172,8 @@ def upsert_argument_package(form, teacher):
     title = str(form.get("title") or "").strip()
     question = str(form.get("question") or "").strip()
     source_text = str(form.get("source_text") or "").strip()
-    if not title or not question or not source_text or len(pieces) < 2:
-        raise ValueError("Gói bản đồ cần có tiêu đề, câu hỏi, văn bản nguồn và ít nhất 2 mảnh.")
+    if not title or not question or not source_text or len(pieces) != 5 or {p['bucket'] for p in pieces} != {b['key'] for b in ARGUMENT_BUCKETS}:
+        raise ValueError("Bản đồ cần đủ 5 mảnh, mỗi vai trò lập luận có đúng một mảnh (20 điểm/mảnh).")
     existing = next((item for item in data["argument_packages"] if item.get("id") == package_id), None) if package_id else None
     package = existing or {"id": str(uuid4()), "created_at": _now()}
     package.update(
@@ -185,7 +185,7 @@ def upsert_argument_package(form, teacher):
             "source_text": source_text,
             "buckets": deepcopy(ARGUMENT_BUCKETS),
             "pieces": pieces,
-            "active": form.get("active", "on") == "on",
+            "active": form.get("active") == "on",
         }
     )
     if not existing:
@@ -211,8 +211,29 @@ def score_argument_package(package_id, placements):
         actual = placements.get(piece["id"])
         is_correct = actual == piece["bucket"]
         correct += 1 if is_correct else 0
-        details.append({"piece_id": piece["id"], "expected": piece["bucket"], "actual": actual, "correct": is_correct})
-    return {"score": round(correct / total * 100), "correct": correct, "total": len(pieces), "details": details}
+        details.append({"piece_id": piece["id"], "actual": actual, "correct": is_correct})
+    score = round(correct / total * 100)
+    labels = {b['key']: b['label'] for b in ARGUMENT_BUCKETS}
+    right = [labels[p['bucket']] for p, d in zip(pieces, details) if d['correct']]
+    wrong_roles = [labels[p['bucket']] for p, d in zip(pieces, details) if not d['correct']]
+    hints = {
+        'claim': 'Luận điểm là ý kiến chính cần được bảo vệ.',
+        'evidence': 'Bằng chứng là dữ kiện hỗ trợ luận điểm; cần xét độ tin cậy và sự liên quan.',
+        'assumption': 'Giả định là cầu nối logic giữa bằng chứng và luận điểm.',
+        'counter': 'Phản biện nêu giới hạn, ngoại lệ hoặc góc nhìn làm giảm sức thuyết phục của luận điểm.',
+        'conclusion': 'Kết luận là điều rút ra từ chuỗi lập luận; cần tương xứng với bằng chứng.',
+    }
+    feedback = f'Bạn đã xác định đúng {correct}/{len(pieces)} thành phần của lập luận.'
+    if right:
+        feedback += ' Bạn nhận diện đúng: ' + ', '.join(right) + '.'
+    if wrong_roles:
+        feedback += ' Cần phân biệt lại các vai trò: ' + ', '.join(wrong_roles) + '. '
+        feedback += ' '.join(hints[p['bucket']] for p, d in zip(pieces, details) if not d['correct'])
+        feedback += ' Hãy xem chức năng của từng thông tin và điều chỉnh các thẻ màu đỏ trước khi chấm lại.'
+    return {'score': score, 'correct': correct, 'total': len(pieces), 'details': details,
+            'level': 'Thành thạo' if score == 100 else 'Đạt' if score >= 80 else 'Đang hình thành' if score >= 60 else 'Cần xem lại',
+            'feedback': feedback,
+            'reflection': 'Nếu loại bỏ bằng chứng nào thì kết luận sẽ kém thuyết phục nhất? Vì sao?' if score == 100 else ''}
 
 
 def save_argument_submission(student, package, placements, result):
@@ -250,6 +271,7 @@ def save_argument_submission(student, package, placements, result):
         "correct": result.get("correct", 0),
         "total": result.get("total", 0),
         "details": result.get("details", []),
+        "ai_review": result,
         "teacher_score": "",
         "teacher_review": "",
         "status": "pending_teacher_review",
@@ -324,7 +346,7 @@ def upsert_detective_case(form, teacher):
             **fields,
             "teacher_username": (teacher or {}).get("username", ""),
             "teacher_name": (teacher or {}).get("name", "Giáo viên"),
-            "active": form.get("active", "on") == "on",
+            "active": form.get("active") == "on",
         }
     )
     if not existing:
@@ -343,19 +365,37 @@ def score_detective_case(code, suspicious_text, error_type, explanation, evidenc
     case = get_detective_case(code, active_only=True, field_key=field_key)
     if not case:
         return {"score": 0, "expected": {}, "passed": False}
+    return evaluate_detection(case, suspicious_text, error_type, explanation, evidence, rewrite)
+
+
+def evaluate_detection(case, suspicious_text, error_type, explanation, evidence, rewrite):
     suspicious = _normalize(str(suspicious_text or "").strip())
     expected_suspicious = _normalize(case.get("suspicious_text", ""))
     selected_type = _normalize(str(error_type or "").strip())
     expected_type = _normalize(case.get("error_type", ""))
-    points = 0
-    if suspicious and expected_suspicious and (expected_suspicious in suspicious or suspicious in expected_suspicious):
-        points += 25
-    if selected_type == expected_type:
-        points += 25
-    points += min(20, len(str(explanation or "").strip()) // 3)
-    points += min(15, len(str(evidence or "").strip()) // 4)
-    points += min(15, len(str(rewrite or "").strip()) // 5)
-    return {"score": min(points, 100), "expected": case, "passed": points >= 60}
+    tokens, expected_tokens = set(suspicious.split()), set(expected_suspicious.split())
+    matched = bool(expected_tokens and len(tokens & expected_tokens) / len(expected_tokens) >= .8 and len(tokens & expected_tokens) / max(1, len(tokens)) >= .5)
+    typed = selected_type == expected_type
+    rubric = [
+        {'key': 'suspicious_text', 'label': 'Bước 1 – Đoạn đáng nghi', 'score': 20 if matched else 0, 'max': 20,
+         'status': 'Đúng' if matched else 'Chưa đúng',
+         'feedback': 'Em đã khoanh vùng thông tin cần kiểm chứng.' if matched else 'Hãy khoanh cụ thể tên nguồn, số liệu hoặc kết luận quá chắc chắn; tránh chọn cả đoạn.'},
+        {'key': 'error_type', 'label': 'Bước 2 – Loại lỗi', 'score': 20 if typed else 0, 'max': 20,
+         'status': 'Đúng' if typed else 'Chưa đúng',
+         'feedback': 'Em đã nhận diện đúng loại lỗi.' if typed else 'Phân loại chưa phù hợp. Hãy phân biệt dữ kiện sai với nguồn chưa xác minh hoặc suy luận thiếu căn cứ.'},
+    ]
+    review = review_text({'task': case['task'], 'text': case['text'], 'reference': {'error_type': case['error_type'], 'evidence': case['evidence'], 'rewrite': case['rewrite']}},
+                         {'explanation': explanation, 'evidence': evidence, 'rewrite': rewrite}, [
+        criterion('explanation', 'Bước 3 – Vì sao đáng nghi', 20, 'Chỉ ra dấu hiệu cụ thể khiến thông tin đáng nghi và giải thích vì sao cần kiểm chứng.'),
+        criterion('evidence', 'Bước 4 – Nguồn/bằng chứng kiểm chứng', 20, 'Nêu tài liệu/cơ quan/đường dẫn độc lập, thông tin đã đối chiếu và kết quả. Một URL đơn lẻ chưa chứng minh thông tin đúng.'),
+        criterion('rewrite', 'Bước 5 – Viết lại chính xác hơn', 20, 'Chỉ giữ thông tin có căn cứ; loại bỏ hoặc ghi rõ phần chưa xác minh. Giải thích giới hạn của kết luận.'),
+    ])
+    rubric += review['rubric']
+    points = sum(r['score'] for r in rubric)
+    return {**review, 'rubric': rubric, 'score': points, 'level': level(points), 'passed': points >= 70,
+            'provisional': not review['ai_available'], 'expected_error_type': case['error_type'],
+            'learning_feedback': f"Thông tin cần kiểm chứng liên quan đến {case['error_type'].lower()}. Cần xác minh nguồn thực sự tồn tại và có hỗ trợ kết luận. Không xác minh được không đồng nghĩa đã chứng minh nguồn không tồn tại.",
+            'reflection': 'Sau khi kiểm chứng, điều gì khiến em thay đổi mức độ tin tưởng vào câu trả lời của AI?'}
 
 
 def save_detective_submission(student, case, payload, result):
@@ -382,6 +422,9 @@ def save_detective_submission(student, case, payload, result):
         "rewrite": str((payload or {}).get("rewrite") or "").strip(),
         "expected_error_type": case.get("error_type", ""),
         "expected_suspicious_text": case.get("suspicious_text", ""),
+        "expected_evidence": case.get("evidence", ""),
+        "expected_rewrite": case.get("rewrite", ""),
+        "ai_review": result,
         "ai_score": result.get("score", 0),
         "score": result.get("score", 0),
         "teacher_score": "",

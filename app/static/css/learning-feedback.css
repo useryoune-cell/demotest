@@ -1,0 +1,16 @@
+/* Override the earlier focus/landing rules so the signed-in account stays visible. */
+body.is-authenticated .site-header { display: flex !important; }
+body.is-authenticated.module-focus-page .module-focus-back { top: 86px; }
+.account-menu { position: relative; }
+.account-menu[open] { position: relative; }
+.account-menu[open] a { min-width: 190px; }
+.teacher-shell .teacher-page-content { width: min(1180px, calc(100% - 48px)); min-width: 0; }
+.teacher-page-content .skill-row { grid-template-columns: minmax(0, 1fr) 90px; }
+.teacher-page-content .skill-row strong { white-space: nowrap; }
+.teacher-page-content .app-panel { margin-bottom: 20px; }
+.teacher-page-content .admin-form { gap: 14px; }
+@media (max-width: 700px) {
+    body.is-authenticated .site-header .main-nav { display: none; }
+    body.is-authenticated .brand > span:last-child { display: none; }
+    .teacher-shell .teacher-page-content { width: calc(100% - 24px); }
+}

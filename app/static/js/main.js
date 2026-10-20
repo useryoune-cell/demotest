@@ -946,7 +946,7 @@ if (trustInitial) {
         document.getElementById("markerInitial").style.left = `${trustInitial.value}%`;
         document.getElementById("markerRevised").style.left = `${trustRevised.value}%`;
         document.getElementById("markerTruth").style.left = `${data.item.ground_truth}%`;
-        trustExplanation.textContent = `${data.item.explanation} Điểm hiệu chỉnh: ${data.score.score}/100. Sai lệch sau cùng: ${data.score.revised_error} điểm.`;
+        trustExplanation.textContent = `${data.item.explanation} Điểm hiệu chỉnh: ${data.score.score}/100. Sai lệch sau cùng: ${data.score.revised_error} điểm. ${data.score.feedback} ${data.score.reflection}`;
     });
 
     nextTrustItem.addEventListener("click", () => {
@@ -1006,7 +1006,10 @@ if (compareForm) {
                 meta.textContent = data.error || "Chưa lưu được bài làm.";
                 return;
             }
-            meta.textContent = data.feedback || "Đã gửi bài về giáo viên.";
+            meta.textContent = 'Đã đánh giá sơ bộ; xem phản hồi bên dưới.';
+            let result = document.getElementById('compareFeedback');
+            if (!result) { result = document.createElement('section'); result.id = 'compareFeedback'; result.setAttribute('aria-live', 'polite'); compareForm.after(result); }
+            renderLearningFeedback(result, data);
         } catch (error) {
             meta.textContent = "Mạng đang lỗi, em thử lưu lại sau nhé.";
         } finally {
@@ -1325,10 +1328,10 @@ if (errorForm) {
             }),
         });
         const data = await response.json();
-        errorMeta.textContent = `${data.score}/100 · Lỗi chuẩn: ${data.expected.error_type}`;
-        if (data.score < 70) {
-            document.getElementById("errorRewrite").value += `\n\nGợi ý sửa: ${data.expected.corrected_answer}`;
-        }
+        if (!response.ok) { errorMeta.textContent = data.error || 'Chưa đánh giá được bài.'; return; }
+        let result = document.getElementById('errorFeedback');
+        if (!result) { result = document.createElement('section'); result.id = 'errorFeedback'; errorForm.after(result); }
+        renderLearningFeedback(result, data);
     });
 }
 
@@ -1360,6 +1363,8 @@ async function loadDetectiveStation(code) {
     document.getElementById("detectiveEvidence").value = "";
     document.getElementById("detectiveRewrite").value = "";
     detectiveMeta.textContent = "";
+    const oldFeedback = document.getElementById("detectiveFeedback");
+    if (oldFeedback) { oldFeedback.hidden = true; oldFeedback.replaceChildren(); }
     detectiveNodes.forEach((node) => node.classList.toggle("current", node.dataset.stationCode === station.code));
 }
 
@@ -1376,49 +1381,7 @@ if (detectiveText) {
     });
 }
 
-if (detectiveForm) {
-    detectiveForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const response = await fetch("/api/modules/detective/score", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                code: detectiveTask.dataset.code,
-                field: detectiveTask.dataset.field || "",
-                suspicious_text: detectiveSuspicious.value,
-                error_type: document.getElementById("detectiveType").value,
-                explanation: document.getElementById("detectiveExplanation").value,
-                evidence: document.getElementById("detectiveEvidence").value,
-                rewrite: document.getElementById("detectiveRewrite").value,
-            }),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            detectiveMeta.textContent = data.error || "Chưa chấm được bài.";
-            return;
-        }
-        detectiveMeta.textContent = `${data.score}/100 · Lỗi chuẩn: ${data.expected.error_type}`;
-        if (data.passed) {
-            const current = [...detectiveNodes].find((node) => node.dataset.stationCode === detectiveTask.dataset.code);
-            const next = current?.nextElementSibling;
-            current.classList.add("completed");
-            current.innerHTML = `<span>${current.dataset.stationCode}</span><small>${current.querySelector("small")?.textContent || "Hoàn thành"}</small>`;
-            const icon = document.createElement("i");
-            icon.className = "ti ti-check";
-            current.appendChild(icon);
-            if (next) {
-                next.disabled = false;
-                next.classList.add("active");
-                const nextIcon = next.querySelector("i");
-                if (nextIcon) {
-                    nextIcon.className = "ti ti-file-off";
-                }
-            }
-        } else {
-            document.getElementById("detectiveRewrite").value += `\n\nGợi ý sửa: ${data.expected.rewrite}`;
-        }
-    });
-}
+if (detectiveForm) wireDetectiveFeedback(detectiveForm);
 
 const argumentPieces = document.querySelectorAll(".argument-piece");
 const bucketDropzones = document.querySelectorAll(".bucket-dropzone");
@@ -1469,14 +1432,14 @@ if (scoreArgumentMap) {
             body: JSON.stringify({ map_id: workspace?.dataset.mapId || "", placements }),
         });
         const data = await response.json();
+        if (!response.ok) { alert(data.error || 'Chưa chấm được bản đồ.'); return; }
         const passed = data.score >= 80;
         argumentResult.hidden = false;
         document.getElementById("argumentScore").textContent = `${data.score}/100`;
-        document.getElementById("argumentResultTitle").textContent = passed ? "Đạt yêu cầu" : "Cần chỉnh lại bản đồ";
-        document.getElementById("argumentResultBadge").textContent = passed ? "Hoàn thành" : "Chưa đạt";
-        document.getElementById("argumentFeedback").textContent = passed
-            ? `${data.correct}/${data.total} mảnh đúng. Bạn có thể chuyển sang bài tiếp theo.`
-            : `${data.correct}/${data.total} mảnh đúng. Sửa các thẻ màu đỏ rồi chấm lại.`;
+        document.getElementById("argumentResultTitle").textContent = data.level;
+        document.getElementById("argumentResultBadge").textContent = data.level;
+        document.getElementById("argumentFeedback").textContent = data.feedback;
+        document.getElementById("argumentReflection").textContent = data.reflection || '';
         argumentResult.classList.toggle("is-passed", passed);
         argumentResult.classList.toggle("needs-retry", !passed);
         data.details.forEach((detail) => {

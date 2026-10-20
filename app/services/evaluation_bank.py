@@ -160,6 +160,7 @@ def score_trust(initial, revised, ground_truth):
     except (TypeError, ValueError):
         ground_truth = 50
 
+    initial, revised = max(0, min(100, initial)), max(0, min(100, revised))
     initial_error = abs(int(initial) - int(ground_truth))
     revised_error = abs(int(revised) - int(ground_truth))
     improvement = initial_error - revised_error
@@ -169,6 +170,8 @@ def score_trust(initial, revised, ground_truth):
         "revised_error": revised_error,
         "improvement": improvement,
         "score": score,
+        "feedback": 'Mức tin tưởng sau điều chỉnh gần với dữ kiện hơn.' if improvement > 0 else 'Hãy đối chiếu lại bằng chứng và giải thích vì sao em giữ hoặc đổi mức tin tưởng.',
+        'reflection': 'Bằng chứng nào làm em đổi ý? Nếu nguồn đó sai, em sẽ kiểm tra tiếp thế nào?',
     }
 
 

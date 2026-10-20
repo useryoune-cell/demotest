@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.services.storage import load_json, save_json
+from app.services.learning_feedback import criterion, review_text, level
 
 DEFAULT_COMPARE_DATA = {
     "packages": [
@@ -140,8 +141,7 @@ def get_compare_package(package_id=None):
     packages = list_compare_packages(active_only=True)
     if package_id:
         selected = next((package for package in packages if package["id"] == package_id), None)
-        if selected:
-            return selected
+        return selected
     return packages[0] if packages else None
 
 
@@ -167,8 +167,8 @@ def upsert_compare_package(form, teacher):
             "trust": _clean_trust(form.get("trust_c")),
         },
     ]
-    if not title or not question or any(not answer["text"] for answer in answers):
-        raise ValueError("Gói bài cần có tiêu đề, câu hỏi và đủ 3 câu trả lời AI.")
+    if not title or not question or any(not answer["text"] for answer in answers) or not str(form.get('explanation') or '').strip():
+        raise ValueError("Gói bài cần tiêu đề, câu hỏi, đủ 3 câu trả lời và giải thích đáp án đúng.")
 
     existing = None
     if package_id:
@@ -186,7 +186,8 @@ def upsert_compare_package(form, teacher):
             "question": question,
             "answers": answers,
             "best": str(form.get("best") or "A").strip().upper(),
-            "active": form.get("active", "on") == "on",
+            "explanation": str(form.get("explanation") or "").strip(),
+            "active": form.get("active") == "on",
         }
     )
     _normalize_package(package)
@@ -206,7 +207,7 @@ def delete_compare_package(package_id):
     _save(data)
 
 
-def save_compare_submission(student, package, selected, criteria, synthesis, score, correct):
+def save_compare_submission(student, package, selected, criteria, synthesis, score, correct, result=None):
     if not student or not package:
         return None
     data = _data()
@@ -224,6 +225,7 @@ def save_compare_submission(student, package, selected, criteria, synthesis, sco
         "synthesis": str(synthesis or "").strip(),
         "score": score,
         "correct": bool(correct),
+        "ai_review": result or {},
         "teacher_score": "",
         "teacher_review": "",
         "status": "pending_teacher_review",
@@ -232,6 +234,21 @@ def save_compare_submission(student, package, selected, criteria, synthesis, sco
     data["submissions"].append(entry)
     _save(data)
     return entry
+
+
+def evaluate_compare(package, selected, criteria, synthesis):
+    correct = selected == package['best']
+    review = review_text({'question': package['question'], 'answers': package['answers'],
+                          'best': package['best'], 'explanation': package.get('explanation', '')},
+                         {'selected': selected, 'criteria': criteria, 'synthesis': synthesis}, [
+        criterion('criteria', 'Lý do lựa chọn', 30, 'So sánh chi tiết giữa các câu trả lời: bằng chứng nào đáng tin, giả định nào chưa được chứng minh, kết luận nào quá mức?'),
+        criterion('synthesis', 'Câu trả lời viết lại', 40, 'Giữ ý có căn cứ, bổ sung giới hạn hoặc quan điểm khác và chỉ ra thông tin cần kiểm chứng.'),
+    ])
+    score = (30 if correct else 0) + sum(r['score'] for r in review['rubric'])
+    return {**review, 'correct': correct, 'score': score, 'level': level(score),
+            'provisional': not review['ai_available'], 'best': package['best'],
+            'explanation': package.get('explanation') or 'Giáo viên chưa bổ sung giải thích đáp án. Hãy đối chiếu mức phù hợp của bằng chứng, giả định và kết luận ở từng lựa chọn.',
+            'choice_feedback': 'Lựa chọn của em phù hợp với đáp án giáo viên.' if correct else 'Lựa chọn chưa phù hợp với đáp án giáo viên. Hãy so sánh bằng chứng và phạm vi kết luận của từng câu.'}
 
 
 def list_compare_submissions(limit=30):
