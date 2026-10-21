@@ -3,6 +3,7 @@ import re
 from uuid import uuid4
 
 from app.services.storage import load_json, save_json
+from app.services.datatm_bank import seed_datatm
 
 DEFAULT_ASSIGNMENT_DATA = {
     "tasks": [
@@ -113,6 +114,7 @@ def _data():
     if not any(submission.get("id") == DEMO_EXTRA_SUBMISSION["id"] for submission in data["submissions"]):
         data["submissions"].append(dict(DEMO_EXTRA_SUBMISSION))
         changed = True
+    changed = seed_datatm(data, 'tasks') or changed
     if changed:
         save_json("assignments.json", data)
     return data

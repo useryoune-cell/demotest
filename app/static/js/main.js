@@ -1047,6 +1047,33 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
         chat: [],
     };
     const assignmentSoftLimitSeconds = 45 * 60;
+    const wordRange = assignmentPage.querySelector('.assignment-task-card p')?.textContent.match(/(\d+)\s*[-–—]\s*(\d+)\s+từ(?=\s|[.,;:]|$)/iu);
+    let submitting = false;
+
+    async function assignmentRequest(url, payload) {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 25000);
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                signal: controller.signal,
+            });
+            const data = await response.json().catch(() => null);
+            if (!response.ok || !data) {
+                throw new Error(data?.error || 'Máy chủ đang bận. Vui lòng thử lại.');
+            }
+            return data;
+        } catch (error) {
+            if (error.name === 'AbortError' || error instanceof TypeError) {
+                throw new Error('Kết nối bị gián đoạn hoặc quá thời gian chờ. Nội dung vẫn được giữ, bạn hãy thử lại.');
+            }
+            throw error;
+        } finally {
+            window.clearTimeout(timeout);
+        }
+    }
 
     function formatAssignmentTime(seconds) {
         const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -1074,6 +1101,8 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
         }
         const text = assignmentAnswer.value.trim();
         const words = text ? text.split(/\s+/).length : 0;
+        const valid = !wordRange || (words >= Number(wordRange[1]) && words <= Number(wordRange[2]));
+        assignmentAnswer.setCustomValidity(valid ? '' : `Bài làm cần từ ${wordRange[1]} đến ${wordRange[2]} từ.`);
         assignmentCounter.textContent = `${words} từ · ${assignmentAnswer.value.length} ký tự`;
     }
 
@@ -1202,36 +1231,33 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
         chatForm.addEventListener("submit", async (event) => {
             event.preventDefault();
             const message = chatInput.value.trim();
-            if (!message || !assignmentState.attemptId) {
+            if (!message || !assignmentState.attemptId || chatInput.disabled) {
                 return;
             }
             appendAssignmentChat("student", message);
-            chatInput.value = "";
             chatInput.disabled = true;
+            chatForm.querySelector('button[type="submit"]').disabled = true;
             const loading = document.createElement("article");
             loading.className = "socratic-message ai loading";
             loading.innerHTML = "<span>AI</span><p>Đang trả lời...</p>";
             chatThread.appendChild(loading);
 
             try {
-                const response = await fetch("/api/modules/assignments/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
+                const data = await assignmentRequest("/api/modules/assignments/chat", {
                         task_id: taskId,
                         attempt_id: assignmentState.attemptId,
                         message,
                         messages: assignmentState.chat,
-                    }),
                 });
-                const data = await response.json();
+                chatInput.value = "";
                 loading.remove();
                 appendAssignmentChat("assistant", data.answer || data.error || "AI chưa trả lời được.");
             } catch (error) {
                 loading.remove();
-                appendAssignmentChat("assistant", `Không gửi được câu hỏi: ${error}`);
+                appendAssignmentChat("assistant", error.message);
             } finally {
                 chatInput.disabled = false;
+                chatForm.querySelector('button[type="submit"]').disabled = false;
                 chatInput.focus();
             }
         });
@@ -1240,35 +1266,37 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
     if (assignmentForm) {
         assignmentForm.addEventListener("submit", async (event) => {
             event.preventDefault();
+            if (submitting || !assignmentState.attemptId || !assignmentForm.reportValidity()) return;
+            submitting = true;
+            const submitButton = assignmentForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
             const answer = assignmentAnswer.value.trim();
             const durationSeconds = assignmentState.startedAt
                 ? Math.max(0, Math.floor((Date.now() - assignmentState.startedAt) / 1000))
                 : 0;
             assignmentMeta.textContent = "Đang nộp bài...";
-            const response = await fetch("/api/modules/assignments/submit", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
+            try {
+                const data = await assignmentRequest("/api/modules/assignments/submit", {
                     task_id: taskId,
                     attempt_id: assignmentState.attemptId,
                     answer,
                     chat: assignmentState.chat,
                     duration_seconds: durationSeconds,
-                }),
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                assignmentMeta.textContent = data.error || "Không nộp được bài.";
-                return;
+                });
+                window.clearInterval(assignmentState.timerId);
+                assignmentMeta.textContent = "Đã nộp bài.";
+                assignmentAiReview.textContent = cleanAiText(data.submission.ai_review);
+                assignmentResult.hidden = false;
+                closeAssignmentChat();
+                assignmentForm.querySelectorAll("textarea, button").forEach((node) => {
+                    node.disabled = true;
+                });
+            } catch (error) {
+                assignmentMeta.textContent = error.message;
+                submitButton.disabled = false;
+            } finally {
+                submitting = false;
             }
-            window.clearInterval(assignmentState.timerId);
-            assignmentMeta.textContent = "Đã nộp bài.";
-            assignmentAiReview.textContent = cleanAiText(data.submission.ai_review);
-            assignmentResult.hidden = false;
-            closeAssignmentChat();
-            assignmentForm.querySelectorAll("textarea, button").forEach((node) => {
-                node.disabled = true;
-            });
         });
     }
 }

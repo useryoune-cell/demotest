@@ -1,4 +1,13 @@
 /* Override the earlier focus/landing rules so the signed-in account stays visible. */
+/* Assignment pages already provide a back link to the task list. */
+body.module-focus-page:has(.assignment-page) .module-focus-back { display: none !important; }
+.assignment-chatbot.is-open .assignment-chat-toggle { display: none !important; }
+.assignment-chat-thread .socratic-message.user {
+    background: #17558a !important;
+    color: #fff;
+}
+.assignment-chat-thread .socratic-message.user p,
+.assignment-chat-thread .socratic-message.user span { color: #fff !important; }
 body.is-authenticated .site-header { display: flex !important; }
 body.is-authenticated.module-focus-page .module-focus-back { top: 86px; }
 .account-menu { position: relative; }

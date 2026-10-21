@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.services.storage import load_json, save_json
+from app.services.datatm_bank import seed_datatm
 from app.services.learning_feedback import criterion, review_text, level
 
 
@@ -127,6 +128,7 @@ def _content():
         if not case.get("field"):
             case["field"] = "Kiểm chứng nguồn AI" if "nguon" in _normalize(case.get("error_type")) else DETECTIVE_DEFAULT_FIELD
             changed = True
+    changed = seed_datatm(data, 'argument_packages', 'detective_cases') or changed
     if changed:
         save_json("teacher_content.json", data)
     return data
@@ -325,7 +327,7 @@ def public_detective_case(case):
 def upsert_detective_case(form, teacher):
     data = _content()
     case_id = str(form.get("case_id") or "").strip()
-    code = str(form.get("code") or "").strip().upper()[:2]
+    code = str(form.get("code") or "").strip().upper()[:20]
     fields = {
         "code": code,
         "field": _field_name(form.get("field")),

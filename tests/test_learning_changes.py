@@ -164,7 +164,7 @@ class LearningChanges(unittest.TestCase):
         attempt_id = response.get_json()['attempt']['id']
         app.config['GEMINI_API_KEYS'] = ['test-only']
         captured = []
-        fake = SimpleNamespace(generate_text=lambda prompt: (captured.append(prompt) or SimpleNamespace(text='Gợi ý',model='mock',key_index=0,attempts=1)))
+        fake = SimpleNamespace(generate_text=lambda prompt, **kwargs: (captured.append(prompt) or SimpleNamespace(text='Gợi ý',model='mock',key_index=0,attempts=1)))
         with patch('app.routes.GeminiClient.from_app_config', return_value=fake):
             response = self.client.post('/api/modules/assignments/chat', json={'task_id':task['id'],'attempt_id':attempt_id,'message':'Kiểm chứng nguồn như thế nào?','messages':[]})
         self.assertEqual(response.status_code, 200)

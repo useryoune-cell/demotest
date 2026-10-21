@@ -143,14 +143,18 @@ class GeminiClient:
             "keys": client.key_manager.status(),
         }
 
-    def generate_text(self, prompt, max_attempts=None):
+    def generate_text(self, prompt, max_attempts=None, deadline_seconds=None):
         attempts_allowed = max_attempts or self.key_manager.total_keys
         last_error = None
+        deadline = time.monotonic() + deadline_seconds if deadline_seconds else None
 
         for attempt in range(1, attempts_allowed + 1):
+            remaining = deadline - time.monotonic() if deadline else None
+            if remaining is not None and remaining <= 1:
+                break
             state = self.key_manager.next_key()
             try:
-                text = self._request_with_key(state, prompt)
+                text = self._request_with_key(state, prompt, remaining)
                 self.key_manager.mark_success(state)
                 return GeminiResponse(
                     text=text,
@@ -165,7 +169,7 @@ class GeminiClient:
 
         raise GeminiClientError(str(last_error or "Gemini request failed."), retryable=True)
 
-    def _request_with_key(self, state, prompt):
+    def _request_with_key(self, state, prompt, remaining=None):
         url = (
             "https://generativelanguage.googleapis.com/v1beta/models/"
             f"{self.model}:generateContent"
@@ -189,7 +193,8 @@ class GeminiClient:
                 url,
                 params=params,
                 json=payload,
-                timeout=self.timeout_seconds,
+                timeout=(min(3, remaining / 2), min(self.timeout_seconds, remaining / 2))
+                if remaining is not None else self.timeout_seconds,
             )
         except requests.RequestException as exc:
             message = f"Network error on {state.label}: {exc}"
@@ -224,11 +229,14 @@ class GeminiClient:
             self.key_manager.mark_error(state, message)
             raise GeminiClientError(message, retryable=False)
 
-        data = response.json()
         try:
+            data = response.json()
             parts = data["candidates"][0]["content"]["parts"]
-            return "\n".join(part.get("text", "") for part in parts).strip()
-        except (KeyError, IndexError, TypeError) as exc:
+            text = "\n".join(part.get("text", "") for part in parts).strip()
+            if not text:
+                raise ValueError("Empty Gemini response")
+            return text
+        except (ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
             self.key_manager.mark_error(state, "Unexpected Gemini response shape.")
             raise GeminiClientError("Gemini returned an unexpected response shape.", retryable=False) from exc
 

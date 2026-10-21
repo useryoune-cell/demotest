@@ -1,0 +1,1850 @@
+{
+  "argument_packages": [
+    {
+      "id": "datatm-argument-01",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Vì sao Xiêm giữ được độc lập?",
+      "question": "Dựa vào đoạn tư liệu, hãy xác định các thành phần của lập luận để làm rõ: Vì sao Xiêm không bị trở thành thuộc địa của thực dân phương Tây?",
+      "source_text": "“Công cuộc cải cách đã góp phần thúc đẩy sản xuất phát triển, mở cửa cho hàng hóa xuất khẩu,... đưa Vương quốc Xiêm phát triển theo con đường tư bản chủ nghĩa, từng bước hội nhập với thế giới trong những thập niên đầu thế kỉ XX. Trên cơ sở những thành tựu của công cuộc cải cách, Chính phủ Xiêm có thực lực để thực hiện đường lối ngoại giao mềm dẻo, nhằm giữ vững nền độc lập và chủ quyền đất nước, không bị rơi vào tình trạng thuộc địa.”",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Trên cơ sở những thành tựu của công cuộc cải cách, Chính phủ Xiêm có thực lực để thực hiện đường lối ngoại giao mềm dẻo.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Từ năm 1892, Ra-ma V tiến hành cải cách hành chính theo mô hình phương Tây.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Những thành tựu của công cuộc cải cách tạo cơ sở thực lực để Chính phủ Xiêm thực hiện đường lối ngoại giao mềm dẻo.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Chính phủ Xiêm đồng ý cắt một số vùng lãnh thổ thuộc ảnh hưởng của Xiêm ở Lào, Cam-pu-chia cho Pháp (1907) và ở Mã Lai cho Anh (1909).",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Xiêm giữ vững nền độc lập và chủ quyền đất nước, không bị rơi vào tình trạng thuộc địa.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 5: Quá trình xâm lược và cai trị của chủ nghĩa thực dân ở Đông Nam Á, mục 2. Công cuộc cải cách ở Xiêm, trang 35–36. SGK Lịch sử 11.KNTT (1)",
+      "teacher_notes": "Đáp án hiển thị cho giáo viên\nLuận điểm: Trên cơ sở những thành tựu của công cuộc cải cách, Chính phủ Xiêm có thực lực để thực hiện đường lối ngoại giao mềm dẻo.\nBằng chứng: Từ năm 1892, Ra-ma V tiến hành cải cách hành chính theo mô hình phương Tây.\nGiả định: Những thành tựu của công cuộc cải cách tạo cơ sở thực lực để Chính phủ Xiêm thực hiện đường lối ngoại giao mềm dẻo.\nPhản biện: Chính phủ Xiêm vẫn phải chấp nhận cắt một số vùng lãnh thổ thuộc ảnh hưởng của Xiêm ở Lào, Cam-pu-chia cho Pháp năm 1907 và ở Mã Lai cho Anh năm 1909. Đây là chi tiết trong SGK cho thấy việc giữ độc lập không có nghĩa Xiêm hoàn toàn không phải nhượng bộ trước các cường quốc phương Tây.\nKết luận: Xiêm giữ vững nền độc lập và chủ quyền đất nước, không bị rơi vào tình trạng thuộc địa."
+    },
+    {
+      "id": "datatm-argument-02",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Chủ nghĩa tư bản hiện đại",
+      "question": "Dựa vào thông tin trong SGK, hãy xây dựng bản đồ lập luận để trả lời câu hỏi: Có thể đánh giá như thế nào về tiềm năng và thách thức của chủ nghĩa tư bản hiện đại?",
+      "source_text": "SGK chỉ ra chủ nghĩa tư bản hiện đại có nhiều tiềm năng về khoa học – công nghệ, nguồn nhân lực và kinh nghiệm quản lí; đồng thời vẫn phải đối mặt với những thách thức như khủng hoảng kinh tế, tài chính, bất bình đẳng xã hội và các vấn đề mang tính toàn cầu. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Chủ nghĩa tư bản hiện đại có nhiều tiềm năng phát triển trên các lĩnh vực.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Chủ nghĩa tư bản có ưu thế trong việc sử dụng những thành tựu của cuộc Cách mạng công nghiệp lần thứ tư, có nguồn nhân lực chất lượng cao và kinh nghiệm quản lí.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Những lợi thế về khoa học - công nghệ, nguồn nhân lực và quản lí là cơ sở tạo nên tiềm năng phát triển của chủ nghĩa tư bản hiện đại.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Chủ nghĩa tư bản đang phải đối mặt với những thách thức như khủng hoảng kinh tế, tài chính mang tính toàn cầu, bất bình đẳng xã hội và những mâu thuẫn xã hội.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Chủ nghĩa tư bản hiện đại có nhiều tiềm năng phát triển nhưng đồng thời vẫn phải đối mặt với những thách thức lớn.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên:\nLuận điểm: mảnh 1\nBằng chứng: mảnh 2\nGiả định: mảnh 3\nPhản biện: mảnh 4\nKết luận: mảnh 5"
+    },
+    {
+      "id": "datatm-argument-03",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Cải cách Hồ Quý Ly",
+      "question": "Dựa vào SGK, hãy xây dựng bản đồ lập luận để trả lời: Cuộc cải cách của Hồ Quý Ly và triều Hồ có kết quả và ý nghĩa như thế nào?",
+      "source_text": "SGK đánh giá cuộc cải cách có nhiều điểm tiến bộ, góp phần đưa đất nước thoát khỏi tình trạng khủng hoảng, củng cố quyền lực trung ương, bước đầu ổn định tình hình xã hội và củng cố tiềm lực đất nước; tuy nhiên, một số cải cách chưa triệt để và kết quả thực tế còn hạn chế. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Cuộc cải cách của Hồ Quý Ly và triều Hồ có nhiều điểm tiến bộ.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Chính sách hạn điền, hạn nô, cải cách thuế khóa cùng những cải cách về văn hóa, giáo dục góp phần củng cố quyền lực của chính quyền trung ương và ổn định tình hình đất nước.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Những cải cách giúp củng cố chính quyền, ổn định xã hội và tăng cường tiềm lực đất nước là cơ sở để đánh giá ý nghĩa của cuộc cải cách.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Tuy nhiên, những cải cách của Hồ Quý Ly và triều Hồ vẫn còn chưa triệt để và kết quả trong thực tế còn hạn chế.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Cuộc cải cách có ý nghĩa trong việc bước đầu ổn định tình hình xã hội, củng cố tiềm lực của đất nước để chuẩn bị đối phó với giặc ngoại xâm.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: Luận điểm 1 – Bằng chứng 2 – Giả định 3 – Phản biện 4 – Kết luận 5."
+    },
+    {
+      "id": "datatm-argument-04",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Từ khởi nghĩa địa phương đến phong trào dân tộc",
+      "question": "Vì sao phong trào Tây Sơn được đánh giá là từ một cuộc khởi nghĩa địa phương phát triển thành phong trào dân tộc rộng lớn?",
+      "source_text": "SGK nêu phong trào Tây Sơn khởi đầu từ cuộc khởi nghĩa chống chính quyền chúa Nguyễn ở Đàng Trong; sau đó lật đổ các chính quyền phong kiến Nguyễn – Trịnh, xóa bỏ tình trạng chia cắt đất nước, đánh tan quân Xiêm và quân Thanh, bảo vệ độc lập dân tộc và chủ quyền lãnh thổ. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Phong trào Tây Sơn từ một cuộc khởi nghĩa địa phương đã phát triển thành phong trào dân tộc rộng lớn.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Phong trào đã lật đổ các chính quyền phong kiến Nguyễn - Trịnh, xóa bỏ tình trạng chia cắt đất nước, đồng thời đánh tan các thế lực ngoại xâm hùng mạnh.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Một phong trào vừa giải quyết những vấn đề lớn trong nước vừa bảo vệ độc lập dân tộc đã vượt ra ngoài phạm vi của một cuộc khởi nghĩa địa phương.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Mùa xuân năm 1771, ba anh em Nguyễn Nhạc, Nguyễn Huệ, Nguyễn Lữ dựng cờ khởi nghĩa ở Tây Sơn thượng đạo chống lại chính quyền chúa Nguyễn.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Phong trào Tây Sơn đã góp phần bảo vệ vững chắc nền độc lập dân tộc và chủ quyền lãnh thổ của Tổ quốc.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Lưu ý: Mảnh “Phản biện” ở đây có chức năng cho thấy điểm xuất phát ban đầu của phong trào còn mang phạm vi địa phương, để HS đối chiếu với sự phát triển về sau."
+    },
+    {
+      "id": "datatm-argument-05",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Vị trí địa chiến lược của Việt Nam",
+      "question": "Những yếu tố nào làm cho Việt Nam có vị trí địa chiến lược quan trọng và vị trí đó đặt ra vấn đề gì trong lịch sử?",
+      "source_text": "Theo SGK, Việt Nam nằm trên các tuyến giao thông quan trọng kết nối châu Á với châu Đại Dương, Ấn Độ Dương với Thái Bình Dương; là đầu nối giữa Trung Quốc với Đông Nam Á, giữa Đông Nam Á lục địa và Đông Nam Á hải đảo. Cùng nguồn tài nguyên phong phú và dân cư đông đúc, Việt Nam có vị trí địa chiến lược quan trọng; đồng thời trong lịch sử phải nhiều lần đối phó với ngoại xâm. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Việt Nam có vị trí địa chiến lược quan trọng ở khu vực Đông Nam Á.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Việt Nam nằm trên trục đường giao thông trọng yếu nối châu Á với châu Đại Dương, Ấn Độ Dương với Thái Bình Dương; đồng thời là đầu nối giữa Trung Quốc với khu vực Đông Nam Á.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Vị trí nằm trên các tuyến giao thông và khu vực kết nối quan trọng làm gia tăng giá trị chiến lược của một quốc gia.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Trong suốt tiến trình lịch sử, Việt Nam luôn phải đối phó với nhiều thế lực ngoại xâm và tiến hành nhiều cuộc chiến tranh bảo vệ Tổ quốc.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Cùng với nguồn tài nguyên phong phú, dân cư đông đúc, Việt Nam trở thành một trong những quốc gia có vị trí địa chiến lược quan trọng.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": ""
+    },
+    {
+      "id": "datatm-argument-06",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Điều gì quyết định thành bại?",
+      "question": "Qua các cuộc kháng chiến trong lịch sử Việt Nam trước năm 1945, những yếu tố nào có ảnh hưởng đến thắng lợi hoặc thất bại của cuộc chiến tranh bảo vệ Tổ quốc?",
+      "source_text": "SGK chỉ ra các cuộc kháng chiến thắng lợi gắn với tính chính nghĩa, lòng yêu nước, tinh thần đoàn kết và những kế sách đánh giặc đúng đắn, linh hoạt. Ngược lại, một số cuộc kháng chiến không thành công có nguyên nhân từ hạn chế của người lãnh đạo, không tập hợp được sức mạnh đoàn kết của nhân dân hoặc mắc sai lầm về đường lối, phương pháp đấu tranh. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Thắng lợi của các cuộc kháng chiến bảo vệ Tổ quốc gắn với nhiều yếu tố, trong đó có sức mạnh đoàn kết của nhân dân và nghệ thuật lãnh đạo, tổ chức kháng chiến.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Nhân dân Việt Nam có lòng yêu nước nồng nàn, các tầng lớp nhân dân đoàn kết thành một khối; đồng thời nhiều cuộc kháng chiến có kế sách đánh giặc đúng đắn, linh hoạt và nghệ thuật quân sự độc đáo.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Khi sức mạnh của nhân dân được tập hợp và sử dụng bằng đường lối, phương pháp phù hợp, khả năng giành thắng lợi của cuộc kháng chiến được tăng lên.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Một số cuộc kháng chiến không thành công do người lãnh đạo không tập hợp được đông đảo quần chúng nhân dân, không xây dựng được khối đoàn kết toàn dân hoặc phạm sai lầm về đường lối, phương pháp đấu tranh.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Kết quả của chiến tranh bảo vệ Tổ quốc phụ thuộc không chỉ vào tinh thần yêu nước mà còn vào khả năng tập hợp lực lượng và đường lối, nghệ thuật tổ chức đấu tranh.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": ""
+    },
+    {
+      "id": "datatm-argument-07",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Từ khởi nghĩa Lam Sơn đến giải phóng dân tộc",
+      "question": "Dựa vào SGK, hãy xây dựng bản đồ lập luận để trả lời: Vì sao khởi nghĩa Lam Sơn được xem là một cuộc chiến tranh giải phóng dân tộc?",
+      "source_text": "Khởi nghĩa Lam Sơn diễn ra trong bối cảnh đất nước bị nhà Minh đô hộ. Từ năm 1418, nghĩa quân từng bước phát triển lực lượng, mở rộng địa bàn hoạt động và giành nhiều thắng lợi; đến cuối năm 1427, quân Minh rút hết về nước, đất nước được hoàn toàn giải phóng. SGK đánh giá khởi nghĩa Lam Sơn đã chấm dứt hơn 20 năm thống trị của nhà Minh, khôi phục nền độc lập dân tộc và mở ra thời kì phát triển mới của đất nước. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Khởi nghĩa Lam Sơn phát triển thành một cuộc chiến tranh giải phóng dân tộc.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Cuối năm 1427, quân Minh rút hết về nước, đất nước hoàn toàn giải phóng.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Việc đánh bại lực lượng đô hộ và khôi phục nền độc lập là cơ sở để xác định tính chất giải phóng dân tộc của cuộc khởi nghĩa.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Năm 1418, khi mới bắt đầu, nghĩa quân Lam Sơn gặp nhiều khó khăn, nhiều lần phải rút lên vùng núi Chí Linh.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Khởi nghĩa Lam Sơn chấm dứt hơn 20 năm thống trị của nhà Minh, khôi phục nền độc lập dân tộc và mở ra thời kì phát triển mới của đất nước.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: Luận điểm 1 – Bằng chứng 2 – Giả định 3 – Phản biện 4 – Kết luận 5."
+    },
+    {
+      "id": "datatm-argument-08",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Củng cố nhà nước thời Lê Thánh Tông",
+      "question": "Cuộc cải cách của Lê Thánh Tông đã góp phần tăng cường quyền lực của nhà vua và bộ máy nhà nước như thế nào?",
+      "source_text": "Ở trung ương, Lê Thánh Tông xoá bỏ hầu hết các chức quan đại thần có quyền lực lớn, nhà vua nắm mọi quyền hành và trực tiếp chỉ đạo các cơ quan chuyên môn. Ở địa phương, năm 1466, cả nước được chia thành 12 đạo thừa tuyên và phủ Trung Đô; đến năm 1469 đổi thành 13 đạo thừa tuyên. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Cải cách hành chính của Lê Thánh Tông góp phần tăng cường quyền lực của nhà vua và củng cố bộ máy nhà nước.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Ở trung ương, Lê Thánh Tông xoá bỏ hầu hết các chức quan đại thần có quyền lực lớn; nhà vua nắm mọi quyền hành và trực tiếp chỉ đạo các cơ quan chuyên môn.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Việc hạn chế quyền lực của các đại thần và tăng quyền điều hành trực tiếp của nhà vua làm tăng mức độ tập trung quyền lực ở trung ương.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Trước cải cách, bộ máy hành chính nhà nước đã bộc lộ một số hạn chế, trong đó quyền lực của một số quan đại thần còn lớn.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Cuộc cải cách góp phần làm cho bộ máy nhà nước trở nên quy củ, chặt chẽ và tập trung cao độ, đề cao quyền hành toàn diện của hoàng đế.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-09",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Cải cách hành chính Minh Mạng",
+      "question": "Dựa vào SGK, hãy làm rõ: Vì sao cải cách Minh Mạng có ý nghĩa đối với việc hoàn thành thống nhất đất nước về mặt hành chính?",
+      "source_text": "Đầu thế kỉ XIX, bộ máy hành chính nhà Nguyễn còn chưa hoàn chỉnh; ở trung ương tồn tại nhiều cơ quan chưa được hoàn thiện, còn ở địa phương tồn tại Bắc Thành và Gia Định Thành với quyền hạn khá lớn. Minh Mạng tiến hành cải cách hành chính nhằm tăng cường quyền lực của triều đình trung ương. SGK đánh giá cuộc cải cách có ý nghĩa quan trọng trong việc hoàn thành thống nhất đất nước về mặt hành chính. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Cải cách của Minh Mạng có ý nghĩa quan trọng trong việc hoàn thành thống nhất đất nước về mặt hành chính.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Minh Mạng tiến hành cải tổ hệ thống hành chính, xoá bỏ Bắc Thành và Gia Định Thành, tổ chức lại các đơn vị hành chính địa phương và tăng cường sự quản lí của triều đình trung ương.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Một hệ thống hành chính được tổ chức thống nhất và đặt dưới sự quản lí trực tiếp của trung ương sẽ tăng mức độ thống nhất về hành chính.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Trước cải cách, bộ máy hành chính nhà Nguyễn còn chưa hoàn chỉnh và ở địa phương vẫn tồn tại những đơn vị có quyền hạn khá lớn như Bắc Thành và Gia Định Thành.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Cuộc cải cách Minh Mạng góp phần hoàn thành thống nhất đất nước về mặt hành chính và làm cho hoạt động của bộ máy nhà nước hiệu quả hơn trước.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-10",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Bảo vệ Tổ quốc và truyền thống dân tộc",
+      "question": "Chiến tranh bảo vệ Tổ quốc có vai trò và ý nghĩa như thế nào đối với lịch sử dân tộc Việt Nam?",
+      "source_text": "SGK khẳng định chiến tranh bảo vệ Tổ quốc có vai trò quan trọng đối với sự tồn tại và phát triển của dân tộc Việt Nam; góp phần bảo vệ vững chắc nền độc lập, giữ gìn bản sắc văn hoá và tạo điều kiện thuận lợi cho quá trình xây dựng đất nước. Đồng thời, các cuộc chiến tranh bảo vệ Tổ quốc có ý nghĩa lớn trong việc hình thành và nâng cao lòng tự hào, ý thức tự cường và những truyền thống tốt đẹp của dân tộc. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Chiến tranh bảo vệ Tổ quốc có vai trò đặc biệt quan trọng đối với sự tồn tại và phát triển của dân tộc Việt Nam.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Các cuộc chiến tranh bảo vệ Tổ quốc góp phần bảo vệ vững chắc nền độc lập, giữ gìn bản sắc văn hoá và tạo điều kiện thuận lợi cho quá trình xây dựng đất nước.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Việc bảo vệ độc lập, lãnh thổ và những giá trị văn hoá là điều kiện quan trọng để một dân tộc duy trì sự tồn tại và phát triển.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Trong lịch sử, do vị trí địa chiến lược quan trọng, Việt Nam nhiều lần phải đối phó với các thế lực ngoại xâm.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Chiến tranh bảo vệ Tổ quốc còn góp phần hình thành và nâng cao lòng tự hào, ý thức tự cường cùng những truyền thống tốt đẹp của dân tộc.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-11",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Biển Đông và phát triển kinh tế",
+      "question": "Vì sao Biển Đông có vai trò quan trọng đối với phát triển các ngành kinh tế trọng điểm của Việt Nam?",
+      "source_text": "SGK nêu Việt Nam giáp Biển Đông ở ba phía, có đường bờ biển dài khoảng 3 260 km. Vị trí địa lí và tài nguyên của Biển Đông tạo điều kiện thuận lợi cho phát triển kinh tế biển, trong đó có khai thác tài nguyên sinh vật, dầu khí, giao thông vận tải biển và du lịch. Biển Đông còn là “cửa ngõ” để Việt Nam giao lưu kinh tế với các nước trong khu vực và trên thế giới. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Biển Đông có vai trò quan trọng đối với sự phát triển các ngành kinh tế trọng điểm của Việt Nam.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Biển Đông tạo điều kiện thuận lợi cho phát triển các ngành kinh tế biển như khai thác nguồn lợi thuỷ sản, dầu khí, giao thông vận tải biển và du lịch.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Nguồn tài nguyên phong phú và điều kiện giao thông biển thuận lợi tạo cơ sở để phát triển nhiều ngành kinh tế.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Tầm quan trọng của Biển Đông đối với Việt Nam không chỉ giới hạn ở kinh tế mà còn gắn với quốc phòng và an ninh.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Biển Đông vừa cung cấp nguồn lực phát triển kinh tế, vừa là cửa ngõ để Việt Nam giao lưu kinh tế với các nước trong khu vực và thế giới.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-12",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Vì sao mô hình xã hội chủ nghĩa ở Đông Âu và Liên Xô sụp đổ?",
+      "question": "Dựa vào SGK, hãy xây dựng bản đồ lập luận để trả lời: Sự khủng hoảng và sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô xuất phát từ những nguyên nhân nào?",
+      "source_text": "SGK nêu nhiều nguyên nhân dẫn đến khủng hoảng và sụp đổ, trong đó có đường lối lãnh đạo chủ quan, duy ý chí; áp dụng máy móc mô hình kinh tế tập trung, quan liêu, bao cấp; chậm ứng dụng thành tựu khoa học – kĩ thuật; những sai lầm trong quá trình cải tổ và hoạt động chống phá của các lực lượng thù địch. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Sự khủng hoảng và sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô xuất phát từ nhiều nguyên nhân.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Đường lối lãnh đạo mang tính chủ quan, duy ý chí; áp dụng máy móc mô hình kinh tế tập trung, quan liêu, bao cấp; chậm đổi mới cơ chế và hệ thống quản lí kinh tế.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Những hạn chế kéo dài trong đường lối lãnh đạo và quản lí có thể làm suy giảm khả năng thích ứng và phát triển của một mô hình kinh tế - xã hội.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Hoạt động chống phá của các lực lượng thù địch ở trong nước và các thế lực bên ngoài cũng góp phần làm gia tăng tình trạng bất ổn xã hội.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Sự sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô là kết quả của nhiều nguyên nhân cả từ bên trong và tác động từ bên ngoài.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: Luận điểm 1 – Bằng chứng 2 – Giả định 3 – Phản biện 4 – Kết luận 5."
+    },
+    {
+      "id": "datatm-argument-13",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Bản chất của chính sách cai trị thuộc địa",
+      "question": "Chính sách cai trị của thực dân phương Tây đã tác động như thế nào đến các nước Đông Nam Á?",
+      "source_text": "SGK cho biết về chính trị, thực dân phương Tây thiết lập nền thống trị với các hình thức khác nhau nhưng đều nhằm phục vụ quyền lợi của chính quốc; thực hiện chính sách “chia để trị”. Về kinh tế, chúng tiến hành bóc lột, khai thác thuộc địa và biến các nước trong khu vực thành nơi cung cấp nguyên liệu, thị trường tiêu thụ hàng hóa. Về văn hóa – xã hội, chính quyền thực dân tìm cách kìm hãm người dân các nước thuộc địa trong tình trạng lạc hậu, nghèo đói. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Chính sách cai trị của thực dân phương Tây ở Đông Nam Á chủ yếu phục vụ mục tiêu thống trị và khai thác thuộc địa.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Thực dân phương Tây thực hiện chính sách “chia để trị”, khai thác thuộc địa, biến các nước trong khu vực thành nơi cung cấp nguyên liệu và thị trường tiêu thụ hàng hóa.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Khi bộ máy chính trị, kinh tế và xã hội của thuộc địa được tổ chức nhằm phục vụ lợi ích của chính quốc thì bản chất của chính sách cai trị là khai thác và duy trì sự thống trị.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Hình thức cai trị của các nước thực dân tại Đông Nam Á không hoàn toàn giống nhau, có thể là cai trị trực tiếp hoặc gián tiếp.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Dù có những hình thức cai trị khác nhau, chính sách của thực dân phương Tây đều tác động sâu sắc đến đời sống chính trị, kinh tế và xã hội của các nước Đông Nam Á.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-14",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Từ khuynh hướng phong kiến đến những khuynh hướng mới",
+      "question": "Phong trào đấu tranh giành độc lập dân tộc ở Đông Nam Á đã có sự chuyển biến về khuynh hướng đấu tranh như thế nào?",
+      "source_text": "SGK chia quá trình đấu tranh giành độc lập dân tộc ở Đông Nam Á từ cuối thế kỉ XIX đến năm 1975 thành ba giai đoạn. Từ cuối thế kỉ XIX đến khoảng năm 1920 là giai đoạn chuyển tiếp từ ý thức hệ phong kiến sang khuynh hướng tư sản; từ năm 1920 đến năm 1945, khuynh hướng vô sản từng bước phát triển nhưng khuynh hướng tư sản vẫn tồn tại ở một số nước. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Phong trào đấu tranh giành độc lập dân tộc ở Đông Nam Á có sự chuyển biến rõ rệt về khuynh hướng đấu tranh.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Từ cuối thế kỉ XIX đến khoảng năm 1920 diễn ra sự chuyển tiếp từ ý thức hệ phong kiến sang khuynh hướng tư sản; giai đoạn 1920 - 1945, khuynh hướng vô sản từng bước phát triển.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Sự xuất hiện và phát triển của những khuynh hướng đấu tranh mới phản ánh sự thay đổi về lực lượng, tổ chức và phương thức đấu tranh giành độc lập.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Trong giai đoạn 1920 - 1945, bên cạnh sự phát triển của khuynh hướng vô sản, khuynh hướng tư sản vẫn tồn tại ở một số nước Đông Nam Á.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Phong trào giành độc lập ở Đông Nam Á không phát triển theo một khuynh hướng duy nhất mà trải qua quá trình chuyển biến và tồn tại nhiều khuynh hướng đấu tranh.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-15",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Di sản của chế độ thực dân",
+      "question": "Dựa vào SGK, hãy đánh giá: Chế độ thực dân đã để lại những ảnh hưởng như thế nào đối với các nước Đông Nam Á?",
+      "source_text": "SGK cho biết chế độ thực dân để lại nhiều hệ lụy như nền kinh tế lạc hậu, phụ thuộc vào nước ngoài; chính sách “chia để trị” làm gia tăng sự chia rẽ về dân tộc, tôn giáo; chính sách nô dịch, áp đặt văn hóa ngoại lai gây ra nhiều vấn đề trong đời sống văn hóa – xã hội. Tuy nhiên, SGK cũng lưu ý sự thống trị của chủ nghĩa thực dân tạo ra một số chuyển biến nhất định về cơ sở hạ tầng ở một số nước. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Chế độ thực dân để lại những hệ quả sâu sắc đối với quá trình phát triển của các nước Đông Nam Á.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Nền kinh tế nhiều nước lạc hậu và phụ thuộc; chính sách “chia để trị” làm gia tăng chia rẽ dân tộc, tôn giáo; chính sách nô dịch và áp đặt văn hóa ngoại lai để lại nhiều vấn đề xã hội.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Những biến đổi kéo dài về kinh tế, dân tộc, xã hội và văn hóa có thể tiếp tục ảnh hưởng đến quá trình phát triển của một quốc gia sau khi giành độc lập.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Bên cạnh những tác động tiêu cực, sự thống trị của chủ nghĩa thực dân cũng tạo ra những chuyển biến nhất định về cơ sở hạ tầng như đường sá và đô thị ở một số nước Đông Nam Á.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Ảnh hưởng của chế độ thực dân đối với Đông Nam Á có tính lâu dài và phức tạp, trong đó những hệ lụy tiêu cực là vấn đề mà nhiều quốc gia phải giải quyết sau khi giành độc lập.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-16",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Con đường phát triển sau độc lập",
+      "question": "Các nước Đông Nam Á đã điều chỉnh chiến lược phát triển kinh tế như thế nào sau khi giành độc lập?",
+      "source_text": "SGK cho biết In-đô-nê-xi-a, Ma-lai-xi-a, Phi-lip-pin, Xin-ga-po tiến hành công nghiệp hóa với mục tiêu xây dựng nền kinh tế độc lập tự chủ. Trong những năm đầu, các nước thực hiện chiến lược công nghiệp hóa thay thế nhập khẩu và đạt một số kết quả bước đầu, nhưng sau đó xuất hiện những hạn chế. Các nước chuyển sang chiến lược công nghiệp hóa hướng tới xuất khẩu, mở cửa nền kinh tế, thu hút vốn và công nghệ nước ngoài. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Sau khi giành độc lập, một số nước Đông Nam Á đã điều chỉnh chiến lược phát triển kinh tế để thích ứng với những yêu cầu mới.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Ban đầu, các nước thực hiện công nghiệp hóa thay thế nhập khẩu; sau đó chuyển sang công nghiệp hóa hướng tới xuất khẩu, mở cửa nền kinh tế và thu hút vốn đầu tư nước ngoài.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Khi một chiến lược phát triển bộc lộ hạn chế, việc điều chỉnh chính sách có thể giúp nền kinh tế thích ứng tốt hơn với điều kiện trong nước và quốc tế.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Chiến lược công nghiệp hóa thay thế nhập khẩu ban đầu đã đạt được một số thành tựu nhất định trước khi bộc lộ những hạn chế.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Việc chuyển sang chiến lược công nghiệp hóa hướng tới xuất khẩu góp phần tạo nên sự chuyển biến trong quá trình phát triển kinh tế của một số nước Đông Nam Á.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án giáo viên: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-17",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Sức mạnh làm nên thắng lợi",
+      "question": "Dựa vào SGK, hãy xây dựng bản đồ lập luận để trả lời: Những yếu tố nào tạo nên thắng lợi của các cuộc kháng chiến bảo vệ Tổ quốc trong lịch sử Việt Nam?",
+      "source_text": "SGK nêu: trước hết, các cuộc kháng chiến của nhân dân Việt Nam đều là những cuộc chiến tranh chính nghĩa nhằm bảo vệ độc lập dân tộc; nhân dân có lòng yêu nước nồng nàn, các tầng lớp đoàn kết thành một khối; đồng thời có đường lối kháng chiến đúng đắn, linh hoạt, nghệ thuật quân sự độc đáo, sáng tạo và những người lãnh đạo tài năng. SGK cũng cho biết quân xâm lược gặp những khó khăn như đường xa, vận chuyển lương thực, không quen địa hình và khí hậu. SGK Lịch sử 11, Bài 7, trang 47. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Thắng lợi của các cuộc kháng chiến bảo vệ Tổ quốc là kết quả của sự kết hợp nhiều yếu tố.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Nhân dân Việt Nam có lòng yêu nước nồng nàn, các tầng lớp nhân dân đoàn kết thành một khối; các cuộc kháng chiến có đường lối đúng đắn, linh hoạt và nghệ thuật quân sự độc đáo, sáng tạo.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Khi sức mạnh đoàn kết của nhân dân được kết hợp với đường lối và nghệ thuật quân sự phù hợp, khả năng bảo vệ đất nước được tăng cường.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Trong quá trình xâm lược, quân giặc cũng gặp một số khó khăn như đường xa, vận chuyển lương thực, không quen địa hình và khí hậu.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Thắng lợi của các cuộc kháng chiến bắt nguồn chủ yếu từ tính chính nghĩa, lòng yêu nước, sức mạnh đoàn kết, đường lối đúng đắn và tài năng của những người lãnh đạo.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 Luận điểm – 2 Bằng chứng – 3 Giả định – 4 Phản biện – 5 Kết luận."
+    },
+    {
+      "id": "datatm-argument-18",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Khi sức mạnh toàn dân chưa được phát huy",
+      "question": "Những nguyên nhân nào dẫn đến thất bại của một số cuộc kháng chiến chống ngoại xâm trong lịch sử Việt Nam?",
+      "source_text": "SGK chỉ ra một số nguyên nhân chủ yếu: người lãnh đạo không tập hợp được đông đảo quần chúng nhân dân tham gia, không xây dựng được khối đoàn kết toàn dân; có những sai lầm trong đường lối và phương pháp đấu tranh. Bên cạnh đó, tương quan lực lượng chênh lệch không có lợi cho cuộc kháng chiến cũng là nguyên nhân khách quan. Bài 7, trang 49. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Sự thất bại của một số cuộc kháng chiến chống ngoại xâm bắt nguồn từ cả nguyên nhân chủ quan và khách quan.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Có những người lãnh đạo không tập hợp được đông đảo quần chúng nhân dân tham gia, không xây dựng được khối đoàn kết toàn dân hoặc phạm sai lầm trong đường lối, phương pháp đấu tranh.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Khả năng tập hợp lực lượng và lựa chọn đường lối đấu tranh phù hợp có quan hệ trực tiếp với sức mạnh của cuộc kháng chiến.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Bên cạnh nguyên nhân chủ quan, tương quan lực lượng chênh lệch không có lợi cho cuộc kháng chiến cũng là một nguyên nhân khách quan.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Không thể giải thích sự thất bại của các cuộc kháng chiến chỉ bằng một nguyên nhân; cần xem xét cả hạn chế bên trong và điều kiện khách quan.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-19",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Tuyến hàng hải chiến lược của Biển Đông",
+      "question": "Vì sao Biển Đông có vị trí đặc biệt quan trọng đối với giao thông hàng hải quốc tế?",
+      "source_text": "SGK xác định Biển Đông nằm trên tuyến đường biển quốc tế huyết mạch nối Thái Bình Dương với Ấn Độ Dương, châu Âu – châu Á, Trung Đông – Đông Á. Trong số 10 tuyến đường vận tải biển trọng yếu của thế giới liên quan đến Biển Đông, có 5 tuyến đi qua eo biển Ma-lắc-ca. Bài 12, trang 75. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Biển Đông giữ vị trí đặc biệt quan trọng trong giao thông hàng hải quốc tế.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Biển Đông nằm trên tuyến đường biển quốc tế huyết mạch nối Thái Bình Dương với Ấn Độ Dương, châu Âu - châu Á, Trung Đông - Đông Á.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Một vùng biển nằm trên các tuyến kết nối nhiều khu vực kinh tế lớn và tập trung nhiều tuyến vận tải quan trọng có giá trị chiến lược đối với giao thông hàng hải.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Tầm quan trọng của Biển Đông không chỉ thể hiện ở giao thông hàng hải mà còn ở vị trí chiến lược, nguồn tài nguyên thiên nhiên và các hoạt động kinh tế khác.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Vị trí kết nối các đại dương, khu vực và những tuyến vận tải biển quan trọng làm cho Biển Đông trở thành một tuyến giao thông biển huyết mạch của thế giới.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-20",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Hai quần đảo có vị trí chiến lược",
+      "question": "Vì sao quần đảo Hoàng Sa và quần đảo Trường Sa có tầm quan trọng chiến lược ở Biển Đông?",
+      "source_text": "Theo SGK, hệ thống đảo và quần đảo trên Biển Đông nằm trên những tuyến hàng hải quốc tế quan trọng, kết nối các châu lục nên có ý nghĩa chiến lược về quốc phòng, an ninh đối với nhiều quốc gia ven biển. Một số đảo, quần đảo có vị trí, điều kiện tự nhiên thích hợp để phát triển các ngành kinh tế biển. Hoàng Sa và Trường Sa có vị trí chiến lược đặc biệt quan trọng. Bài 12, trang 78–79. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Quần đảo Hoàng Sa và quần đảo Trường Sa có tầm quan trọng chiến lược đặc biệt trên Biển Đông.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Các quần đảo nằm trên những tuyến hàng hải quốc tế quan trọng và có ý nghĩa chiến lược về quốc phòng, an ninh đối với nhiều quốc gia ven biển.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Vị trí có khả năng tác động đến các tuyến hàng hải và hoạt động trên biển làm gia tăng giá trị chiến lược của các đảo và quần đảo.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Giá trị của Hoàng Sa và Trường Sa không chỉ nằm ở quốc phòng, an ninh; các đảo và vùng biển xung quanh còn có nguồn tài nguyên sinh vật, khoáng sản và tiềm năng du lịch.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Hoàng Sa và Trường Sa có ý nghĩa quan trọng cả về quốc phòng, an ninh và phát triển kinh tế biển.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-21",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Biển Đông với Việt Nam",
+      "question": "Có thể đánh giá tầm quan trọng của Biển Đông đối với Việt Nam chỉ từ góc độ kinh tế hay không?",
+      "source_text": "SGK nêu Việt Nam giáp Biển Đông ở ba phía và có đường bờ biển dài khoảng 3 260 km. Biển Đông có vai trò quan trọng đối với sự nghiệp xây dựng và bảo vệ Tổ quốc. Về quốc phòng, an ninh, đây là tuyến phòng thủ phía đông của đất nước. Về kinh tế, vị trí và tài nguyên của Biển Đông tạo điều kiện thuận lợi cho phát triển các ngành kinh tế biển. Bài 13, trang 81–82. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Không thể đánh giá tầm quan trọng của Biển Đông đối với Việt Nam chỉ từ góc độ kinh tế.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Biển Đông vừa tạo điều kiện phát triển các ngành kinh tế biển, vừa là tuyến phòng thủ phía đông của đất nước.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Khi một không gian vừa có giá trị kinh tế vừa giữ vai trò đối với quốc phòng, an ninh thì tầm quan trọng của nó phải được xem xét trên nhiều phương diện.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Nguồn tài nguyên và vị trí địa lí của Biển Đông tạo điều kiện thuận lợi cho Việt Nam phát triển giao thông vận tải biển, khai thác tài nguyên và du lịch.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Biển Đông có tầm quan trọng toàn diện đối với Việt Nam, gắn với cả phát triển kinh tế và bảo đảm quốc phòng, an ninh.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-22",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Xác lập và thực thi chủ quyền trên biển",
+      "question": "Những bằng chứng nào cho thấy Việt Nam đã xác lập và thực thi chủ quyền đối với Hoàng Sa và Trường Sa từ sớm?",
+      "source_text": "SGK cho biết người Việt đã tích cực, chủ động và sớm có hoạt động kinh tế, văn hóa ở Biển Đông. Nhiều bản đồ và thư tịch cổ ghi chép về Hoàng Sa, Trường Sa. Các chúa Nguyễn tổ chức đội Hoàng Sa và đội Bắc Hải để thực hiện nhiệm vụ tại các vùng biển đảo; dưới triều Nguyễn, đặc biệt thời Gia Long và Minh Mạng, nhiều hoạt động xác lập, quản lí và khẳng định chủ quyền tiếp tục được tiến hành. Bài 13, trang 82–85. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Việt Nam đã xác lập và thực thi chủ quyền đối với quần đảo Hoàng Sa và quần đảo Trường Sa từ sớm và liên tục.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Các chúa Nguyễn tổ chức đội Hoàng Sa và đội Bắc Hải thực hiện nhiệm vụ ở vùng biển đảo; dưới triều Gia Long và Minh Mạng, Nhà nước tiếp tục tiến hành nhiều hoạt động quản lí và khẳng định chủ quyền.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Những hoạt động được tổ chức và duy trì bởi Nhà nước qua nhiều thời kì là cơ sở để xác định quá trình xác lập và thực thi chủ quyền.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Việc xác lập và bảo vệ chủ quyền không chỉ được thể hiện bằng hoạt động trên thực địa mà còn được phản ánh trong nhiều bản đồ, thư tịch và tài liệu lịch sử.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Các nguồn tư liệu và hoạt động quản lí của Nhà nước cho thấy quá trình xác lập, thực thi chủ quyền của Việt Nam đối với Hoàng Sa và Trường Sa đã được tiến hành trong lịch sử.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    },
+    {
+      "id": "datatm-argument-23",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Bản đồ lập luận - Bộ câu hỏi-đáp án.docx",
+      "title": "Bảo vệ chủ quyền bằng biện pháp hòa bình",
+      "question": "Chủ trương giải quyết tranh chấp bằng biện pháp hòa bình có đồng nghĩa với việc Việt Nam từ bỏ việc kiên quyết bảo vệ chủ quyền hay không?",
+      "source_text": "SGK khẳng định Nhà nước Việt Nam thực hiện các biện pháp toàn diện trên các lĩnh vực chính trị, ngoại giao, kinh tế và quốc phòng để bảo vệ chủ quyền, các quyền và lợi ích hợp pháp ở Biển Đông. Đối với tranh chấp chủ quyền, Việt Nam chủ trương giải quyết bằng biện pháp hòa bình trên cơ sở tuân thủ luật pháp quốc tế. Việt Nam tham gia UNCLOS 1982, ban hành Luật Biển Việt Nam năm 2012 và thúc đẩy thực hiện DOC. Bài 13, trang 88–89. SGK Lịch sử 11.KNTT (1)",
+      "pieces": [
+        {
+          "id": "p1",
+          "text": "Chủ trương giải quyết tranh chấp bằng biện pháp hòa bình không đồng nghĩa với việc từ bỏ bảo vệ chủ quyền và các quyền, lợi ích hợp pháp của Việt Nam ở Biển Đông.",
+          "bucket": "claim"
+        },
+        {
+          "id": "p2",
+          "text": "Việt Nam chủ trương giải quyết tranh chấp bằng biện pháp hòa bình, tuân thủ luật pháp quốc tế; đồng thời tham gia UNCLOS 1982, ban hành Luật Biển Việt Nam năm 2012 và thúc đẩy thực hiện DOC.",
+          "bucket": "evidence"
+        },
+        {
+          "id": "p3",
+          "text": "Sử dụng các biện pháp pháp lí và ngoại giao hòa bình vẫn là một hình thức chủ động bảo vệ quyền và lợi ích hợp pháp của quốc gia.",
+          "bucket": "assumption"
+        },
+        {
+          "id": "p4",
+          "text": "Nhà nước Việt Nam vẫn tiến hành các hoạt động đấu tranh kiên quyết nhằm bảo vệ và thực thi chủ quyền đối với các vùng biển, đảo thuộc chủ quyền của Việt Nam.",
+          "bucket": "counter"
+        },
+        {
+          "id": "p5",
+          "text": "Việt Nam kết hợp kiên quyết bảo vệ chủ quyền với chủ trương giải quyết các tranh chấp ở Biển Đông bằng biện pháp hòa bình trên cơ sở luật pháp quốc tế.",
+          "bucket": "conclusion"
+        }
+      ],
+      "source_reference": "",
+      "teacher_notes": "Đáp án: 1 – Luận điểm; 2 – Bằng chứng; 3 – Giả định; 4 – Phản biện; 5 – Kết luận."
+    }
+  ],
+  "detective_cases": [
+    {
+      "id": "datatm-detective-01",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT01",
+      "title": "Ghép nhầm mốc thời gian và sự kiện lịch sử",
+      "field": "Lịch sử 11 – Phong trào Tây Sơn",
+      "task": "Đọc câu trả lời của AI dưới đây. Xác định thông tin đáng nghi, chỉ ra loại lỗi, sử dụng SGK Lịch sử 11 để kiểm chứng và viết lại nội dung chính xác hơn.",
+      "text": "Phong trào Tây Sơn đã giành nhiều thắng lợi quan trọng trong quá trình bảo vệ đất nước. Năm 1785, Nguyễn Huệ lên ngôi Hoàng đế, lấy niên hiệu Quang Trung và chỉ huy quân Tây Sơn tiến ra Bắc. Tại trận Ngọc Hồi – Đống Đa, quân Tây Sơn đã đánh tan 29 vạn quân Thanh, qua đó bảo vệ nền độc lập dân tộc và khẳng định vai trò của phong trào Tây Sơn trong lịch sử Việt Nam.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Dữ kiện sai – ghép nhầm mốc thời gian và sự kiện.",
+      "suspicious_text": "Năm 1785, Nguyễn Huệ lên ngôi Hoàng đế, lấy niên hiệu Quang Trung và chỉ huy quân Tây Sơn tiến ra Bắc. Tại trận Ngọc Hồi – Đống Đa, quân Tây Sơn đã đánh tan 29 vạn quân Thanh.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 8, phần Phong trào Tây Sơn, năm 1785 quân Tây Sơn giành chiến thắng Rạch Gầm – Xoài Mút, đánh tan 5 vạn quân Xiêm; năm 1788, Nguyễn Huệ lên ngôi Hoàng đế, lấy niên hiệu Quang Trung; năm 1789, quân Tây Sơn giành chiến thắng Ngọc Hồi – Đống Đa, đánh tan 29 vạn quân Thanh. SGK Lịch sử 11.KNTT (1)",
+      "rewrite": "Phong trào Tây Sơn đã giành nhiều thắng lợi quan trọng. Năm 1785, dưới sự chỉ huy của Nguyễn Huệ, quân Tây Sơn giành chiến thắng Rạch Gầm – Xoài Mút, đánh tan 5 vạn quân Xiêm. Năm 1788, Nguyễn Huệ lên ngôi Hoàng đế, lấy niên hiệu Quang Trung; năm 1789, ông chỉ huy quân Tây Sơn giành chiến thắng Ngọc Hồi – Đống Đa, đánh tan 29 vạn quân Thanh."
+    },
+    {
+      "id": "datatm-detective-02",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT02",
+      "title": "Sai mốc thời gian lịch sử",
+      "field": "Lịch sử 11 – Sự hình thành Liên bang Cộng hòa xã hội chủ nghĩa Xô viết",
+      "task": "Đọc câu trả lời của AI, xác định thông tin đáng nghi, chỉ ra loại lỗi, đối chiếu với SGK Lịch sử 11 và viết lại nội dung chính xác hơn.",
+      "text": "Sau Cách mạng tháng Mười Nga, việc liên kết các nước cộng hòa Xô viết trở thành yêu cầu quan trọng nhằm tăng cường sức mạnh chung. Ngày 30/12/1922, Đại hội lần thứ nhất các Xô viết toàn Liên bang được tổ chức tại Mát-xcơ-va và thông qua Tuyên ngôn thành lập cùng Hiệp ước Liên bang, đánh dấu sự ra đời của Liên Xô. Ngay tại Đại hội này, bản Hiến pháp đầu tiên của Liên Xô cũng được thông qua, hoàn thiện cơ sở pháp lí cho nhà nước liên bang mới.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai mốc thời gian – gắn một sự kiện đúng vào thời điểm không đúng.",
+      "suspicious_text": "Ngay tại Đại hội này, bản Hiến pháp đầu tiên của Liên Xô cũng được thông qua.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 3, trang 20, ngày 30/12/1922, Đại hội lần thứ nhất các Xô viết toàn Liên bang thông qua Tuyên ngôn thành lập Liên Xô và Hiệp ước Liên bang. Bản Hiến pháp đầu tiên của Liên Xô được thông qua vào tháng 1/1924, không phải ngày 30/12/1922. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Sau Cách mạng tháng Mười Nga, việc liên kết các nước cộng hòa Xô viết trở thành yêu cầu quan trọng. Ngày 30/12/1922, tại Mát-xcơ-va, Đại hội lần thứ nhất các Xô viết toàn Liên bang thông qua Tuyên ngôn thành lập Liên Xô và Hiệp ước Liên bang. Đến tháng 1/1924, bản Hiến pháp đầu tiên của Liên Xô được thông qua."
+    },
+    {
+      "id": "datatm-detective-03",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT03",
+      "title": "Nhầm quốc gia thực dân",
+      "field": "Lịch sử 11 – Quá trình xâm lược Đông Nam Á của thực dân phương Tây",
+      "task": "Đọc câu trả lời của AI, xác định chi tiết chưa chính xác, tìm bằng chứng trong SGK để kiểm chứng và viết lại đoạn thông tin đúng.",
+      "text": "Từ thế kỉ XVI, các nước phương Tây từng bước mở rộng quá trình xâm lược Đông Nam Á. Tây Ban Nha thiết lập ách thống trị ở Phi-lip-pin từ giữa thế kỉ XVI và duy trì quyền cai trị trong nhiều thế kỉ. Sau cuộc chiến tranh Mỹ – Tây Ban Nha năm 1898, Tây Ban Nha thất bại và Phi-lip-pin trở thành thuộc địa của Anh. Quá trình này cho thấy sự cạnh tranh giữa các nước phương Tây trong việc giành quyền kiểm soát các quốc gia Đông Nam Á.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai dữ kiện – nhầm quốc gia thực dân.",
+      "suspicious_text": "Sau cuộc chiến tranh Mỹ – Tây Ban Nha năm 1898, Tây Ban Nha thất bại và Phi-lip-pin trở thành thuộc địa của Anh.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 5, trang 31, từ giữa thế kỉ XVI, Phi-lip-pin chịu sự thống trị của Tây Ban Nha; sau Chiến tranh Mỹ – Tây Ban Nha năm 1898, Phi-lip-pin trở thành thuộc địa của Mỹ, không phải của Anh. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Từ giữa thế kỉ XVI, Phi-lip-pin chịu sự thống trị của Tây Ban Nha. Sau Chiến tranh Mỹ – Tây Ban Nha năm 1898, Tây Ban Nha thất bại và Phi-lip-pin trở thành thuộc địa của Mỹ."
+    },
+    {
+      "id": "datatm-detective-04",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT04",
+      "title": "Sai nội dung cải cách",
+      "field": "Lịch sử 11 – Công cuộc cải cách ở Xiêm",
+      "task": "Đọc câu trả lời của AI, xác định thông tin đáng nghi, chỉ ra loại lỗi, đối chiếu với SGK Lịch sử 11 và viết lại nội dung chính xác hơn.",
+      "text": "Trước nguy cơ xâm lược của các nước phương Tây, vua Ra-ma V đã tiến hành nhiều cải cách nhằm tăng cường sức mạnh của Xiêm. Từ năm 1892, ông tiến hành cải cách hành chính theo mô hình Trung Quốc, đồng thời chú trọng phát triển giáo dục và kinh tế. Chính phủ Xiêm cũng thực hiện đường lối ngoại giao mềm dẻo, chấp nhận một số nhượng bộ về lãnh thổ để giữ vững nền độc lập và chủ quyền đất nước.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai dữ kiện – nhầm mô hình cải cách hành chính.",
+      "suspicious_text": "Từ năm 1892, ông tiến hành cải cách hành chính theo mô hình Trung Quốc.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 5, trang 35, từ năm 1892, Ra-ma V tiến hành cải cách hành chính theo mô hình phương Tây, không phải theo mô hình Trung Quốc. SGK cũng nêu Xiêm thực hiện đường lối ngoại giao mềm dẻo nhằm giữ vững độc lập và chủ quyền. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Trước nguy cơ xâm lược của các nước phương Tây, vua Ra-ma V tiến hành nhiều cải cách nhằm tăng cường sức mạnh của Xiêm. Từ năm 1892, ông tiến hành cải cách hành chính theo mô hình phương Tây, đồng thời chú trọng phát triển giáo dục và kinh tế. Trên cơ sở những thành tựu cải cách, Chính phủ Xiêm thực hiện đường lối ngoại giao mềm dẻo nhằm giữ vững nền độc lập và chủ quyền đất nước."
+    },
+    {
+      "id": "datatm-detective-05",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT05",
+      "title": "Nhầm số lượng đơn vị hành chính",
+      "field": "Lịch sử 11 – Cuộc cải cách của Lê Thánh Tông",
+      "task": "Đọc câu trả lời của AI, tìm dữ kiện chưa chính xác, sử dụng SGK để kiểm chứng và viết lại đoạn thông tin đúng.",
+      "text": "Trong cải cách hành chính, vua Lê Thánh Tông tập trung tăng cường quyền lực của nhà vua và tổ chức lại bộ máy nhà nước. Năm 1466, cả nước được chia thành 13 đạo thừa tuyên và phủ Trung Đô. Đến năm 1471, nhà vua đặt thêm đạo thừa tuyên Quảng Nam, nâng tổng số lên 14 đạo. Việc tổ chức lại bộ máy hành chính góp phần tăng cường sự quản lí của nhà nước từ trung ương đến địa phương.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai dữ kiện – nhầm số lượng đơn vị hành chính.",
+      "suspicious_text": "Năm 1466, cả nước được chia thành 13 đạo thừa tuyên và phủ Trung Đô. Đến năm 1471, nhà vua đặt thêm đạo thừa tuyên Quảng Nam, nâng tổng số lên 14 đạo.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 10, trang 65, năm 1466, Lê Thánh Tông chia đất nước thành 12 đạo thừa tuyên và phủ Trung Đô (Thăng Long). Năm 1471, nhà vua đặt thêm đạo thừa tuyên thứ 13 là Quảng Nam. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Trong cải cách hành chính, vua Lê Thánh Tông tăng cường quyền lực của nhà vua và tổ chức lại bộ máy nhà nước. Năm 1466, đất nước được chia thành 12 đạo thừa tuyên và phủ Trung Đô; đến năm 1471, đặt thêm đạo thừa tuyên thứ 13 là Quảng Nam. Việc cải cách góp phần làm cho bộ máy nhà nước trở nên quy củ, chặt chẽ và tập trung cao độ."
+    },
+    {
+      "id": "datatm-detective-06",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT06",
+      "title": "Sai năm cải cách hành chính",
+      "field": "Lịch sử 11 – Cuộc cải cách của Minh Mạng",
+      "task": "Đọc câu trả lời của AI, xác định thông tin đáng nghi, chỉ ra loại lỗi, đối chiếu với SGK Lịch sử 11 và viết lại nội dung chính xác hơn.",
+      "text": "Cuộc cải cách của Minh Mạng tập trung chủ yếu vào lĩnh vực hành chính nhằm tăng cường quyền lực của triều đình trung ương. Năm 1831, nhà vua bãi bỏ Bắc Thành và Gia Định Thành, chia cả nước thành 30 tỉnh và phủ Thừa Thiên. Việc tổ chức lại đơn vị hành chính đã góp phần tăng cường sự quản lí thống nhất từ trung ương đến địa phương.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai dữ kiện – ghép nhầm thời điểm cải cách.",
+      "suspicious_text": "Năm 1831, nhà vua bãi bỏ Bắc Thành và Gia Định Thành, chia cả nước thành 30 tỉnh và phủ Thừa Thiên.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 11, trang 71, năm 1831, Minh Mạng bãi bỏ Bắc Thành và chia khu vực này thành 18 tỉnh; đến năm 1832, ông bãi bỏ Gia Định Thành và chia thành 12 tỉnh. Cả nước sau đó gồm 30 tỉnh và phủ Thừa Thiên. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Cuộc cải cách của Minh Mạng tập trung chủ yếu vào lĩnh vực hành chính nhằm tăng cường quyền lực của triều đình trung ương. Năm 1831, nhà vua bãi bỏ Bắc Thành và chia thành 18 tỉnh; năm 1832, bãi bỏ Gia Định Thành và chia thành 12 tỉnh. Sau cải cách, cả nước gồm 30 tỉnh và phủ Thừa Thiên."
+    },
+    {
+      "id": "datatm-detective-07",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT07",
+      "title": "Sai địa điểm xác lập chủ quyền",
+      "field": "Lịch sử 11 – Việt Nam và Biển Đông",
+      "task": "Đọc câu trả lời của AI, phát hiện chi tiết chưa chính xác, sử dụng SGK Lịch sử 11 để kiểm chứng và viết lại thông tin đúng.",
+      "text": "Dưới thời Nguyễn, Nhà nước tiếp tục thực thi chủ quyền đối với quần đảo Hoàng Sa. Năm 1835, vua Minh Mạng cho dựng miếu và trồng cây tại quần đảo Trường Sa nhằm khẳng định sự quản lí của triều đình đối với các vùng biển đảo. Những hoạt động này cho thấy việc thực thi chủ quyền được Nhà nước tiến hành bằng nhiều hình thức cụ thể.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai địa điểm – nhầm Hoàng Sa với Trường Sa.",
+      "suspicious_text": "Năm 1835, vua Minh Mạng cho dựng miếu và trồng cây tại quần đảo Trường Sa.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 13, trang 85, năm 1835, vua Minh Mạng cho người dựng miếu và trồng cây ở một số đảo thuộc quần đảo Hoàng Sa, không phải Trường Sa. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Dưới thời Nguyễn, Nhà nước tiếp tục thực thi chủ quyền đối với quần đảo Hoàng Sa. Năm 1835, vua Minh Mạng cho người dựng miếu và trồng cây ở một số đảo thuộc quần đảo Hoàng Sa. Đây là một trong những hoạt động thể hiện việc quản lí và thực thi chủ quyền của Nhà nước trên biển đảo."
+    },
+    {
+      "id": "datatm-detective-08",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT08",
+      "title": "Sai chủ trương giải quyết tranh chấp",
+      "field": "Lịch sử 11 – Chủ trương của Việt Nam trong giải quyết tranh chấp ở Biển Đông",
+      "task": "Đọc câu trả lời của AI, xác định thông tin chưa chính xác, đối chiếu với SGK và viết lại nội dung phù hợp.",
+      "text": "Trong giải quyết các tranh chấp chủ quyền ở Biển Đông, Việt Nam chủ trương ưu tiên sử dụng sức mạnh quân sự để bảo vệ chủ quyền và chỉ tiến hành đàm phán khi các biện pháp khác không đạt kết quả. Quan điểm này được thể hiện qua việc Việt Nam tham gia Công ước Liên hợp quốc về Luật Biển năm 1982 và ban hành Luật Biển Việt Nam năm 2012.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai nội dung – xuyên tạc chủ trương giải quyết tranh chấp.",
+      "suspicious_text": "Việt Nam chủ trương ưu tiên sử dụng sức mạnh quân sự để bảo vệ chủ quyền và chỉ tiến hành đàm phán khi các biện pháp khác không đạt kết quả.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 13, trang 88, Việt Nam chủ trương giải quyết các tranh chấp trên Biển Đông bằng biện pháp hòa bình, trên cơ sở tôn trọng lẫn nhau và tuân thủ luật pháp quốc tế. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Trong giải quyết các tranh chấp chủ quyền ở Biển Đông, Việt Nam chủ trương giải quyết bằng biện pháp hòa bình, trên cơ sở tôn trọng lẫn nhau và tuân thủ luật pháp quốc tế. Chủ trương này được thể hiện qua việc Việt Nam tham gia Công ước Liên hợp quốc về Luật Biển năm 1982 và ban hành Luật Biển Việt Nam năm 2012."
+    },
+    {
+      "id": "datatm-detective-09",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT09",
+      "title": "Ghép nhầm trận quyết chiến",
+      "field": "Lịch sử 11 – Các cuộc kháng chiến chống quân Nguyên",
+      "task": "Đọc câu trả lời của AI, xác định thông tin đáng nghi, chỉ ra loại lỗi, đối chiếu với SGK Lịch sử 11 và viết lại nội dung chính xác hơn.",
+      "text": "Trong thế kỉ XIII, nhà Trần đã ba lần lãnh đạo nhân dân kháng chiến chống quân Mông – Nguyên. Năm 1285, dưới sự lãnh đạo của Trần Nhân Tông và Trần Quốc Tuấn, quân dân nhà Trần giành thắng lợi quyết định trong trận Bạch Đằng, buộc quân Nguyên phải rút khỏi Đại Việt. Những thắng lợi này thể hiện nghệ thuật quân sự sáng tạo và sức mạnh đoàn kết của dân tộc.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai dữ kiện – ghép nhầm trận đánh với cuộc kháng chiến.",
+      "suspicious_text": "Năm 1285… quân dân nhà Trần giành thắng lợi quyết định trong trận Bạch Đằng.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 7, trang 46, cuộc kháng chiến chống quân Nguyên năm 1285 có các trận tiêu biểu như Tây Kết, Hàm Tử, Chương Dương, Thăng Long. Trận Bạch Đằng thuộc cuộc kháng chiến chống quân Nguyên 1287–1288, dưới sự lãnh đạo của Trần Nhân Tông và Trần Quốc Tuấn. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Trong thế kỉ XIII, nhà Trần ba lần lãnh đạo nhân dân kháng chiến chống quân Mông – Nguyên. Năm 1285, quân dân nhà Trần giành thắng lợi tại Tây Kết, Hàm Tử, Chương Dương và Thăng Long. Trong cuộc kháng chiến 1287–1288, quân dân Đại Việt giành thắng lợi quyết định trên sông Bạch Đằng."
+    },
+    {
+      "id": "datatm-detective-10",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT10",
+      "title": "Sai mốc thời gian trận đánh",
+      "field": "Lịch sử 11 – Khởi nghĩa Lam Sơn",
+      "task": "Đọc câu trả lời của AI, tìm chi tiết chưa chính xác, sử dụng SGK để kiểm chứng và viết lại nội dung đúng.",
+      "text": "Từ cuối năm 1424, nghĩa quân Lam Sơn chuyển hướng hoạt động vào Nghệ An và từng bước mở rộng vùng giải phóng. Tháng 11/1427, nghĩa quân giành thắng lợi lớn tại Tốt Động – Chúc Động, làm thay đổi tương quan lực lượng. Sau đó, quân Lam Sơn tiếp tục đánh bại viện binh nhà Minh ở Chi Lăng, Cần Trạm, Phố Cát và Xương Giang, buộc quân Minh phải rút về nước.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai mốc thời gian.",
+      "suspicious_text": "Tháng 11/1427, nghĩa quân giành thắng lợi lớn tại Tốt Động – Chúc Động.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 8, trang 54, chiến thắng Tốt Động – Chúc Động diễn ra tháng 11/1426. Tháng 10/1427, nghĩa quân tiếp tục giành thắng lợi tại Chi Lăng, Cần Trạm, Phố Cát và Xương Giang; đến tháng 1/1428, quân Minh rút hết về nước. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Từ cuối năm 1424, nghĩa quân Lam Sơn mở rộng hoạt động vào Nghệ An và vùng phía Nam. Tháng 11/1426, nghĩa quân giành thắng lợi tại Tốt Động – Chúc Động. Tháng 10/1427, quân Lam Sơn tiếp tục đánh bại viện binh nhà Minh tại Chi Lăng, Cần Trạm, Phố Cát và Xương Giang; đến tháng 1/1428, quân Minh rút hết về nước."
+    },
+    {
+      "id": "datatm-detective-11",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT11",
+      "title": "Đảo lẫn dữ kiện địa lí",
+      "field": "Lịch sử 11 – Vị trí và tầm quan trọng của Biển Đông",
+      "task": "Đọc câu trả lời của AI, xác định dữ kiện chưa chính xác, đối chiếu với SGK Lịch sử 11 và viết lại đoạn thông tin đúng.",
+      "text": "Quần đảo Hoàng Sa và quần đảo Trường Sa đều có vị trí chiến lược quan trọng trên Biển Đông. Quần đảo Hoàng Sa gồm hơn 100 đảo, đá, bãi ngầm và bãi san hô, trong khi quần đảo Trường Sa gồm hơn 37 đảo, đá và bãi cạn. Vị trí của hai quần đảo có ý nghĩa quan trọng đối với giao thông hàng hải, quốc phòng, an ninh và các hoạt động kinh tế biển.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai dữ kiện – đảo lẫn đặc điểm của hai quần đảo.",
+      "suspicious_text": "Quần đảo Hoàng Sa gồm hơn 100 đảo… trong khi quần đảo Trường Sa gồm hơn 37 đảo…",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 12, trang 78, quần đảo Hoàng Sa gồm hơn 37 đảo, đá, bãi cạn; còn quần đảo Trường Sa có hơn 100 đảo, đá, bãi ngầm, bãi san hô. SGK Lịch sử 11.KNTT (1)(1)",
+      "rewrite": "Quần đảo Hoàng Sa gồm hơn 37 đảo, đá và bãi cạn; quần đảo Trường Sa có hơn 100 đảo, đá, bãi ngầm và bãi san hô. Hai quần đảo đều có vị trí chiến lược quan trọng trên Biển Đông, gắn với quốc phòng, an ninh, giao thông hàng hải và các hoạt động kinh tế biển."
+    },
+    {
+      "id": "datatm-detective-12",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT12",
+      "title": "Sai nguyên nhân lịch sử",
+      "field": "Lịch sử 11 – Khủng hoảng và sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô",
+      "task": "Đọc câu trả lời của AI, xác định thông tin đáng nghi, chỉ ra loại lỗi, đối chiếu với SGK Lịch sử 11 và viết lại nội dung chính xác hơn.",
+      "text": "Sự khủng hoảng và sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô bắt nguồn từ nhiều nguyên nhân. Mô hình kinh tế tập trung, quan liêu, bao cấp bộc lộ nhiều hạn chế và việc đổi mới diễn ra chậm. Trong quá trình cải tổ, vai trò lãnh đạo của Đảng Cộng sản tiếp tục được củng cố, nhờ đó tình hình chính trị – xã hội từng bước ổn định. Tuy nhiên, sự chống phá của các lực lượng thù địch từ bên ngoài đã làm cho khủng hoảng ngày càng nghiêm trọng.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai nội dung – đảo ngược nguyên nhân.",
+      "suspicious_text": "Trong quá trình cải tổ, vai trò lãnh đạo của Đảng Cộng sản tiếp tục được củng cố, nhờ đó tình hình chính trị – xã hội từng bước ổn định.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 4, trang 25, quá trình cải tổ mắc nhiều sai lầm; vai trò lãnh đạo của Đảng Cộng sản bị xóa bỏ, làm cho khủng hoảng ngày càng nghiêm trọng. SGK cũng nêu các nguyên nhân khác như đường lối lãnh đạo chủ quan, duy ý chí; mô hình kinh tế tập trung, quan liêu, bao cấp; chậm đổi mới và sự chống phá của các lực lượng thù địch. SGK Lịch sử 11.KNTT (1)",
+      "rewrite": "Sự khủng hoảng và sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô bắt nguồn từ nhiều nguyên nhân. Trong quá trình cải tổ, nhiều sai lầm tiếp tục xảy ra, vai trò lãnh đạo của Đảng Cộng sản bị xóa bỏ, khiến khủng hoảng chính trị – xã hội ngày càng nghiêm trọng; bên cạnh đó còn có sự chống phá của các lực lượng thù địch."
+    },
+    {
+      "id": "datatm-detective-13",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT13",
+      "title": "Hiểu sai chính sách cai trị",
+      "field": "Lịch sử 11 – Chính sách cai trị của thực dân phương Tây ở Đông Nam Á",
+      "task": "Đọc câu trả lời của AI, tìm nội dung chưa chính xác, sử dụng SGK để kiểm chứng và viết lại đoạn thông tin đúng.",
+      "text": "Sau khi thiết lập ách thống trị ở Đông Nam Á, các nước thực dân phương Tây tiến hành nhiều chính sách nhằm củng cố bộ máy cai trị. Về chính trị, họ chủ trương thống nhất các vùng lãnh thổ và hạn chế sự khác biệt giữa các cộng đồng dân cư để tăng cường đoàn kết trong thuộc địa. Về kinh tế, thực dân đẩy mạnh khai thác tài nguyên, bóc lột nhân công và biến thuộc địa thành thị trường tiêu thụ hàng hóa.",
+      "error_type": "Dữ kiện sai",
+      "source_error_type": "Sai nội dung – hiểu ngược chính sách “chia để trị”.",
+      "suspicious_text": "Họ chủ trương thống nhất các vùng lãnh thổ và hạn chế sự khác biệt giữa các cộng đồng dân cư để tăng cường đoàn kết trong thuộc địa.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 5, trang 33, chính quyền thực dân phổ biến thực hiện chính sách “chia để trị”, chia rẽ các cộng đồng dân cư, khu vực hành chính hoặc tôn giáo nhằm làm suy yếu sức mạnh đoàn kết của các dân tộc thuộc địa. SGK Lịch sử 11.KNTT (1)",
+      "rewrite": "Sau khi thiết lập ách thống trị ở Đông Nam Á, các nước thực dân phương Tây thực hiện nhiều chính sách nhằm củng cố quyền cai trị. Về chính trị, chính sách “chia để trị” được sử dụng phổ biến nhằm chia rẽ và làm suy yếu sức mạnh đoàn kết của các dân tộc thuộc địa. Về kinh tế, thực dân đẩy mạnh khai thác tài nguyên, bóc lột nhân công và biến thuộc địa thành thị trường tiêu thụ hàng hóa."
+    },
+    {
+      "id": "datatm-detective-14",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Thám tử thông tin.docx",
+      "code": "TT14",
+      "title": "Khái quát hóa quá mức nội dung cải cách",
+      "field": "Lịch sử 11 – Cuộc cải cách của Hồ Quý Ly và triều Hồ",
+      "task": "Đọc câu trả lời của AI, xác định nhận định chưa chính xác, đối chiếu với SGK và viết lại nội dung phù hợp.",
+      "text": "Trong lĩnh vực kinh tế – xã hội, Hồ Quý Ly và triều Hồ thực hiện nhiều chính sách nhằm hạn chế thế lực của tầng lớp quý tộc. Chính sách hạn điền đã xóa bỏ hoàn toàn quyền sở hữu ruộng đất của quý tộc và chuyển toàn bộ ruộng đất về cho nhà nước quản lí. Bên cạnh đó, triều Hồ còn phát hành tiền giấy, cải cách thuế khóa và thống nhất đơn vị đo lường trong cả nước.",
+      "error_type": "Khái quát hóa quá mức",
+      "source_error_type": "Sai nội dung – khái quát hóa quá mức.",
+      "suspicious_text": "Chính sách hạn điền đã xóa bỏ hoàn toàn quyền sở hữu ruộng đất của quý tộc và chuyển toàn bộ ruộng đất về cho nhà nước quản lí.",
+      "evidence": "Theo SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 9, trang 62, chính sách hạn điền nhằm hạn chế sự phát triển của sở hữu lớn về ruộng đất trong các điền trang, thái ấp của tầng lớp quý tộc, chứ không xóa bỏ hoàn toàn quyền sở hữu ruộng đất của quý tộc hay chuyển toàn bộ ruộng đất về nhà nước. SGK Lịch sử 11.KNTT (1)",
+      "rewrite": "Trong lĩnh vực kinh tế – xã hội, Hồ Quý Ly và triều Hồ thực hiện chính sách hạn điền nhằm hạn chế sự phát triển của sở hữu lớn về ruộng đất trong các điền trang, thái ấp của tầng lớp quý tộc. Triều Hồ còn phát hành tiền giấy, cải cách thuế khóa và thống nhất đơn vị đo lường trong cả nước."
+    }
+  ],
+  "packages": [
+    {
+      "id": "datatm-compare-01",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Mục tiêu và nhiệm vụ của các cuộc cách mạng tư sản",
+      "question": "Vấn đề 1. Mục tiêu và nhiệm vụ của các cuộc cách mạng tư sản",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Các cuộc cách mạng tư sản chủ yếu nhằm thay đổi người đứng đầu nhà nước, hạn chế quyền lực của vua và thiết lập chế độ cộng hòa. Nhiệm vụ quan trọng nhất của các cuộc cách mạng này là giải quyết vấn đề dân tộc, còn vấn đề dân chủ chỉ xuất hiện trong một số cuộc cách mạng.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Các cuộc cách mạng tư sản đều nhằm mục tiêu xoá bỏ những rào cản kìm hãm sự phát triển của nền kinh tế tư bản chủ nghĩa, mở đường cho chủ nghĩa tư bản phát triển. Cách mạng tư sản bao gồm hai nhiệm vụ cơ bản: dân tộc và dân chủ. Nhiệm vụ dân tộc nhằm xoá bỏ tình trạng phong kiến cát cứ, hình thành thị trường dân tộc thống nhất (hoặc giải phóng dân tộc). Nhiệm vụ dân chủ nhằm xoá bỏ chế độ phong kiến chuyên chế, xác lập nền dân chủ tư sản.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Mục tiêu chung của các cuộc cách mạng tư sản là xóa bỏ hoàn toàn chế độ phong kiến và thiết lập ngay chế độ cộng hòa tư sản. Vì vậy, mọi cuộc cách mạng tư sản đều đồng thời hoàn thành triệt để cả nhiệm vụ dân tộc và nhiệm vụ dân chủ.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "B",
+      "explanation": "SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 1: Một số vấn đề chung về cách mạng tư sản, mục 2.a. Mục tiêu và nhiệm vụ, trang 9.\nLập luận 1 thu hẹp mục tiêu của cách mạng tư sản; lập luận 3 sai ở việc đồng nhất mọi cách mạng với việc lập chế độ cộng hòa và cho rằng các nhiệm vụ đều được giải quyết triệt để."
+    },
+    {
+      "id": "datatm-compare-02",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Ý nghĩa của Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mỹ",
+      "question": "Vấn đề 2. Ý nghĩa của Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mỹ",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mỹ chủ yếu có ý nghĩa đối với nước Anh vì cuộc chiến đã buộc Anh phải chuyển từ chế độ quân chủ chuyên chế sang quân chủ lập hiến; ảnh hưởng của cuộc chiến đối với phong trào giải phóng dân tộc ở các khu vực khác không đáng kể.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mỹ giải phóng nhân dân các thuộc địa Anh khỏi ách thực dân, đưa đến sự thành lập nhà nước tư sản đầu tiên ở ngoài châu Âu, thúc đẩy phong trào giải phóng dân tộc ở khu vực Mỹ La-tinh phát triển và có ảnh hưởng tích cực đến phong trào giành độc lập ở nhiều nơi trên thế giới.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Thắng lợi của 13 thuộc địa Anh ở Bắc Mỹ đã xóa bỏ hoàn toàn chế độ phong kiến ở Bắc Mỹ, thành lập nhà nước tư sản đầu tiên trên thế giới và trực tiếp mở đầu quá trình xác lập chủ nghĩa tư bản trên phạm vi toàn thế giới.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "B",
+      "explanation": "SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 1, mục 3. Kết quả và ý nghĩa của các cuộc cách mạng tư sản, trang 11.\nLập luận 1 nhầm ý nghĩa của Cách mạng tư sản Anh với cuộc chiến ở Bắc Mỹ; lập luận 3 đánh tráo “nhà nước tư sản đầu tiên ở ngoài châu Âu” thành “đầu tiên trên thế giới”."
+    },
+    {
+      "id": "datatm-compare-03",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Sự thành lập Liên bang Cộng hòa xã hội chủ nghĩa Xô viết",
+      "question": "Vấn đề 3. Sự thành lập Liên bang Cộng hòa xã hội chủ nghĩa Xô viết",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Ngày 30-12-1922, tại Mát-xcơ-va, dưới sự chỉ đạo trực tiếp của Lê-nin, Đại hội lần thứ nhất các Xô viết toàn Liên bang đã thông qua Bản Tuyên ngôn thành lập Liên bang Cộng hoà xã hội chủ nghĩa Xô viết (gọi tắt là Liên Xô) và bản Hiệp ước Liên bang.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Liên bang Cộng hòa xã hội chủ nghĩa Xô viết được thành lập ngay sau thắng lợi của Cách mạng tháng Mười năm 1917. Tại Đại hội Xô viết tháng 11-1917, Nga cùng các nước cộng hòa Xô viết khác đã kí Hiệp ước Liên bang và chính thức thành lập Liên Xô.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Liên Xô được thành lập năm 1924 sau khi bản Hiến pháp đầu tiên của Liên Xô được thông qua. Vì vậy, năm 1924 mới được coi là thời điểm chính thức ra đời của Liên bang Cộng hòa xã hội chủ nghĩa Xô viết.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 3: Sự hình thành Liên bang Cộng hòa xã hội chủ nghĩa Xô viết, mục 1. Quá trình hình thành Liên bang Cộng hòa xã hội chủ nghĩa Xô viết, trang 20.\nNăm 1922 là thời điểm thành lập Liên Xô; năm 1924 là thời điểm bản Hiến pháp đầu tiên của Liên Xô được thông qua, không phải thời điểm thành lập nhà nước này."
+    },
+    {
+      "id": "datatm-compare-04",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Quá trình Phi-lip-pin trở thành thuộc địa của các nước phương Tây",
+      "question": "Vấn đề 4. Quá trình Phi-lip-pin trở thành thuộc địa của các nước phương Tây",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Phi-lip-pin bị thực dân Tây Ban Nha xâm lược từ giữa thế kỉ XVI. Sau cuộc Chiến tranh Mỹ – Tây Ban Nha năm 1898, Phi-lip-pin trở thành thuộc địa của Mỹ.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Phi-lip-pin ban đầu là thuộc địa của Bồ Đào Nha. Đến cuối thế kỉ XIX, Tây Ban Nha đánh bại Bồ Đào Nha và giành quyền kiểm soát Phi-lip-pin; sau đó Mỹ mới can thiệp và giành quyền cai trị vào đầu thế kỉ XX.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Tây Ban Nha thống trị Phi-lip-pin từ giữa thế kỉ XVI đến năm 1898. Sau Chiến tranh Mỹ – Tây Ban Nha, Phi-lip-pin giành được độc lập hoàn toàn, nhưng sau đó tự nguyện đặt mình dưới sự bảo hộ của Mỹ.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 5: Quá trình xâm lược và cai trị của chủ nghĩa thực dân ở Đông Nam Á, mục 1.a. Quá trình xâm lược, phần về Phi-lip-pin, trang 31.\nLập luận 3 đặc biệt dễ gây nhầm vì phần đầu đúng nhưng kết luận “Phi-lip-pin giành độc lập hoàn toàn năm 1898” là sai theo SGK."
+    },
+    {
+      "id": "datatm-compare-05",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Diễn biến quyết định của khởi nghĩa Lam Sơn năm 1427",
+      "question": "Vấn đề 5. Diễn biến quyết định của khởi nghĩa Lam Sơn năm 1427",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Năm 1427, nghĩa quân Lam Sơn chủ yếu rút về vùng Thanh Hóa để củng cố lực lượng. Thắng lợi quyết định chỉ diễn ra vào đầu năm 1428 khi quân Minh bị đánh bại tại Đông Quan.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Tháng 10 – 1427, nghĩa quân tiếp giành thắng lợi tại Chi Lăng (Lạng Sơn), Cần Trạm, Phố Cát và Xương Giang (Bắc Giang). Tháng 12 – 1427, nghĩa quân giành thắng lợi ở Tốt Động – Chúc Động và buộc quân Minh phải rút khỏi Đông Quan.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Tháng 10 – 1427, nghĩa quân tiếp giành thắng lợi tại Chi Lăng (Lạng Sơn), Cần Trạm, Phố Cát và Xương Giang (Bắc Giang).",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "SGK Lịch sử 11 – Kết nối tri thức với cuộc sống, Bài 8: Một số cuộc khởi nghĩa và chiến tranh giải phóng trong lịch sử Việt Nam, mục 2.b. Diễn biến chính của khởi nghĩa Lam Sơn, trang 54.\nLập luận 2 mở đầu hoàn toàn đúng nhưng sau đó đảo sai trình tự lịch sử: Tốt Động – Chúc Động diễn ra năm 1426, không phải tháng 12-1427. Đây là dạng nhiễu rất phù hợp để luyện thói quen không tin toàn bộ một câu trả lời AI chỉ vì phần đầu của nó đúng."
+    },
+    {
+      "id": "datatm-compare-06",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Xiêm trước nguy cơ xâm lược",
+      "question": "Hãy đánh giá ba câu trả lời của AI cho câu hỏi: Vì sao Xiêm là nước duy nhất ở Đông Nam Á không trở thành thuộc địa của thực dân phương Tây?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Xiêm giữ được nền độc lập chủ yếu vì có vị trí địa lí xa các tuyến xâm lược của phương Tây nên ít chịu sức ép từ các nước thực dân.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Xiêm giữ được nền độc lập nhờ tiến hành công cuộc cải cách tương đối toàn diện, tạo ra tiềm lực cho đất nước; đồng thời thực hiện đường lối ngoại giao mềm dẻo, lợi dụng vị trí vùng đệm giữa Anh và Pháp và chấp nhận một số nhượng bộ về lãnh thổ để bảo vệ chủ quyền.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Xiêm không trở thành thuộc địa vì đã đánh bại hoàn toàn các cuộc xâm lược quân sự của Anh và Pháp, từ đó buộc hai nước phải công nhận nền độc lập của Xiêm.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "B",
+      "explanation": "SGK nêu rằng công cuộc cải cách đã thúc đẩy sản xuất, mở cửa hàng hóa và giúp Xiêm phát triển theo con đường tư bản chủ nghĩa, tăng cường tiềm lực đất nước. Trên cơ sở đó, Chính phủ Xiêm thực hiện đường lối ngoại giao mềm dẻo, nhằm giữ vững nền độc lập và chủ quyền. Câu A không đúng vì Xiêm vẫn chịu sức ép mạnh từ phương Tây; câu C sai vì SGK không nêu Xiêm bảo vệ độc lập bằng việc đánh bại Anh và Pháp trong chiến tranh."
+    },
+    {
+      "id": "datatm-compare-07",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Điều gì tạo nên thắng lợi?",
+      "question": "Những yếu tố nào góp phần làm nên thắng lợi của các cuộc kháng chiến chống ngoại xâm trong lịch sử Việt Nam?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Các cuộc kháng chiến thắng lợi chủ yếu vì quân xâm lược luôn yếu hơn quân đội Việt Nam về số lượng và vũ khí.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Thắng lợi chủ yếu do điều kiện tự nhiên của Việt Nam gây khó khăn cho quân xâm lược; các yếu tố về lòng yêu nước và nghệ thuật quân sự chỉ giữ vai trò thứ yếu.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Các cuộc kháng chiến thắng lợi trước hết vì đây là những cuộc chiến tranh chính nghĩa nhằm bảo vệ độc lập; nhân dân có lòng yêu nước, đoàn kết; đồng thời có đường lối kháng chiến đúng đắn, linh hoạt, nghệ thuật quân sự sáng tạo và những người lãnh đạo tài năng.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "SGK xác định các nguyên nhân chủ yếu gồm tính chính nghĩa của cuộc chiến, lòng yêu nước và đoàn kết của nhân dân, đường lối và nghệ thuật quân sự đúng đắn, sáng tạo cùng vai trò của những người lãnh đạo tài năng. Khó khăn của quân xâm lược chỉ là yếu tố khách quan, không phải nguyên nhân duy nhất hay quyết định. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-08",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Khởi nghĩa Lam Sơn và độc lập dân tộc",
+      "question": "Ý nghĩa lịch sử nổi bật của khởi nghĩa Lam Sơn là gì?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Khởi nghĩa Lam Sơn đã chấm dứt hơn 20 năm thống trị của nhà Minh, khôi phục nền độc lập dân tộc, mở ra thời kì phát triển mới của đất nước.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Ý nghĩa lớn nhất của khởi nghĩa Lam Sơn là mở rộng lãnh thổ Đại Việt về phía Nam và thiết lập quan hệ giao thương với các nước Đông Nam Á.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Khởi nghĩa Lam Sơn chủ yếu có ý nghĩa thay thế một triều đại phong kiến bằng một triều đại khác, nên không làm thay đổi tình trạng độc lập của đất nước.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "SGK khẳng định khởi nghĩa Lam Sơn đã chấm dứt hơn 20 năm thống trị của nhà Minh, khôi phục nền độc lập dân tộc và mở ra thời kì phát triển mới của đất nước. Vì vậy, B đưa thêm nội dung không phải ý nghĩa được SGK xác định, còn C phủ nhận tính chất giải phóng dân tộc của cuộc khởi nghĩa. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-09",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Cải cách Lê Thánh Tông",
+      "question": "Kết quả và ý nghĩa của cuộc cải cách thời Lê Thánh Tông được đánh giá như thế nào?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Cuộc cải cách làm suy yếu quyền lực của nhà vua, tăng quyền tự chủ cho địa phương và khiến bộ máy nhà nước trở nên phân tán hơn.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Cuộc cải cách làm cho bộ máy nhà nước trở nên quy củ, chặt chẽ và tập trung cao độ; đề cao quyền lực của hoàng đế, đồng thời góp phần phát triển kinh tế, văn hóa, giáo dục và đưa Đại Việt trở thành một quốc gia hùng mạnh trong khu vực.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Cuộc cải cách chỉ thay đổi bộ máy hành chính, hầu như không tác động đến kinh tế, pháp luật, quân đội hay giáo dục.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "B",
+      "explanation": "SGK nêu cuộc cải cách giúp bộ máy nhà nước quy củ, chặt chẽ, tập trung cao độ và đề cao quyền lực của hoàng đế; đồng thời góp phần phát triển kinh tế, văn hóa, giáo dục và làm Đại Việt trở thành một quốc gia hùng mạnh trong khu vực. Vì vậy, A trái với nội dung SGK, còn C thu hẹp không đúng phạm vi của cuộc cải cách. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-10",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Vì sao Biển Đông có vị trí chiến lược?",
+      "question": "Vì sao Biển Đông có vị trí chiến lược quan trọng đối với khu vực và thế giới?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Biển Đông quan trọng chủ yếu vì có diện tích lớn và nguồn hải sản phong phú; vai trò về giao thông và quốc phòng không đáng kể.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Biển Đông có vị trí quan trọng vì nằm hoàn toàn trong lãnh thổ một quốc gia, nên mọi hoạt động giao thông và khai thác tài nguyên đều do quốc gia đó kiểm soát.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Biển Đông nằm trên tuyến đường biển quốc tế huyết mạch nối Thái Bình Dương với Ấn Độ Dương và nhiều khu vực lớn; đồng thời là địa bàn chiến lược quan trọng, có nguồn tài nguyên thiên nhiên phong phú và hệ thống đảo, quần đảo có giá trị về quốc phòng, an ninh và kinh tế.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "Theo SGK, Biển Đông nằm trên tuyến giao thông hàng hải quốc tế huyết mạch, có vị trí chiến lược ở khu vực châu Á – Thái Bình Dương, đồng thời giàu tài nguyên thiên nhiên. Các đảo và quần đảo còn có ý nghĩa quan trọng về quốc phòng, an ninh và kinh tế. A chỉ nhìn một chiều vào tài nguyên; B sai về đặc điểm địa lí và pháp lí của Biển Đông."
+    },
+    {
+      "id": "datatm-compare-11",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Mục tiêu của cách mạng tư sản",
+      "question": "Mục tiêu chung của các cuộc cách mạng tư sản là gì?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Các cuộc cách mạng tư sản chủ yếu nhằm thay thế một ông vua bằng một ông vua khác, còn cơ cấu kinh tế và xã hội cơ bản không thay đổi.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Các cuộc cách mạng tư sản đều nhằm xóa bỏ những rào cản kìm hãm sự phát triển của nền kinh tế tư bản chủ nghĩa, mở đường cho chủ nghĩa tư bản phát triển.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Mục tiêu chung của các cuộc cách mạng tư sản là xóa bỏ hoàn toàn mọi giai cấp và xây dựng một xã hội không còn chế độ tư hữu.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "B",
+      "explanation": "SGK xác định các cuộc cách mạng tư sản đều hướng tới xóa bỏ những rào cản kìm hãm sự phát triển của nền kinh tế tư bản chủ nghĩa, mở đường cho chủ nghĩa tư bản phát triển. A thu hẹp sai bản chất của cách mạng; C là mục tiêu không thuộc cách mạng tư sản. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-12",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Tổ chức độc quyền hình thành như thế nào?",
+      "question": "Tổ chức độc quyền trong chủ nghĩa tư bản cuối thế kỉ XIX – đầu thế kỉ XX được hiểu như thế nào?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Tổ chức độc quyền là sự liên minh giữa các nhà tư bản lớn, nắm phần lớn việc sản xuất hoặc tiêu thụ một số loại hàng hóa nhằm thu lợi nhuận cao.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Tổ chức độc quyền là sự liên kết tự nguyện giữa người lao động nhằm kiểm soát hoạt động của các nhà tư bản và phân phối lại lợi nhuận cho công nhân.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Tổ chức độc quyền xuất hiện khi nhà nước trực tiếp sở hữu toàn bộ doanh nghiệp tư nhân và xóa bỏ cạnh tranh trên thị trường.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "SGK nêu tổ chức độc quyền là sự liên minh giữa các nhà tư bản lớn, nắm phần lớn việc sản xuất hoặc tiêu thụ một số hàng hóa để thu lợi nhuận cao; các hình thức tiêu biểu gồm các-ten, xanh-đi-ca, tơ-rớt. B và C đều làm sai chủ thể và bản chất của tổ chức độc quyền. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-13",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Trung Quốc sau cải cách – mở cửa",
+      "question": "Nhận định nào phản ánh đúng những thành tựu nổi bật của công cuộc cải cách – mở cửa ở Trung Quốc?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Cải cách – mở cửa chủ yếu đem lại thay đổi về văn hóa và giáo dục, trong khi kinh tế Trung Quốc tăng trưởng chậm và ít có thay đổi về khoa học – công nghệ.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Sau cải cách – mở cửa, Trung Quốc từ bỏ định hướng xã hội chủ nghĩa và chuyển hoàn toàn sang mô hình chính trị, kinh tế của các nước tư bản phương Tây.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Công cuộc cải cách – mở cửa giúp Trung Quốc đạt nhiều thành tựu lớn về kinh tế, khoa học – công nghệ, văn hóa – giáo dục và nâng cao vị thế quốc tế; những kết quả đó cho thấy sự đúng đắn của con đường xây dựng chủ nghĩa xã hội phù hợp với đặc điểm Trung Quốc.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "SGK nêu Trung Quốc đạt nhiều thành tựu nổi bật về kinh tế, khoa học – công nghệ, văn hóa – giáo dục, đồng thời nâng cao vị thế của đất nước. Những thành tựu của cải cách – mở cửa cho thấy sự đúng đắn của con đường xây dựng chủ nghĩa xã hội của Trung Quốc. A phủ nhận các thành tựu kinh tế – công nghệ; B trái với nội dung SGK. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-14",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Các giai đoạn đấu tranh giành độc lập",
+      "question": "Phong trào đấu tranh giành độc lập dân tộc ở Đông Nam Á đã chuyển biến như thế nào từ cuối thế kỉ XIX đến năm 1945?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Từ cuối thế kỉ XIX đến khoảng năm 1920, phong trào chuyển dần từ ý thức hệ phong kiến sang khuynh hướng tư sản; giai đoạn 1920–1945 xuất hiện và phát triển khuynh hướng vô sản, trong khi khuynh hướng tư sản vẫn tiếp tục tồn tại ở một số nước.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Ngay từ cuối thế kỉ XIX, khuynh hướng vô sản đã hoàn toàn thay thế khuynh hướng phong kiến và tư sản ở tất cả các nước Đông Nam Á.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Trong suốt giai đoạn từ cuối thế kỉ XIX đến năm 1945, phong trào giành độc lập ở Đông Nam Á chỉ diễn ra theo khuynh hướng phong kiến và hầu như không có sự thay đổi.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "Sơ đồ trong SGK cho thấy từ cuối thế kỉ XIX đến khoảng 1920 diễn ra sự chuyển tiếp từ ý thức hệ phong kiến sang khuynh hướng tư sản; từ 1920–1945, khuynh hướng vô sản từng bước xuất hiện và phát triển, đồng thời khuynh hướng tư sản vẫn tồn tại ở một số quốc gia. B và C đều tuyệt đối hóa một khuynh hướng và không phản ánh đúng quá trình chuyển biến. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-15",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Cải cách Hồ Quý Ly – tiến bộ hay hoàn toàn thành công?",
+      "question": "Đánh giá nào phù hợp nhất về kết quả và ý nghĩa của cuộc cải cách Hồ Quý Ly và triều Hồ?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Cuộc cải cách hoàn toàn thất bại vì không tạo ra bất kì thay đổi nào đối với kinh tế, xã hội, quân sự hay bộ máy nhà nước.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Cuộc cải cách thành công toàn diện, giải quyết triệt để mọi mâu thuẫn của xã hội và đưa đất nước phát triển ổn định lâu dài.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Cuộc cải cách có nhiều điểm tiến bộ, góp phần tăng cường tiềm lực đất nước, củng cố quyền lực nhà nước, phát triển văn hóa – giáo dục và quân sự; tuy nhiên, một số cải cách chưa triệt để và kết quả thực tế còn hạn chế.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "SGK đánh giá cải cách của Hồ Quý Ly và triều Hồ có nhiều điểm tiến bộ, góp phần củng cố quyền lực nhà nước, tăng cường tiềm lực quân sự, thúc đẩy một số chuyển biến về kinh tế, xã hội, văn hóa và giáo dục. Tuy nhiên, một số cải cách chưa triệt để và kết quả trong thực tế còn hạn chế. Vì vậy, cả A và B đều là những đánh giá cực đoan, không phản ánh đầy đủ nội dung SGK. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-16",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Ý nghĩa sự ra đời của Liên Xô",
+      "question": "Việc thành lập Liên bang Cộng hòa xã hội chủ nghĩa Xô viết có ý nghĩa như thế nào?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Sự ra đời của Liên Xô chủ yếu nhằm mở rộng lãnh thổ của nước Nga và làm giảm quyền tự quyết của các dân tộc trong liên bang.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Sự thành lập Liên Xô phù hợp với lợi ích chung của các dân tộc trên lãnh thổ Xô viết, tăng cường đoàn kết và hợp tác, tạo điều kiện phát triển kinh tế – xã hội và nâng cao vị thế của Liên Xô; đồng thời trở thành chỗ dựa cho phong trào cách mạng thế giới.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Việc thành lập Liên Xô chỉ có ý nghĩa đối với nước Nga, hầu như không ảnh hưởng đến các nước cộng hòa khác hay phong trào cách mạng thế giới.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "B",
+      "explanation": "SGK cho thấy việc thành lập Liên Xô phù hợp với lợi ích chung của các dân tộc, tăng cường đoàn kết, hợp tác, tạo điều kiện phát triển kinh tế – xã hội và nâng cao vị thế của nhà nước Xô viết; đồng thời Liên Xô trở thành chỗ dựa tinh thần, vật chất cho phong trào cách mạng thế giới. A và C đều thu hẹp hoặc làm sai ý nghĩa của sự kiện. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-17",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Nguyên nhân thất bại của một số cuộc kháng chiến",
+      "question": "Những nguyên nhân nào dẫn đến thất bại của một số cuộc kháng chiến chống ngoại xâm trong lịch sử Việt Nam?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Các cuộc kháng chiến thất bại hoàn toàn do quân xâm lược có vũ khí mạnh hơn, còn đường lối lãnh đạo và sức mạnh đoàn kết trong nước không có ảnh hưởng đáng kể.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Nguyên nhân chủ yếu là do điều kiện tự nhiên của Việt Nam không thuận lợi cho việc tổ chức chiến đấu, trong khi tương quan lực lượng giữa hai bên gần như ngang nhau.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Một số cuộc kháng chiến thất bại do người lãnh đạo chưa tập hợp được đông đảo nhân dân, chưa xây dựng được khối đoàn kết toàn dân hoặc có sai lầm trong quá trình tổ chức kháng chiến; bên cạnh đó còn có nguyên nhân khách quan là tương quan lực lượng bất lợi.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "SGK nêu cả nguyên nhân chủ quan và khách quan: hạn chế trong tập hợp lực lượng, xây dựng đoàn kết, sai lầm của người lãnh đạo và sự chênh lệch lực lượng không có lợi cho cuộc kháng chiến. A và B đều giải thích phiến diện, chỉ dựa vào một nguyên nhân. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-18",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Tổ chức lại bộ máy nhà nước thời Minh Mạng",
+      "question": "Cuộc cải cách của Minh Mạng tập trung vào nội dung nào và được thực hiện ra sao?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Cuộc cải cách tập trung chủ yếu vào hành chính: Minh Mạng tổ chức lại bộ máy trung ương, lập Nội các, Cơ mật viện; ở địa phương từng bước xóa bỏ Bắc Thành và Gia Định Thành, chia cả nước thành các tỉnh nhằm tăng cường quản lí thống nhất.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Minh Mạng chủ yếu trao thêm quyền tự chủ cho Bắc Thành và Gia Định Thành, giảm sự can thiệp của triều đình trung ương vào các địa phương.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Nội dung quan trọng nhất của cải cách là bãi bỏ toàn bộ bộ máy hành chính cũ và giao quyền quản lí các địa phương cho những người đứng đầu vùng tự quyết định.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "Trọng tâm cải cách của Minh Mạng là hành chính, nhằm tăng cường quyền lực trung ương và quản lí thống nhất. Ở trung ương có những điều chỉnh như lập Nội các, Cơ mật viện; ở địa phương tiến hành tổ chức lại các đơn vị hành chính, xóa bỏ Bắc Thành và Gia Định Thành. B và C đều trái với xu hướng tăng cường tập quyền của cuộc cải cách. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-19",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Giá trị chiến lược của Hoàng Sa và Trường Sa",
+      "question": "Vì sao quần đảo Hoàng Sa và quần đảo Trường Sa có vị trí chiến lược quan trọng ở Biển Đông?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Hai quần đảo có vị trí trên những tuyến hàng hải quốc tế quan trọng, có ý nghĩa về quốc phòng, an ninh; đồng thời thuận lợi cho các hoạt động kinh tế biển.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Giá trị của Hoàng Sa và Trường Sa chỉ nằm ở nguồn lợi thủy sản, còn vị trí của hai quần đảo hầu như không liên quan đến giao thông hàng hải hay quốc phòng.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Hai quần đảo quan trọng chủ yếu vì có diện tích đất liền rất lớn, tạo điều kiện thuận lợi cho phát triển nông nghiệp quy mô lớn.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "A",
+      "explanation": "SGK xác định hệ thống đảo và quần đảo trên Biển Đông nằm trên những tuyến hàng hải quốc tế quan trọng, có ý nghĩa về quốc phòng, an ninh, đồng thời tạo điều kiện cho các hoạt động kinh tế. Vì vậy, B và C đều đánh giá phiến diện hoặc không phù hợp với đặc điểm của hai quần đảo. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-compare-20",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "Modun 3 lựa chọn AI_Bộ câu hỏi kèm đáp án.docx",
+      "title": "Chủ nghĩa tư bản hiện đại – tiềm năng và thách thức",
+      "question": "Chủ nghĩa tư bản hiện đại đang phải đối mặt với những thách thức nào?",
+      "answers": [
+        {
+          "label": "A",
+          "text": "Chủ nghĩa tư bản hiện đại đã giải quyết triệt để khủng hoảng kinh tế, bất bình đẳng xã hội và các vấn đề chính trị, vì vậy hầu như không còn thách thức lớn.",
+          "trust": "unclear"
+        },
+        {
+          "label": "B",
+          "text": "Thách thức của chủ nghĩa tư bản hiện đại chỉ là sự cạnh tranh giữa các doanh nghiệp, còn những vấn đề về kinh tế, chính trị và xã hội đã được giải quyết cơ bản.",
+          "trust": "unclear"
+        },
+        {
+          "label": "C",
+          "text": "Bên cạnh tiềm năng phát triển, chủ nghĩa tư bản hiện đại vẫn phải đối mặt với nhiều thách thức như các cuộc khủng hoảng kinh tế – tài chính có tính toàn cầu, những vấn đề chính trị – xã hội và các mâu thuẫn xã hội chưa được giải quyết triệt để.",
+          "trust": "unclear"
+        }
+      ],
+      "best": "C",
+      "explanation": "SGK vừa chỉ ra những tiềm năng của chủ nghĩa tư bản hiện đại, vừa nhấn mạnh các thách thức về kinh tế, chính trị và xã hội, trong đó có khủng hoảng kinh tế – tài chính, bất ổn và những mâu thuẫn xã hội vẫn tồn tại. A và B đều tuyệt đối hóa khả năng tự giải quyết các vấn đề của chủ nghĩa tư bản."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "datatm-task-01",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Vì sao Xiêm giữ được nền độc lập?",
+      "prompt": "Có ý kiến cho rằng: “Xiêm không trở thành thuộc địa của các nước phương Tây chủ yếu nhờ đường lối ngoại giao mềm dẻo; những cải cách trong nước chỉ giữ vai trò thứ yếu.”\nEm có đồng ý với ý kiến trên không? Hãy viết một đoạn khoảng 180–250 từ để bảo vệ quan điểm của mình. Trong bài làm, em cần:\nxác định rõ đồng ý, không đồng ý hoặc chỉ đồng ý một phần;\nsử dụng ít nhất hai dẫn chứng cụ thể về công cuộc cải cách và chính sách đối ngoại của Xiêm;\nphân tích mối quan hệ giữa nội lực được tạo ra từ cải cách và đường lối ngoại giao;\nđưa ra kết luận của riêng em.\nNếu sử dụng AI để tham khảo, em cần kiểm tra lại thông tin trước khi đưa vào bài và không sao chép nguyên văn câu trả lời của AI.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nXác định rõ quan điểm và đúng trọng tâm vấn đề: 2 điểm.\nLựa chọn được dẫn chứng chính xác, phù hợp: 3 điểm.\nPhân tích được vai trò của cải cách và ngoại giao, biết xem xét hai mặt thay vì quy nguyên nhân về một yếu tố duy nhất: 3 điểm.\nKết luận hợp lí, diễn đạt rõ ràng, thể hiện suy nghĩ riêng: 2 điểm.\nNội dung nhiệm vụ bám sát Bài 5: SGK nêu các cải cách về kinh tế, hành chính, giáo dục và chính sách ngoại giao mềm dẻo; trên cơ sở thành tựu cải cách, Chính phủ Xiêm có thực lực để thực hiện đường lối ngoại giao nhằm giữ vững độc lập, chủ quyền. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-02",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Nhìn nhận đúng về cuộc cải cách của Lê Thánh Tông",
+      "prompt": "Một câu trả lời của AI nhận định:\n“Cuộc cải cách của Lê Thánh Tông thực chất chỉ nhằm tập trung quyền lực vào tay nhà vua, vì vậy tác động chủ yếu của cải cách nằm ở lĩnh vực hành chính.”\nTheo em, nhận định trên đúng, sai hay chưa đầy đủ? Hãy viết một đoạn khoảng 180–250 từ để đánh giá nhận định đó.\nBài làm cần:\nchỉ ra phần hợp lí và phần chưa hợp lí trong nhận định;\nlựa chọn dẫn chứng từ ít nhất ba lĩnh vực trong cuộc cải cách;\ngiải thích các biện pháp cải cách đã tác động như thế nào đến nhà nước và đất nước;\nđưa ra đánh giá cuối cùng có căn cứ.\nKhông chấp nhận cách trả lời chỉ liệt kê các biện pháp cải cách mà không phân tích.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nNhận diện đúng tính chất của nhận định: 2 điểm.\nSử dụng dẫn chứng lịch sử chính xác ở từ ba lĩnh vực trở lên: 3 điểm.\nBiết phân tích, đối chiếu và phản biện nhận định; không chỉ kể lại kiến thức: 3 điểm.\nKết luận có căn cứ, diễn đạt mạch lạc và thể hiện quan điểm cá nhân: 2 điểm.\nSGK cho thấy cải cách của Lê Thánh Tông không chỉ diễn ra trong hành chính mà còn bao gồm pháp luật, quân đội và quốc phòng, kinh tế, văn hóa – giáo dục; kết quả góp phần xây dựng bộ máy nhà nước quy củ, tập trung cao độ, phát triển kinh tế, văn hóa, giáo dục và đưa Đại Việt trở thành một quốc gia hùng mạnh trong khu vực. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-03",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Vì sao Cách mạng Pháp được đánh giá là triệt để?",
+      "prompt": "Có ý kiến cho rằng: “Cách mạng tư sản Pháp cuối thế kỉ XVIII chỉ là một cuộc thay đổi chính quyền, vì vậy không khác nhiều so với các cuộc cách mạng tư sản khác.”\nEm hãy đánh giá ý kiến trên bằng một đoạn viết khoảng 180–250 từ. Trong bài làm, em cần:\nxác định rõ ý kiến trên đúng, sai hay chưa đầy đủ;\nsử dụng dẫn chứng về kết quả và ý nghĩa của Cách mạng Pháp;\nso sánh ở mức khái quát với các cuộc cách mạng tư sản khác đã học;\ngiải thích vì sao SGK đánh giá Cách mạng Pháp là cuộc cách mạng tư sản triệt để nhất;\nđưa ra kết luận của riêng em.\nKhông chấp nhận cách trả lời chỉ kể lại diễn biến cách mạng.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nXác định đúng vấn đề và thể hiện rõ quan điểm: 2 điểm.\nSử dụng dẫn chứng lịch sử chính xác, phù hợp: 3 điểm.\nBiết phân tích, so sánh và giải thích tính triệt để của Cách mạng Pháp: 3 điểm.\nKết luận hợp lí, diễn đạt mạch lạc, có chính kiến: 2 điểm.\nSGK nêu thắng lợi của các cuộc cách mạng tư sản đã lật đổ chế độ quân chủ chuyên chế, mở đường cho chủ nghĩa tư bản phát triển; riêng Cách mạng Pháp được đánh giá là cuộc cách mạng tư sản triệt để nhất. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-04",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Bảo vệ chủ quyền Biển Đông bằng cách nào?",
+      "prompt": "Một bạn cho rằng: “Trong tranh chấp chủ quyền ở Biển Đông, biện pháp hiệu quả nhất là thể hiện thái độ cứng rắn; các biện pháp pháp lí và ngoại giao chỉ có vai trò hỗ trợ.”\nEm có đồng ý với ý kiến trên không? Hãy viết một đoạn khoảng 180–250 từ để trình bày quan điểm của mình. Bài làm cần:\nxác định rõ lập trường;\nsử dụng dẫn chứng về quá trình Việt Nam bảo vệ, thực thi chủ quyền đối với Hoàng Sa và Trường Sa;\nphân tích vai trò của biện pháp hòa bình, pháp lí và ngoại giao;\ngiải thích vì sao việc bảo vệ chủ quyền cần gắn với luật pháp quốc tế;\nđưa ra kết luận có căn cứ.\nNếu sử dụng AI để tham khảo, em phải kiểm chứng lại thông tin trước khi đưa vào bài.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nNêu rõ quan điểm, bám đúng vấn đề: 2 điểm.\nDẫn chứng chính xác về quá trình bảo vệ, thực thi chủ quyền: 3 điểm.\nPhân tích được vai trò của biện pháp hòa bình, pháp lí và ngoại giao; biết phản biện ý kiến một chiều: 3 điểm.\nKết luận hợp lí, diễn đạt rõ ràng, thể hiện trách nhiệm công dân: 2 điểm.\nSGK nêu Việt Nam đã có nhiều hoạt động kiên quyết bảo vệ, thực thi chủ quyền đối với Hoàng Sa và Trường Sa; đồng thời chủ trương giải quyết tranh chấp bằng biện pháp hòa bình, trên cơ sở tôn trọng lẫn nhau và tuân thủ luật pháp quốc tế. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-05",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Ai là lực lượng quyết định trong cách mạng tư sản?",
+      "prompt": "Có ý kiến cho rằng: “Giai cấp lãnh đạo giữ vai trò quyết định, còn quần chúng nhân dân chỉ là lực lượng tham gia hỗ trợ nên không có ảnh hưởng lớn đến thắng lợi của các cuộc cách mạng tư sản.”\nEm hãy đánh giá ý kiến trên trong một đoạn khoảng 180–250 từ. Bài làm cần:\nxác định rõ ý kiến trên đúng, sai hay chưa đầy đủ;\nphân biệt vai trò của giai cấp lãnh đạo và vai trò của quần chúng nhân dân;\nsử dụng dẫn chứng từ một hoặc hai cuộc cách mạng tư sản đã học;\ngiải thích vì sao không nên đồng nhất “giai cấp lãnh đạo” với “động lực của cách mạng”;\nđưa ra kết luận của riêng em.\nKhông chấp nhận bài làm chỉ nêu tên các giai cấp mà không phân tích vai trò.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nXác định đúng vấn đề và thể hiện rõ quan điểm: 2 điểm.\nSử dụng dẫn chứng lịch sử chính xác, phù hợp: 2 điểm.\nPhân tích đúng vai trò khác nhau của giai cấp lãnh đạo và quần chúng nhân dân: 4 điểm.\nKết luận có căn cứ, diễn đạt mạch lạc: 2 điểm.\nSGK xác định giai cấp tư sản và các lực lượng liên minh của họ giữ vai trò lãnh đạo, trong khi quần chúng nhân dân là lực lượng đông đảo và là động lực quan trọng của cách mạng. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-06",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Giành độc lập có đồng nghĩa với hết khó khăn?",
+      "prompt": "Một bạn cho rằng: “Sau khi giành được độc lập, các nước Đông Nam Á đã cơ bản giải quyết được những khó khăn do chế độ thực dân để lại và có thể nhanh chóng phát triển kinh tế.”\nEm hãy đánh giá nhận định trên bằng một đoạn khoảng 180–250 từ. Trong bài làm, em cần:\nchỉ ra phần hợp lí và phần chưa đầy đủ của nhận định;\nnêu những di sản của chế độ thực dân còn ảnh hưởng đến các nước Đông Nam Á sau độc lập;\nsử dụng dẫn chứng về quá trình tái thiết và phát triển của một số nước trong khu vực;\ngiải thích vì sao độc lập chính trị chưa đồng nghĩa với việc ngay lập tức khắc phục được mọi khó khăn về kinh tế, xã hội;\nđưa ra kết luận có căn cứ.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nXác định đúng tính chất của nhận định: 2 điểm.\nNêu và sử dụng đúng các dẫn chứng về di sản thuộc địa và quá trình phát triển sau độc lập: 3 điểm.\nPhân tích được mối quan hệ giữa độc lập chính trị và những khó khăn trong tái thiết, phát triển: 3 điểm.\nKết luận hợp lí, có lập luận riêng và diễn đạt rõ ràng: 2 điểm.\nSGK cho thấy sau khi giành độc lập, nhiều nước Đông Nam Á vẫn phải đối mặt với những hậu quả về kinh tế, chính trị, xã hội và văn hóa do chế độ thực dân để lại; quá trình tái thiết và phát triển diễn ra trong thời gian dài, với những con đường và kết quả khác nhau. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-07",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Nhìn nhận nguyên nhân khủng hoảng và sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô",
+      "prompt": "Có ý kiến cho rằng: “Sự sụp đổ của chủ nghĩa xã hội ở Đông Âu và Liên Xô chủ yếu do sự chống phá của các lực lượng bên ngoài; những hạn chế bên trong không phải nguyên nhân quan trọng.”\nEm hãy đánh giá nhận định trên bằng một đoạn khoảng 180–250 từ. Bài làm cần:\nxác định nhận định trên đúng, sai hay chưa đầy đủ;\nchỉ ra các nguyên nhân bên trong và bên ngoài;\nlựa chọn ít nhất hai bằng chứng để làm rõ lập luận;\nphân tích vì sao không thể giải thích sự sụp đổ chỉ bằng một nguyên nhân;\nđưa ra kết luận của riêng em.\nKhông chấp nhận bài làm chỉ liệt kê nguyên nhân mà không phân tích mối quan hệ giữa chúng.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nXác định đúng vấn đề và nêu rõ quan điểm: 2 điểm.\nSử dụng đúng các nguyên nhân, dẫn chứng từ bài học: 3 điểm.\nPhân tích được sự tác động của nhiều nguyên nhân, tránh cách giải thích một chiều: 3 điểm.\nKết luận có căn cứ, diễn đạt rõ ràng: 2 điểm.\nSGK nêu nhiều nguyên nhân, gồm đường lối lãnh đạo chủ quan, duy ý chí; mô hình kinh tế tập trung, quan liêu, bao cấp bộc lộ hạn chế; chậm đổi mới; những sai lầm trong quá trình cải tổ, suy giảm vai trò lãnh đạo của Đảng Cộng sản và sự chống phá của các lực lượng thù địch. SGK Lịch sử 11.KNTT (1)(1)"
+    },
+    {
+      "id": "datatm-task-08",
+      "teacher_username": "teacher01",
+      "teacher_name": "Giáo viên phản biện",
+      "active": true,
+      "created_at": "datatm-v1",
+      "source_document": "nhiệm vụ học tập.docx",
+      "title": "Đánh giá thành tựu cải cách – mở cửa của Trung Quốc",
+      "prompt": "Một câu trả lời của AI nhận định: “Thành tựu của công cuộc cải cách – mở cửa ở Trung Quốc chủ yếu được thể hiện qua tốc độ tăng trưởng kinh tế; những lĩnh vực khác không có thay đổi đáng kể.”\nTheo em, nhận định này đúng, sai hay chưa đầy đủ? Hãy viết một đoạn khoảng 180–250 từ để bảo vệ quan điểm của mình. Bài làm cần:\nxác định rõ lập trường;\nsử dụng bằng chứng về kinh tế và ít nhất hai lĩnh vực khác;\nphân tích vì sao không nên đánh giá một công cuộc cải cách chỉ dựa vào tốc độ tăng trưởng GDP;\nđưa ra nhận xét khái quát về kết quả của công cuộc cải cách – mở cửa.\nNếu sử dụng AI để tham khảo, em cần kiểm chứng thông tin trước khi đưa vào bài.",
+      "rubric": "Rubric chấm điểm – 10 điểm:\nXác định đúng tính chất của nhận định: 2 điểm.\nLựa chọn và sử dụng bằng chứng chính xác ở nhiều lĩnh vực: 3 điểm.\nPhân tích, đối chiếu được các mặt của thành tựu; tránh đánh giá phiến diện: 3 điểm.\nKết luận hợp lí, có chính kiến và diễn đạt mạch lạc: 2 điểm.\nSGK cho thấy công cuộc cải cách – mở cửa của Trung Quốc đạt thành tựu không chỉ về kinh tế mà còn ở khoa học – công nghệ, văn hóa – giáo dục, góp phần nâng cao đời sống nhân dân và vị thế của đất nước. SGK Lịch sử 11.KNTT (1)(1)"
+    }
+  ]
+}

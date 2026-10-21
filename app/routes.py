@@ -1,4 +1,5 @@
 from functools import wraps
+import re
 import os
 
 from flask import (
@@ -1243,7 +1244,7 @@ def assignment_chat():
         messages = attempt.get('chat', [])[-12:]
         if not messages or messages[-1].get('content') != question or messages[-1].get('role') == 'assistant':
             messages.append({'role': 'student', 'content': question})
-        result = client.generate_text(build_assignment_chat_prompt(task, messages))
+        result = client.generate_text(build_assignment_chat_prompt(task, messages), deadline_seconds=18)
         answer = result.text
         meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
     except GeminiClientError:
@@ -1274,6 +1275,11 @@ def assignment_submit():
         return jsonify({"error": "Bạn cần chấp nhận điều khoản giám sát trước khi nộp bài."}), 403
     if len(answer) < 20:
         return jsonify({"error": "Bài làm cần dài hơn một chút trước khi nộp."}), 400
+    word_range = re.search(r"(\d+)\s*[-–—]\s*(\d+)\s+từ\b", task.get("prompt", ""), re.IGNORECASE)
+    if word_range:
+        minimum, maximum = map(int, word_range.groups())
+        if not minimum <= len(answer.split()) <= maximum:
+            return jsonify(error=f"Bài làm cần từ {minimum} đến {maximum} từ."), 400
     try:
         attempt = owned_attempt(attempt_id, session['student_username'], task['id'])
     except ValueError as exc:
@@ -1285,7 +1291,7 @@ def assignment_submit():
     ai_meta = {"model": "fallback", "key_label": "fallback"}
     try:
         client = GeminiClient.from_app_config(current_app.config)
-        result = client.generate_text(build_assignment_review_prompt(task, answer, chat_log, duration_label))
+        result = client.generate_text(build_assignment_review_prompt(task, answer, chat_log, duration_label), deadline_seconds=18)
         ai_review = result.text
         ai_meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
     except GeminiClientError:
@@ -1473,7 +1479,10 @@ def argument_map_item():
     package = get_argument_package(active_only=True)
     if not package:
         return jsonify(error='Chưa có bản đồ đang mở.'), 404
-    return jsonify(argument_map={**package, 'pieces': [{'id': p['id'], 'text': p['text']} for p in package['pieces']]})
+    public = {key: package.get(key) for key in ('id', 'title', 'question', 'source_text', 'source_reference')}
+    public['buckets'] = ARGUMENT_BUCKETS
+    public['pieces'] = [{'id': p['id'], 'text': p['text']} for p in package['pieces']]
+    return jsonify(argument_map=public)
 
 
 @main_bp.post("/api/modules/argument-map/score")

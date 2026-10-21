@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.services.storage import load_json, save_json
+from app.services.datatm_bank import seed_datatm
 from app.services.learning_feedback import criterion, review_text, level
 
 DEFAULT_COMPARE_DATA = {
@@ -92,6 +93,7 @@ def _data():
     if not any(submission.get("id") == DEMO_EXTRA_SUBMISSION["id"] for submission in data["submissions"]):
         data["submissions"].append(dict(DEMO_EXTRA_SUBMISSION))
         changed = True
+    changed = seed_datatm(data, 'packages') or changed
     if changed:
         save_json("compare_assignments.json", data)
     return data
