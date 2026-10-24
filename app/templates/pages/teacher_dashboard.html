@@ -6,11 +6,11 @@
 <div class="app-shell teacher-shell">
     <aside class="app-sidebar" aria-label="Điều hướng giáo viên">
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Học sinh</span></a>
-        {% for key, item in teacher_pages.items() %}
-        <a class="sidebar-item {% if teacher_page == key %}active{% endif %}" href="{{ url_for('main.teacher_page', page=key) }}">
-            <i data-lucide="{{ item.icon }}"></i><span>{{ item.label }}</span>
-        </a>
-        {% endfor %}
+        {% for group, keys in [('Tổng quan', ['overview']), ('Nội dung', ['assignments', 'detective', 'argument', 'compare', 'debate']), ('Theo dõi', ['submissions', 'students', 'reports'])] %}
+        <span class="ui-nav-group">{{ group }}</span>
+        {% for key in keys %}{% set item = teacher_pages[key] %}
+        <a class="sidebar-item {% if teacher_page == key %}active{% endif %}" {% if teacher_page == key %}aria-current="page"{% endif %} href="{{ url_for('main.teacher_page', page=key) }}"><i data-lucide="{{ item.icon }}"></i><span>{{ item.label }}</span></a>
+        {% endfor %}{% endfor %}
         <a class="sidebar-item" href="{{ url_for('main.teacher_logout') }}"><i data-lucide="log-out"></i><span>Thoát</span></a>
     </aside>
 
@@ -31,6 +31,11 @@
         </div>
 
         {% if teacher_page == "overview" %}
+        <div class="ui-metrics" aria-label="Thống kê lớp phụ trách">
+            <article class="ui-metric"><strong>{{ learning.students|length }}</strong><span>Học sinh phụ trách</span></article>
+            <article class="ui-metric"><strong>{{ assignment_submissions|rejectattr('teacher_score')|list|length }}</strong><span>Bài viết chờ giáo viên chấm</span></article>
+            <article class="ui-metric"><strong>{{ assignment_tasks|selectattr('active')|list|length }}</strong><span>Nhiệm vụ đang mở</span></article>
+        </div>
         {% include 'pages/teacher_learning_overview.html' %}
         {% endif %}
 
@@ -41,13 +46,13 @@
                 <div>
                     <label class="field-label" for="debateMode">Cách ra chủ đề</label>
                     <select id="debateMode" name="mode">
-                        <option value="random" {% if debate_config.mode == "random" %}selected{% endif %}>Random</option>
+                        <option value="random" {% if debate_config.mode == "random" %}selected{% endif %}>Ngẫu nhiên</option>
                         <option value="priority" {% if debate_config.mode == "priority" %}selected{% endif %}>Ưu tiên lần lượt</option>
-                        <option value="fixed" {% if debate_config.mode == "fixed" %}selected{% endif %}>Setup cứng</option>
+                        <option value="fixed" {% if debate_config.mode == "fixed" %}selected{% endif %}>Chủ đề cố định</option>
                     </select>
                 </div>
                 <div>
-                    <label class="field-label" for="fixedTopic">Chủ đề setup cứng</label>
+                    <label class="field-label" for="fixedTopic">Chủ đề cố định</label>
                     <select id="fixedTopic" name="fixed_topic_id">
                         {% for topic in debate_config.topics %}
                         <option value="{{ topic.id }}" {% if debate_config.fixed_topic_id == topic.id %}selected{% endif %}>{{ loop.index }}. {{ topic.title }}</option>
@@ -358,7 +363,7 @@
                                 <p>{{ submission.answer }}</p>
                                 <h3>AI nhận xét sơ bộ</h3>
                                 <p>{{ submission.ai_review }}</p>
-                                <h3>Chat với AI</h3>
+                                <h3>Trao đổi với AI</h3>
                                 <div class="assignment-chat-log">
                                     {% for message in submission.chat %}
                                     <p><strong>{{ "HS" if message.role == "student" else "AI" }}:</strong> {{ message.content }}</p>
@@ -412,7 +417,7 @@
         </section>
 
         <section class="app-panel">
-            <div class="panel-heading"><div><h2>Bài module giáo viên ra đề</h2></div></div>
+            <div class="panel-heading"><div><h2>Bài mô-đun giáo viên ra đề</h2></div></div>
             <div class="assignment-submission-list">
                 {% if teacher_content_submissions %}
                     {% for submission in teacher_content_submissions %}
@@ -465,7 +470,7 @@
                 <div class="student-table-head"><span>Học sinh</span><span>Trường</span><span>Lớp</span></div>
                 {% for student in learning.students %}
                 <article><strong>{{ student.name }}</strong><span>{{ student.school }}</span><span>{{ student.class_name }}</span></article>
-                {% endfor %}
+                {% else %}<div class="ui-empty">Chưa có học sinh trong lớp phụ trách.</div>{% endfor %}
             </div>
         </section>
         {% endif %}

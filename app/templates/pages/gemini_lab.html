@@ -1,29 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Gemini Test · AI Critical Thinking Lab{% endblock %}
+{% block title %}Kiểm tra kết nối AI · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
-<div class="app-shell">
-    <aside class="app-sidebar" aria-label="Điều hướng Gemini">
-        <a class="sidebar-item" href="{{ url_for('main.app_home') }}">
-            <i data-lucide="arrow-left"></i>
-            <span>Quay lại</span>
-        </a>
-        <a class="sidebar-item active" href="{{ url_for('main.gemini_lab') }}">
-            <i data-lucide="sparkles"></i>
-            <span>Gemini test</span>
-        </a>
-        <a class="sidebar-item" href="{{ url_for('main.health') }}">
-            <i data-lucide="activity"></i>
-            <span>Health</span>
-        </a>
+<div class="app-shell admin-shell">
+    <aside class="app-sidebar" aria-label="Điều hướng quản trị">
+        <a class="sidebar-item" href="{{ url_for('main.admin_dashboard') }}"><i data-lucide="shield"></i><span>Quản trị</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.admin_dashboard') }}#teacherAccounts"><i data-lucide="users"></i><span>Giáo viên</span></a>
+        <a class="sidebar-item active" aria-current="page" href="{{ url_for('main.gemini_lab') }}"><i data-lucide="settings"></i><span>Cấu hình hệ thống</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.health') }}"><i data-lucide="activity"></i><span>Tình trạng hệ thống</span></a>
     </aside>
 
     <section class="app-content">
         <div class="module-detail-hero">
             <div>
-                <p class="eyebrow dark">Gemini service</p>
-                <h1>Test xoay key Gemini</h1>
+                <p class="eyebrow dark">Cấu hình hệ thống</p>
+                <h1>Kiểm tra kết nối Gemini</h1>
             </div>
             <button class="button primary" type="button" id="refreshGeminiStatus">
                 <i data-lucide="refresh-cw"></i>
@@ -31,12 +23,12 @@
             </button>
         </div>
 
-        <div class="gemini-grid">
+        <nav class="ui-role-tabs" aria-label="Cấu hình hệ thống"><a class="ui-back" aria-current="page" href="#geminiTestForm">Kết nối Gemini</a></nav><p class="ui-help">Khóa API dùng để xác thực với dịch vụ AI. Trạng thái cấu hình hiển thị bên dưới.</p><div class="gemini-grid">
             <section class="app-panel">
                 <div class="panel-heading">
                     <div>
                         <p class="eyebrow dark">Prompt thử nghiệm</p>
-                        <h2>Gửi một request</h2>
+                        <h2>Gửi câu hỏi thử nghiệm</h2>
                     </div>
                 </div>
                 <form class="gemini-form" id="geminiTestForm">
@@ -51,7 +43,7 @@
             <section class="app-panel">
                 <div class="panel-heading">
                     <div>
-                        <p class="eyebrow dark">Key pool</p>
+                        <p class="eyebrow dark">Khóa kết nối API</p>
                         <h2>Trạng thái</h2>
                     </div>
                 </div>

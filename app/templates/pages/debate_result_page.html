@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Kết quả Solo Rank · Đấu trường lập luận{% endblock %}
+{% block title %}Kết quả Tranh biện cá nhân · Đấu trường lập luận{% endblock %}
 
 {% block body_class %}game-page{% endblock %}
 
@@ -10,14 +10,14 @@
         <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Sảnh</span></a>
         {% for nav_item in modules %}
         <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
-            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.title }}</span>
         </a>
         {% endfor %}
     </aside>
 
     <section class="app-content solo-result-content">
         <section class="solo-result-hero {{ result.winner }}">
-            <p class="eyebrow dark">Kết quả Solo Rank</p>
+            <p class="eyebrow dark">Kết quả Tranh biện cá nhân</p>
             <h1>
                 {% if result.get('provisional') %}
                 Đang chờ đánh giá
@@ -31,11 +31,11 @@
             </h1>
             <div class="result-scoreline">
                 <span>Bạn <strong>{{ 'Chờ đánh giá' if result.get('provisional') else result.player.total }}</strong></span>
-                <em>VS</em>
+                <em>Đối đầu</em>
                 <span>Đối thủ <strong>{{ 'Chờ đánh giá' if result.get('provisional') else result.opponent.total }}</strong></span>
             </div>
             <div class="rank-delta {% if result.rank_delta > 0 %}gain{% elif result.rank_delta < 0 %}loss{% else %}safe{% endif %}">
-                {% if result.rank_delta > 0 %}+{% endif %}{{ result.rank_delta }} điểm rank
+                {% if result.rank_delta > 0 %}+{% endif %}{{ result.rank_delta }} điểm xếp hạng
             </div>
             {% if result.previous_rank.name != result.rank.name %}
             <div class="promotion-burst">Lên hạng: {{ result.rank.name }}</div>

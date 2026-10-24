@@ -8,7 +8,7 @@
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
         {% for item in modules %}
         <a class="sidebar-item {% if item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=item.slug) }}">
-            <i data-lucide="{{ item.icon }}"></i><span>{{ item.number }}</span>
+            <i data-lucide="{{ item.icon }}"></i><span>{{ item.title }}</span>
         </a>
         {% endfor %}
     </aside>

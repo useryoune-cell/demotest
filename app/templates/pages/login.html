@@ -6,13 +6,15 @@
 <section class="auth-page">
     <form class="auth-card" method="post">
         <p class="eyebrow dark">Đăng nhập</p>
+        <h1>Tiếp tục hành trình học tập</h1>
+        <p>Chọn vai trò và đăng nhập để vào không gian của bạn.</p>
         {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
 
         <label class="field-label" for="role">Đăng nhập với tư cách</label>
         <select id="role" name="role">
             <option value="student" {% if selected_role == "student" %}selected{% endif %}>Học sinh</option>
             <option value="teacher" {% if selected_role == "teacher" %}selected{% endif %}>Giáo viên</option>
-            <option value="admin" {% if selected_role == "admin" %}selected{% endif %}>Admin</option>
+            <option value="admin" {% if selected_role == "admin" %}selected{% endif %}>Quản trị</option>
         </select>
 
         <label class="field-label" for="username">Tên đăng nhập</label>

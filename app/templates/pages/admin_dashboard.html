@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Dashboard · AI Critical Thinking Lab{% endblock %}
+{% block title %}Quản trị hệ thống · AI Critical Thinking Lab{% endblock %}
 
 {% block content %}
 <div class="app-shell admin-shell">
-    <aside class="app-sidebar" aria-label="Điều hướng admin">
-        <a class="sidebar-item active" href="{{ url_for('main.admin_dashboard') }}"><i data-lucide="shield"></i><span>Admin</span></a>
+    <aside class="app-sidebar" aria-label="Điều hướng quản trị">
+        <a class="sidebar-item active" href="{{ url_for('main.admin_dashboard') }}"><i data-lucide="shield"></i><span>Quản trị</span></a>
         <a class="sidebar-item" href="#teacherAccounts"><i data-lucide="users"></i><span>Giáo viên</span></a>
         <a class="sidebar-item" href="#adminReports"><i data-lucide="send"></i><span>Báo cáo</span></a>
-        <a class="sidebar-item" href="{{ url_for('main.gemini_lab') }}"><i data-lucide="sparkles"></i><span>Gemini</span></a>
+        <a class="sidebar-item" href="{{ url_for('main.gemini_lab') }}"><i data-lucide="sparkles"></i><span>Cấu hình hệ thống</span></a>
         <a class="sidebar-item" href="{{ url_for('main.admin_logout') }}"><i data-lucide="log-out"></i><span>Thoát</span></a>
     </aside>
 
     <section class="app-content">
         <div class="teacher-top">
             <div>
-                <p class="eyebrow dark">Admin</p>
+                <p class="eyebrow dark">Quản trị</p>
                 <h1>Quản lý tài khoản giáo viên</h1>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 <input id="teacherName" name="name" placeholder="Giáo viên phản biện">
                 <label class="field-label" for="teacherEmail">Email</label>
                 <input id="teacherEmail" name="email" type="email" placeholder="teacher@example.com">
-                <label class="field-label" for="teacherUsername">Username</label>
+                <label class="field-label" for="teacherUsername">Tên đăng nhập</label>
                 <input id="teacherUsername" name="username" required>
                 <label class="field-label" for="teacherPassword">Mật khẩu</label>
                 <div class="password-field">

@@ -1,0 +1,1624 @@
+{
+  "checks": [
+    {
+      "id": "01-trang-chu",
+      "route": "/",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "02-dang-nhap-hoc-sinh",
+      "route": "/login?role=student",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "03-dang-nhap-giao-vien",
+      "route": "/login?role=teacher",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "04-dang-nhap-admin",
+      "route": "/login?role=admin",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "05-dang-ky-hoc-sinh",
+      "route": "/student/register",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "06-khong-gian-hoc-tap",
+      "route": "/app",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "07-thong-tin-va-tu-danh-gia",
+      "route": "/app/learning-profile",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "08-danh-sach-nhiem-vu",
+      "route": "/app/modules/nhiem-vu",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "11-nhiem-vu-mo-chat-ai",
+      "route": "/app/modules/nhiem-vu/tasks/datatm-task-01",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "12-chatbot-socratic",
+      "route": "/app/modules/chatbot-socratic",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "13-tro-li-phan-bien",
+      "route": "/app/modules/tro-li-phan-bien",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "14-danh-gia-lap-luan-kho-de",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "15-danh-gia-lap-luan-lam-bai",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi?package=datatm-compare-01",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "16-prompt-phan-bien",
+      "route": "/app/modules/prompt-phan-bien",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "17-tham-tu-chon-linh-vuc",
+      "route": "/app/modules/tham-tu-ai",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "18-tham-tu-lam-bai",
+      "route": "/app/modules/tham-tu-ai?field=lich-su-11---chinh-sach-cai-tri-cua-thuc-dan-phuong-tay-o-đong-nam-a",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "19-ban-do-kho-bai",
+      "route": "/app/modules/ban-do-lap-luan",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "21-ban-do-ket-qua",
+      "route": "/app/modules/ban-do-lap-luan/maps/datatm-argument-01",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "22-nhat-ky-phan-tu",
+      "route": "/app/modules/nhat-ky-phan-tu-ai",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 3,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "23-ho-so-nang-luc",
+      "route": "/app/modules/ho-so-nang-luc",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "24-gv-tong-quan",
+      "route": "/teacher/overview",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "25-gv-dau-truong",
+      "route": "/teacher/debate",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 6,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "26-gv-tham-tu",
+      "route": "/teacher/detective",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 18,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "27-gv-ban-do",
+      "route": "/teacher/argument",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [
+        "DIV.ui-field",
+        "LABEL.field-label",
+        "INPUT.",
+        "DIV.ui-field",
+        "LABEL.field-label",
+        "TEXTAREA.",
+        "OUTPUT.ui-character-count",
+        "DIV.ui-field"
+      ],
+      "primary": 27,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "28-gv-danh-gia-lap-luan",
+      "route": "/teacher/compare",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 26,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "34-gv-mo-form-sua-nhiem-vu",
+      "route": "/teacher/assignments",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 12,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "33-gv-mo-bai-nop",
+      "route": "/teacher/submissions",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1600,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "31-gv-hoc-sinh",
+      "route": "/teacher/students",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [
+        "ARTICLE.",
+        "STRONG.",
+        "SPAN.",
+        "SPAN.",
+        "ARTICLE.",
+        "STRONG.",
+        "SPAN.",
+        "SPAN."
+      ],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "32-gv-bao-cao",
+      "route": "/teacher/reports",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "35-quan-tri",
+      "route": "/admin",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "36-kiem-tra-gemini",
+      "route": "/app/gemini",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "37-tin-hay-khong-tin",
+      "route": "/app/modules/tin-hay-khong-tin",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "38-con-nguoi-truoc-ai-sau",
+      "route": "/app/modules/con-nguoi-truoc-ai-sau",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "39-ai-co-tinh-sai",
+      "route": "/app/modules/ai-co-tinh-sai",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "40-dau-truong-lap-luan",
+      "route": "/app/modules/dau-truong-lap-luan",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "41-dau-truong-lap-luan-matching",
+      "route": "/app/modules/dau-truong-lap-luan/matching",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "42-dau-truong-lap-luan-vs",
+      "route": "/app/modules/dau-truong-lap-luan/vs",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "43-dau-truong-lap-luan-battle",
+      "route": "/app/modules/dau-truong-lap-luan/battle",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "44-dau-truong-lap-luan-room-matching",
+      "route": "/app/modules/dau-truong-lap-luan/room-matching",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "45-dau-truong-lap-luan-room-battle",
+      "route": "/app/modules/dau-truong-lap-luan/room-battle",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "01-trang-chu",
+      "route": "/",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "02-dang-nhap-hoc-sinh",
+      "route": "/login?role=student",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "03-dang-nhap-giao-vien",
+      "route": "/login?role=teacher",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "04-dang-nhap-admin",
+      "route": "/login?role=admin",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "05-dang-ky-hoc-sinh",
+      "route": "/student/register",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "06-khong-gian-hoc-tap",
+      "route": "/app",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "07-thong-tin-va-tu-danh-gia",
+      "route": "/app/learning-profile",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "08-danh-sach-nhiem-vu",
+      "route": "/app/modules/nhiem-vu",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "11-nhiem-vu-mo-chat-ai",
+      "route": "/app/modules/nhiem-vu/tasks/datatm-task-01",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "12-chatbot-socratic",
+      "route": "/app/modules/chatbot-socratic",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "13-tro-li-phan-bien",
+      "route": "/app/modules/tro-li-phan-bien",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "14-danh-gia-lap-luan-kho-de",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "15-danh-gia-lap-luan-lam-bai",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi?package=datatm-compare-01",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "16-prompt-phan-bien",
+      "route": "/app/modules/prompt-phan-bien",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "17-tham-tu-chon-linh-vuc",
+      "route": "/app/modules/tham-tu-ai",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "18-tham-tu-lam-bai",
+      "route": "/app/modules/tham-tu-ai?field=lich-su-11---chinh-sach-cai-tri-cua-thuc-dan-phuong-tay-o-đong-nam-a",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "19-ban-do-kho-bai",
+      "route": "/app/modules/ban-do-lap-luan",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "21-ban-do-ket-qua",
+      "route": "/app/modules/ban-do-lap-luan/maps/datatm-argument-01",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "22-nhat-ky-phan-tu",
+      "route": "/app/modules/nhat-ky-phan-tu-ai",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 3,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "23-ho-so-nang-luc",
+      "route": "/app/modules/ho-so-nang-luc",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "24-gv-tong-quan",
+      "route": "/teacher/overview",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "25-gv-dau-truong",
+      "route": "/teacher/debate",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 6,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "26-gv-tham-tu",
+      "route": "/teacher/detective",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 18,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "27-gv-ban-do",
+      "route": "/teacher/argument",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 27,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "28-gv-danh-gia-lap-luan",
+      "route": "/teacher/compare",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 26,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "34-gv-mo-form-sua-nhiem-vu",
+      "route": "/teacher/assignments",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 12,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "33-gv-mo-bai-nop",
+      "route": "/teacher/submissions",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1600,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "31-gv-hoc-sinh",
+      "route": "/teacher/students",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "32-gv-bao-cao",
+      "route": "/teacher/reports",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "35-quan-tri",
+      "route": "/admin",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "36-kiem-tra-gemini",
+      "route": "/app/gemini",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "37-tin-hay-khong-tin",
+      "route": "/app/modules/tin-hay-khong-tin",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "38-con-nguoi-truoc-ai-sau",
+      "route": "/app/modules/con-nguoi-truoc-ai-sau",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "39-ai-co-tinh-sai",
+      "route": "/app/modules/ai-co-tinh-sai",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "40-dau-truong-lap-luan",
+      "route": "/app/modules/dau-truong-lap-luan",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "41-dau-truong-lap-luan-matching",
+      "route": "/app/modules/dau-truong-lap-luan/matching",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "42-dau-truong-lap-luan-vs",
+      "route": "/app/modules/dau-truong-lap-luan/vs",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "43-dau-truong-lap-luan-battle",
+      "route": "/app/modules/dau-truong-lap-luan/battle",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "44-dau-truong-lap-luan-room-matching",
+      "route": "/app/modules/dau-truong-lap-luan/room-matching",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "45-dau-truong-lap-luan-room-battle",
+      "route": "/app/modules/dau-truong-lap-luan/room-battle",
+      "width": 768,
+      "status": 200,
+      "document": 768,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "01-trang-chu",
+      "route": "/",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "02-dang-nhap-hoc-sinh",
+      "route": "/login?role=student",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "03-dang-nhap-giao-vien",
+      "route": "/login?role=teacher",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "04-dang-nhap-admin",
+      "route": "/login?role=admin",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "05-dang-ky-hoc-sinh",
+      "route": "/student/register",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "06-khong-gian-hoc-tap",
+      "route": "/app",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "07-thong-tin-va-tu-danh-gia",
+      "route": "/app/learning-profile",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "08-danh-sach-nhiem-vu",
+      "route": "/app/modules/nhiem-vu",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "11-nhiem-vu-mo-chat-ai",
+      "route": "/app/modules/nhiem-vu/tasks/datatm-task-01",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "12-chatbot-socratic",
+      "route": "/app/modules/chatbot-socratic",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "13-tro-li-phan-bien",
+      "route": "/app/modules/tro-li-phan-bien",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "14-danh-gia-lap-luan-kho-de",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "15-danh-gia-lap-luan-lam-bai",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi?package=datatm-compare-01",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "16-prompt-phan-bien",
+      "route": "/app/modules/prompt-phan-bien",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "17-tham-tu-chon-linh-vuc",
+      "route": "/app/modules/tham-tu-ai",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "18-tham-tu-lam-bai",
+      "route": "/app/modules/tham-tu-ai?field=lich-su-11---chinh-sach-cai-tri-cua-thuc-dan-phuong-tay-o-đong-nam-a",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "19-ban-do-kho-bai",
+      "route": "/app/modules/ban-do-lap-luan",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "21-ban-do-ket-qua",
+      "route": "/app/modules/ban-do-lap-luan/maps/datatm-argument-01",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "22-nhat-ky-phan-tu",
+      "route": "/app/modules/nhat-ky-phan-tu-ai",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 3,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "23-ho-so-nang-luc",
+      "route": "/app/modules/ho-so-nang-luc",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "24-gv-tong-quan",
+      "route": "/teacher/overview",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "25-gv-dau-truong",
+      "route": "/teacher/debate",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 6,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "26-gv-tham-tu",
+      "route": "/teacher/detective",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 18,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "27-gv-ban-do",
+      "route": "/teacher/argument",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 27,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "28-gv-danh-gia-lap-luan",
+      "route": "/teacher/compare",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 26,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "34-gv-mo-form-sua-nhiem-vu",
+      "route": "/teacher/assignments",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 12,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "33-gv-mo-bai-nop",
+      "route": "/teacher/submissions",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1600,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "31-gv-hoc-sinh",
+      "route": "/teacher/students",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "32-gv-bao-cao",
+      "route": "/teacher/reports",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "35-quan-tri",
+      "route": "/admin",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "36-kiem-tra-gemini",
+      "route": "/app/gemini",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "37-tin-hay-khong-tin",
+      "route": "/app/modules/tin-hay-khong-tin",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "38-con-nguoi-truoc-ai-sau",
+      "route": "/app/modules/con-nguoi-truoc-ai-sau",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "39-ai-co-tinh-sai",
+      "route": "/app/modules/ai-co-tinh-sai",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "40-dau-truong-lap-luan",
+      "route": "/app/modules/dau-truong-lap-luan",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "41-dau-truong-lap-luan-matching",
+      "route": "/app/modules/dau-truong-lap-luan/matching",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "42-dau-truong-lap-luan-vs",
+      "route": "/app/modules/dau-truong-lap-luan/vs",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "43-dau-truong-lap-luan-battle",
+      "route": "/app/modules/dau-truong-lap-luan/battle",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "44-dau-truong-lap-luan-room-matching",
+      "route": "/app/modules/dau-truong-lap-luan/room-matching",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "45-dau-truong-lap-luan-room-battle",
+      "route": "/app/modules/dau-truong-lap-luan/room-battle",
+      "width": 1024,
+      "status": 200,
+      "document": 1024,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "01-trang-chu",
+      "route": "/",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "02-dang-nhap-hoc-sinh",
+      "route": "/login?role=student",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "03-dang-nhap-giao-vien",
+      "route": "/login?role=teacher",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "04-dang-nhap-admin",
+      "route": "/login?role=admin",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "05-dang-ky-hoc-sinh",
+      "route": "/student/register",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "06-khong-gian-hoc-tap",
+      "route": "/app",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "07-thong-tin-va-tu-danh-gia",
+      "route": "/app/learning-profile",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "08-danh-sach-nhiem-vu",
+      "route": "/app/modules/nhiem-vu",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "11-nhiem-vu-mo-chat-ai",
+      "route": "/app/modules/nhiem-vu/tasks/datatm-task-01",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "12-chatbot-socratic",
+      "route": "/app/modules/chatbot-socratic",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "13-tro-li-phan-bien",
+      "route": "/app/modules/tro-li-phan-bien",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "14-danh-gia-lap-luan-kho-de",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "15-danh-gia-lap-luan-lam-bai",
+      "route": "/app/modules/so-sanh-ba-cau-tra-loi?package=datatm-compare-01",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "16-prompt-phan-bien",
+      "route": "/app/modules/prompt-phan-bien",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "17-tham-tu-chon-linh-vuc",
+      "route": "/app/modules/tham-tu-ai",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "18-tham-tu-lam-bai",
+      "route": "/app/modules/tham-tu-ai?field=lich-su-11---chinh-sach-cai-tri-cua-thuc-dan-phuong-tay-o-đong-nam-a",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "19-ban-do-kho-bai",
+      "route": "/app/modules/ban-do-lap-luan",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "21-ban-do-ket-qua",
+      "route": "/app/modules/ban-do-lap-luan/maps/datatm-argument-01",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "22-nhat-ky-phan-tu",
+      "route": "/app/modules/nhat-ky-phan-tu-ai",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 3,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "23-ho-so-nang-luc",
+      "route": "/app/modules/ho-so-nang-luc",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "24-gv-tong-quan",
+      "route": "/teacher/overview",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "25-gv-dau-truong",
+      "route": "/teacher/debate",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 6,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "26-gv-tham-tu",
+      "route": "/teacher/detective",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 18,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "27-gv-ban-do",
+      "route": "/teacher/argument",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 27,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "28-gv-danh-gia-lap-luan",
+      "route": "/teacher/compare",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 26,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "34-gv-mo-form-sua-nhiem-vu",
+      "route": "/teacher/assignments",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 12,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "33-gv-mo-bai-nop",
+      "route": "/teacher/submissions",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1600,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "31-gv-hoc-sinh",
+      "route": "/teacher/students",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "32-gv-bao-cao",
+      "route": "/teacher/reports",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "35-quan-tri",
+      "route": "/admin",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "36-kiem-tra-gemini",
+      "route": "/app/gemini",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "37-tin-hay-khong-tin",
+      "route": "/app/modules/tin-hay-khong-tin",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "38-con-nguoi-truoc-ai-sau",
+      "route": "/app/modules/con-nguoi-truoc-ai-sau",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "39-ai-co-tinh-sai",
+      "route": "/app/modules/ai-co-tinh-sai",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "40-dau-truong-lap-luan",
+      "route": "/app/modules/dau-truong-lap-luan",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "41-dau-truong-lap-luan-matching",
+      "route": "/app/modules/dau-truong-lap-luan/matching",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "42-dau-truong-lap-luan-vs",
+      "route": "/app/modules/dau-truong-lap-luan/vs",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 0,
+      "color": null
+    },
+    {
+      "id": "43-dau-truong-lap-luan-battle",
+      "route": "/app/modules/dau-truong-lap-luan/battle",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "44-dau-truong-lap-luan-room-matching",
+      "route": "/app/modules/dau-truong-lap-luan/room-matching",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "45-dau-truong-lap-luan-room-battle",
+      "route": "/app/modules/dau-truong-lap-luan/room-battle",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    }
+  ],
+  "browser_errors": [],
+  "horizontal_overflow": []
+}

@@ -1,0 +1,220 @@
+/* Important declarations in this named layer supersede legacy overrides.
+   The file is excluded entirely from / and /app to preserve their rendering. */
+@layer notebook {
+    body { background: var(--ui-bg) !important; color: var(--ui-text) !important; font-family: var(--ui-font) !important; font-size: 16px !important; line-height: 1.6 !important; }
+    body *, body *::before, body *::after { box-sizing: border-box !important; }
+    body *:not(.ti) { font-family: var(--ui-font) !important; }
+    body :is(h1,h2,h3,h4,input,select,textarea,button,.button) { font-family: var(--ui-font) !important; }
+    body h1 { font-size: 1.75rem !important; font-weight: 700 !important; line-height: 1.25 !important; letter-spacing: -.035em !important; color: var(--ui-text) !important; margin: 0 0 12px !important; }
+    body h2 { font-size: 1.375rem !important; font-weight: 600 !important; line-height: 1.25 !important; color: var(--ui-text) !important; }
+    body h3 { font-size: 1.125rem !important; line-height: 1.4 !important; color: var(--ui-text) !important; }
+    body :is(p,li,.assignment-full-prompt,.argument-piece,.compare-card p,#detectiveText,.assignment-review-body) { font-size: 1rem !important; line-height: 1.7 !important; color: var(--ui-secondary) !important; overflow-wrap: anywhere !important; }
+    body :is(small,.response-meta,.muted-note,.eyebrow,.workshop-kicker,.task-subject,.draft-status,.hero-skills,.hero-stamp) { font-size: .875rem !important; color: var(--ui-muted) !important; letter-spacing: normal !important; }
+    body :is(.field-label,label) { color: var(--ui-text) !important; font-size: .9375rem !important; font-weight: 500 !important; }
+    body .field-label { display: block !important; margin: 16px 0 8px !important; }
+    body :is(strong,.panel-heading,.student-table-head) { color: var(--ui-text) !important; }
+    body :is(a,button,input,select,textarea,summary,[tabindex]):focus-visible { outline: 3px solid var(--ui-ring) !important; outline-offset: 3px !important; }
+    body :is(button,.button,.header-cta,.password-toggle,.filter-tab,.task-filters button) { min-height: 44px !important; min-width: 44px !important; border-radius: var(--ui-radius-control) !important; cursor: pointer !important; transition: background var(--ui-transition), transform var(--ui-transition), box-shadow var(--ui-transition) !important; font-size: .9375rem !important; }
+    body .button { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; padding: 10px 20px !important; font-weight: 600 !important; box-shadow: none !important; }
+    body .button.ui-secondary-action { background: var(--ui-surface) !important; border: 1px solid var(--ui-primary) !important; color: var(--ui-primary) !important; }
+    body svg.lucide { width: 20px !important; height: 20px !important; flex-shrink: 0 !important; stroke-width: 1.75 !important; }
+    body :where(.button.primary,.header-cta,#scoreArgumentMap,.assignment-chat-form button) { background: var(--ui-primary) !important; border: 1px solid var(--ui-primary) !important; color: var(--ui-dark-text) !important; }
+    body :is(.button.primary,.header-cta):hover { background: var(--ui-primary-hover) !important; }
+    body :is(.button.secondary,.filter-tab,.task-filters button) { background: var(--ui-surface) !important; color: var(--ui-primary) !important; border: 1px solid var(--ui-border) !important; }
+    body :is(.button.secondary,.filter-tab):hover { background: var(--ui-primary-soft) !important; }
+    body .button.ui-secondary-action:hover { background: var(--ui-primary-soft) !important; color: var(--ui-primary) !important; }
+    body :is(.button.danger,button[data-ui-danger]) { background: var(--ui-danger-soft) !important; color: var(--ui-danger) !important; border: 1px solid var(--ui-danger) !important; }
+    body :is(button:disabled,.button[aria-disabled=true]) { opacity: .55 !important; cursor: not-allowed !important; transform: none !important; }
+    body :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]),select,textarea) { background: var(--ui-surface) !important; color: var(--ui-text) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-control) !important; min-height: 44px !important; padding: 11px 14px !important; font-size: 1rem !important; line-height: 1.6 !important; min-width: 0 !important; max-width: 100% !important; box-shadow: none !important; }
+    body textarea { width: 100% !important; min-height: 140px !important; resize: vertical !important; }
+    body :is(input,textarea)::placeholder { color: var(--ui-muted) !important; }
+    body :is(input,select,textarea):focus { border-color: var(--ui-primary) !important; outline: 3px solid var(--ui-ring) !important; }
+    body :is(.app-panel,.workshop-card,.auth-card,.compare-card,.detective-task,.detective-form,.piece-tray,.argument-canvas,.thinking-board,.socratic-chat-panel,.teacher-topic-card,.learning-feedback) { background: var(--ui-surface) !important; color: var(--ui-text) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; box-shadow: var(--ui-shadow) !important; padding: 24px !important; min-width: 0 !important; }
+    body :is(.app-panel,.workshop-card) { margin-bottom: 24px !important; }
+    body :is(.module-detail-hero,.teacher-top,.workshop-hero) { display: flex !important; align-items: center !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 24px !important; background: transparent !important; border: 0 !important; border-bottom: 1px solid var(--ui-border) !important; border-radius: 0 !important; padding: 16px 0 32px !important; margin-bottom: 32px !important; box-shadow: none !important; }
+    body .workshop-hero h1 { font-size: 2rem !important; }
+    body :is(.hero-symbol,.section-icon,.assignment-task-icon) { background: var(--ui-primary-soft) !important; color: var(--ui-primary) !important; border-radius: var(--ui-radius-card) !important; transform: none !important; box-shadow: none !important; }
+    body .hero-symbol { width: 72px !important; height: 72px !important; }
+    body :is(.prompt-hero .hero-symbol,.purple,.assignment-chat-toggle) { color: var(--ui-ai) !important; background: var(--ui-ai-soft) !important; }
+    body .site-header { display: flex !important; position: sticky !important; top: 0 !important; z-index: 70 !important; height: 76px !important; padding: 12px 32px !important; background: var(--ui-surface) !important; border-bottom: 1px solid var(--ui-border) !important; box-shadow: none !important; gap: 20px !important; }
+    body .brand { font: 700 1.125rem/1.3 var(--ui-font) !important; color: var(--ui-text) !important; }
+    body .brand-mark { background: var(--ui-primary) !important; color: var(--ui-dark-text) !important; box-shadow: none !important; }
+    body .main-nav { margin-left: auto !important; font-size: .875rem !important; }
+    body .site-footer { color: var(--ui-muted) !important; padding: 24px 32px !important; background: var(--ui-bg) !important; border-top: 1px solid var(--ui-border) !important; }
+    body main::before,body main::after { display: none !important; }
+    body .module-focus-back { display: none !important; }
+    body .app-shell { display: grid !important; grid-template-columns: 240px minmax(0,1fr) !important; gap: 32px !important; width: 100% !important; max-width: 1600px !important; margin: 0 auto !important; padding: 32px !important; background: transparent !important; }
+    body .app-shell.module-shell { display: block !important; max-width: 1360px !important; }
+    body .app-shell.module-shell > .app-sidebar { display: none !important; }
+    body .app-content { width: 100% !important; max-width: none !important; min-width: 0 !important; padding: 0 !important; margin: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    body .app-content { font-size: 1rem !important; line-height: 1.6 !important; }
+    body .app-shell.module-shell > .app-sidebar.ui-drawer-open { display: flex !important; position: fixed !important; top: 84px !important; left: 16px !important; bottom: 16px !important; z-index: 80 !important; box-shadow: var(--ui-shadow-raised) !important; }
+    body .app-sidebar { display: flex !important; flex-direction: column !important; gap: 6px !important; width: 240px !important; background: var(--ui-surface) !important; padding: 16px !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; position: sticky !important; top: 100px !important; height: fit-content !important; max-height: calc(100dvh - 124px) !important; overflow-y: auto !important; }
+    body .sidebar-item { display: flex !important; align-items: center !important; gap: 12px !important; padding: 12px !important; min-height: 48px !important; color: var(--ui-secondary) !important; border-radius: var(--ui-radius-control) !important; font-size: .875rem !important; }
+    body .sidebar-item.active { color: var(--ui-primary) !important; background: var(--ui-primary-soft) !important; border-left: 3px solid var(--ui-primary) !important; }
+    body .ui-nav-group { font-size: .8125rem !important; font-weight: 600 !important; color: var(--ui-muted) !important; padding: 20px 12px 4px !important; }
+    body .ui-breadcrumb { display: flex !important; gap: 8px !important; align-items: center !important; flex-wrap: wrap !important; color: var(--ui-muted) !important; font-size: .875rem !important; margin-bottom: 24px !important; }
+    body .ui-back { color: var(--ui-primary) !important; min-height: 44px !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; }
+    body .workshop-breadcrumb { display: none !important; }
+    body .ui-menu-toggle { background: var(--ui-primary-soft) !important; color: var(--ui-primary) !important; border: 1px solid var(--ui-border) !important; padding: 8px 12px !important; }
+    body .ui-toolbar { display: flex !important; gap: 12px !important; flex-wrap: wrap !important; align-items: center !important; margin-bottom: 24px !important; padding: 16px !important; background: var(--ui-surface) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; }
+    body .ui-toolbar input { flex: 1 1 240px !important; width: auto !important; }
+    body .ui-toolbar label { display: flex !important; gap: 8px !important; align-items: center !important; }
+    body .ui-result-count { color: var(--ui-muted) !important; font-size: .875rem !important; }
+    body .assignment-task-grid { display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: 24px !important; }
+    body .assignment-task-box { display: flex !important; flex-direction: column !important; gap: 12px !important; padding: 24px !important; min-height: 220px !important; background: var(--ui-surface) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; box-shadow: var(--ui-shadow) !important; color: var(--ui-text) !important; transition: transform var(--ui-transition),box-shadow var(--ui-transition) !important; }
+    body .assignment-task-box:hover { transform: translateY(-3px) !important; box-shadow: var(--ui-shadow-raised) !important; border-color: var(--ui-primary) !important; }
+    body .assignment-task-box :is(strong,h3) { font-size: 1.125rem !important; line-height: 1.45 !important; }
+    body .assignment-task-box em { color: var(--ui-muted) !important; font-size: .875rem !important; font-style: normal !important; }
+    body .compare-package-list { display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: 24px !important; }
+    body .compare-package-card { padding: 24px !important; min-height: 180px !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; background: var(--ui-surface) !important; display: flex !important; flex-direction: column !important; gap: 12px !important; box-shadow: var(--ui-shadow) !important; }
+    body .compare-package-card strong { font-size: 1.125rem !important; }
+    body .compare-package-card span { color: var(--ui-secondary) !important; font-size: .875rem !important; }
+    body .compare-package-card em { font-style: normal !important; color: var(--ui-primary) !important; margin-top: auto !important; }
+    body .task-search { position: relative !important; }
+    body .task-search > svg { display: none !important; }
+    body .task-number,body .task-card-bottom,body .task-card-bottom span { color: var(--ui-muted) !important; font-size: .8125rem !important; }
+    body .assignment-task-action { color: var(--ui-primary) !important; margin-top: auto !important; font-size: .875rem !important; }
+    body .ui-badge { display: inline-flex !important; align-items: center !important; gap: 6px !important; border-radius: var(--ui-radius-pill) !important; padding: 4px 10px !important; font-size: .8125rem !important; font-weight: 600 !important; width: fit-content !important; color: var(--ui-primary) !important; background: var(--ui-primary-soft) !important; }
+    body :is(.ui-empty,.assignment-empty,.task-search-empty) { text-align: center !important; padding: 40px 24px !important; color: var(--ui-muted) !important; border: 1px dashed var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; }
+    body .auth-page { min-height: calc(100dvh - 154px) !important; display: grid !important; place-items: center !important; padding: 48px 20px !important; background: var(--ui-bg) !important; }
+    body .auth-card { width: 100% !important; max-width: 460px !important; padding: 32px !important; display: flex !important; flex-direction: column !important; gap: 4px !important; }
+    body .auth-card h1 { margin-top: 12px !important; }
+    body .auth-card > .button { margin-top: 24px !important; }
+    body .auth-links { display: flex !important; justify-content: space-between !important; gap: 16px !important; flex-wrap: wrap !important; margin-top: 20px !important; font-size: .875rem !important; }
+    body .text-link { color: var(--ui-primary) !important; }
+    body .password-field { width: 100% !important; display: flex !important; position: relative !important; }
+    body .password-field input { width: 100% !important; padding-right: 52px !important; }
+    body .password-toggle { position: absolute !important; right: 1px !important; top: 1px !important; background: transparent !important; border: 0 !important; color: var(--ui-secondary) !important; }
+    body .ui-role-tabs { display: grid !important; grid-template-columns: repeat(3,1fr) !important; gap: 4px !important; background: var(--ui-bg) !important; border: 1px solid var(--ui-border) !important; padding: 4px !important; border-radius: var(--ui-radius-control) !important; }
+    body .ui-role-tabs button { background: transparent !important; border: 0 !important; color: var(--ui-secondary) !important; padding: 8px !important; font-size: .875rem !important; }
+    body .ui-role-tabs button[aria-pressed=true] { background: var(--ui-surface) !important; box-shadow: var(--ui-shadow) !important; color: var(--ui-primary) !important; }
+    body .ui-fieldset { margin: 16px 0 0 !important; border: 0 !important; padding: 0 !important; min-width: 0 !important; }
+    body .ui-fieldset legend { font-size: 1rem !important; font-weight: 600 !important; padding: 0 !important; color: var(--ui-text) !important; }
+    body .ui-help { font-size: .8125rem !important; color: var(--ui-muted) !important; margin-top: 6px !important; }
+    body :is(.auth-error,[role=alert]) { color: var(--ui-danger) !important; background: var(--ui-danger-soft) !important; border: 1px solid var(--ui-danger) !important; padding: 12px 16px !important; border-radius: var(--ui-radius-control) !important; }
+    body :is(.auth-success,.green) { color: var(--ui-success-text) !important; background: var(--ui-success-soft) !important; }
+    body :is(.assignment-full-prompt,.argument-source-text,#detectiveText,.assignment-review-body > p,.compare-card p) { max-width: 68ch !important; white-space: pre-line !important; }
+    body :is(.assignment-task-card,.argument-source,.detective-task) { background: var(--ui-primary-soft) !important; }
+    body :is(.assignment-workspace,.prompt-workspace,.detective-layout,.argument-workspace,.socratic-workspace,.gemini-grid,.profile-grid,.teacher-grid) { display: grid !important; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr) !important; gap: 24px !important; align-items: start !important; }
+    body .assignment-form { grid-column: 1 / -1 !important; }
+    body :is(.assignment-writing-grid,.compare-grid) { gap: 24px !important; }
+    body :is(.assignment-submit-bar,.ui-form-actions) { position: sticky !important; bottom: 12px !important; z-index: 15 !important; background: var(--ui-surface) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; padding: 16px !important; box-shadow: var(--ui-shadow) !important; display: flex !important; justify-content: space-between !important; gap: 12px !important; flex-wrap: wrap !important; }
+    body :is(.assignment-timer,.trust-badge) { color: var(--ui-primary) !important; background: var(--ui-primary-soft) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; padding: 12px 16px !important; }
+    body .assignment-timer strong { font-size: 1.75rem !important; font-variant-numeric: tabular-nums !important; }
+    body :is(.chat-thread,.assignment-chat-thread) { background: var(--ui-bg) !important; padding: 16px !important; min-height: 300px !important; max-height: 60dvh !important; overflow-y: auto !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; }
+    body .socratic-message { max-width: 88% !important; border: 0 !important; border-radius: var(--ui-radius-card) !important; padding: 16px !important; margin: 12px 0 !important; }
+    body .socratic-message.ai { background: var(--ui-ai-soft) !important; color: var(--ui-text) !important; margin-right: auto !important; }
+    body .socratic-message.user { background: var(--ui-primary) !important; color: var(--ui-dark-text) !important; margin-left: auto !important; }
+    body .socratic-message.user :is(p,span,strong) { color: var(--ui-dark-text) !important; }
+    body .socratic-message.ai > span { color: var(--ui-ai) !important; }
+    body .socratic-form { position: sticky !important; bottom: 12px !important; background: var(--ui-surface) !important; padding-top: 16px !important; }
+    body .socratic-form textarea { min-height: 88px !important; }
+    body :is(.stage-pill,.socratic-mode-button,.board-section,.detective-hint) { background: var(--ui-bg) !important; color: var(--ui-text) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-control) !important; }
+    body :is(.stage-pill.active,.socratic-mode-button.active,.filter-tab.active,.task-filters button.active) { background: var(--ui-primary-soft) !important; color: var(--ui-primary) !important; border-color: var(--ui-primary) !important; }
+    body .stage-pill :is(span,small) { color: inherit !important; font-size: .8125rem !important; }
+    body .socratic-stagebar { gap: 8px !important; margin-bottom: 24px !important; }
+    body .argument-bucket { border-radius: var(--ui-radius-card) !important; padding: 16px !important; min-height: 130px !important; border: 1px solid var(--ui-border) !important; }
+    body .argument-bucket[data-bucket-key=claim] { background: var(--ui-primary-soft) !important; border-color: var(--ui-primary) !important; }
+    body .argument-bucket[data-bucket-key=evidence],body .argument-bucket[data-bucket-key=conclusion] { background: var(--ui-success-soft) !important; border-color: var(--ui-success) !important; }
+    body .argument-bucket[data-bucket-key=assumption] { background: var(--ui-ai-soft) !important; border-color: var(--ui-ai) !important; }
+    body .argument-bucket[data-bucket-key=counter] { background: var(--ui-warning-soft) !important; border-color: var(--ui-warning) !important; }
+    body .argument-piece { background: var(--ui-surface) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-control) !important; padding: 12px !important; color: var(--ui-text) !important; cursor: grab !important; }
+    body .radar-chart { width: 100% !important; max-width: 460px !important; min-height: 360px !important; margin: auto !important; }
+    body .radar-chart svg { width: 100% !important; height: auto !important; }
+    body .progress-track { background: var(--ui-border) !important; height: 8px !important; border-radius: var(--ui-radius-pill) !important; }
+    body .progress-track > span { background: var(--ui-primary) !important; border-radius: inherit !important; }
+    body .assignment-consent { background: var(--ui-overlay) !important; backdrop-filter: blur(4px) !important; z-index: 120 !important; padding: 24px !important; }
+    body .assignment-consent-card { background: var(--ui-surface) !important; color: var(--ui-text) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-modal) !important; max-width: 560px !important; width: 100% !important; padding: 32px !important; box-shadow: var(--ui-shadow-raised) !important; }
+    body .assignment-consent-card > div { display: flex !important; flex-direction: row-reverse !important; gap: 12px !important; }
+    body .student-table { overflow-x: auto !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; }
+    body :is(.student-table-head,.student-table > article) { padding: 16px !important; gap: 16px !important; min-width: 580px !important; border-bottom: 1px solid var(--ui-border) !important; }
+    body .student-table-head { position: sticky !important; top: 0 !important; background: var(--ui-bg) !important; font-weight: 600 !important; }
+    body :is(.student-table > article,.assignment-submission-list > article):hover { background: var(--ui-primary-soft) !important; }
+    body .teacher-topic-editor > summary { padding: 16px !important; min-height: 60px !important; gap: 16px !important; cursor: pointer !important; border-bottom: 1px solid var(--ui-border) !important; }
+    body .teacher-topic-editor[open] { background: var(--ui-surface) !important; border: 1px solid var(--ui-primary) !important; border-radius: var(--ui-radius-card) !important; padding: 8px !important; }
+    body .assignment-review-body { padding: 24px !important; }
+    body .assignment-review-body form { border-top: 1px solid var(--ui-border) !important; margin-top: 24px !important; padding-top: 24px !important; }
+    body .ui-review-grid { display: grid !important; grid-template-columns: minmax(0,1.5fr) minmax(260px,1fr) !important; gap: 32px !important; }
+    body .ui-review-grid form { margin-top: 0 !important; padding-top: 0 !important; border-top: 0 !important; }
+    body .ui-review-answer { min-width: 0 !important; }
+    body .ui-preview { padding: 24px !important; margin: 24px 0 !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; background: var(--ui-primary-soft) !important; }
+    body .ui-preview summary { cursor: pointer !important; color: var(--ui-primary) !important; min-height: 44px !important; font-weight: 600 !important; }
+    body .ui-preview p { white-space: pre-wrap !important; max-width: 68ch !important; }
+    body :is(.trust-layout,.human-first-grid,.error-layout) { display: grid !important; grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important; gap: 24px !important; }
+    body :is(.ai-answer-box,.evidence-box,.error-ai-response) { background: var(--ui-ai-soft) !important; padding: 24px !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; font-size: 1rem !important; color: var(--ui-text) !important; }
+    body .detective-form .field-label::before { display: none !important; }
+    body.game-page :is(.solo-match-dialog,.solo-player-card,.solo-match-card,.solo-leaderboard-card,.solo-vs-page,.room-battle-page) { background: var(--ui-surface) !important; color: var(--ui-text) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; box-shadow: var(--ui-shadow) !important; }
+    body.game-page :is(#matchmakingHint,#matchmakingTitle,.solo-rank-name,.solo-match-dialog p) { color: var(--ui-text) !important; }
+    body.game-page #matchCountdown { color: var(--ui-text) !important; font-size: 2rem !important; }
+    body.game-page :is(.speaker-head span,.topic-sides span,.argument-skill-row span,.voice-status,.mode-button,.rank-token,.rank-badge span,.vs-player span,.main-nav a) { color: var(--ui-secondary) !important; }
+    body.game-page :is(.ui-back,.ui-menu-toggle,.button.secondary,.button.ui-secondary-action) { color: var(--ui-link) !important; }
+    body.game-page :is(.solo-match-dialog,.solo-vs-page) :is(strong,span) { color: var(--ui-text) !important; }
+    body .admin-form { gap: 16px !important; }
+    body .admin-form input,body .admin-form select { width: 100% !important; }
+    body .ui-metrics { display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: 16px !important; margin-bottom: 32px !important; }
+    body .ui-metric { border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; background: var(--ui-surface) !important; padding: 24px !important; }
+    body .ui-metric strong { display: block !important; font-size: 2rem !important; color: var(--ui-primary) !important; }
+    body .ui-metric span { font-size: .875rem !important; color: var(--ui-secondary) !important; }
+    body .gemini-output { min-height: 100px !important; background: var(--ui-dark-bg) !important; color: var(--ui-dark-text) !important; border-radius: var(--ui-radius-card) !important; padding: 24px !important; white-space: pre-wrap !important; overflow-wrap: anywhere !important; }
+    body .gemini-output:empty::before { content: 'Chưa có phản hồi. Gửi câu hỏi thử để kiểm tra kết nối AI.' !important; }
+    body .opponent-transcript:empty::before { content: 'Đối thủ đang soạn…' !important; display: block !important; padding: 32px !important; color: var(--ui-secondary) !important; border: 1px dashed var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; }
+    body #debateTimer { font-size: 2rem !important; color: var(--ui-text) !important; font-variant-numeric: tabular-nums !important; }
+    body .radar-chart svg text { fill: var(--ui-secondary) !important; font-family: var(--ui-font) !important; }
+    body .radar-chart svg polygon:last-of-type { fill: var(--ui-ring) !important; stroke: var(--ui-primary) !important; }
+    body .radar-chart svg circle { fill: var(--ui-primary) !important; }
+    body #argumentScore { font-size: 2rem !important; color: var(--ui-success-text) !important; padding: 12px 20px !important; border-radius: var(--ui-radius-pill) !important; background: var(--ui-success-soft) !important; }
+    body .argument-source { padding: 24px !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; margin-bottom: 24px !important; }
+    body.game-page :is(.debate-arena,.debate-speaker,.debate-topic,.matching-panel,.room-matching-card,.vs-stage) { background: var(--ui-surface) !important; color: var(--ui-text) !important; border-color: var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; }
+    body input[type=range] { accent-color: var(--ui-primary) !important; width: 100% !important; min-height: 44px !important; }
+    body .ui-range-value { font-size: 1.75rem !important; font-weight: 700 !important; color: var(--ui-primary) !important; display: block !important; }
+    body .ui-character-count { display: block !important; text-align: right !important; color: var(--ui-muted) !important; font-size: .8125rem !important; margin: 4px 0 12px !important; }
+    body .ui-toast { position: fixed !important; top: 92px !important; right: 24px !important; max-width: min(420px,calc(100vw - 32px)) !important; z-index: 140 !important; background: var(--ui-surface) !important; border: 1px solid var(--ui-border) !important; border-left: 4px solid var(--ui-success) !important; border-radius: var(--ui-radius-control) !important; padding: 16px 24px !important; box-shadow: var(--ui-shadow-raised) !important; }
+    body .ui-loading::after { content: '' !important; display: inline-block !important; width: 14px !important; height: 14px !important; border: 2px solid currentColor !important; border-right-color: transparent !important; border-radius: var(--ui-radius-pill) !important; animation: ui-spin 800ms linear infinite !important; margin-left: 8px !important; }
+    body [hidden] { display: none !important; }
+    body.game-page :is(.app-panel,.arena-card,.battle-panel,.debate-panel,.matching-card,.vs-card,.room-card) { background: var(--ui-surface) !important; color: var(--ui-text) !important; border: 1px solid var(--ui-border) !important; border-radius: var(--ui-radius-card) !important; box-shadow: var(--ui-shadow) !important; }
+    body.game-page :is(.matching-title,.matching-status,.battle-timer,.countdown,.debate-timer) { color: var(--ui-text) !important; font-variant-numeric: tabular-nums !important; }
+    body.game-page :is(.battle-timer,.countdown,.debate-timer) { font-size: 2rem !important; }
+    @media (max-width: 1100px) {
+        body .assignment-task-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    }
+    @media (max-width: 1023px) {
+        body .app-shell { display: block !important; padding: 24px !important; }
+        body .app-shell > .app-sidebar { display: none !important; position: fixed !important; top: 84px !important; left: 16px !important; bottom: 16px !important; z-index: 80 !important; max-height: calc(100dvh - 100px) !important; box-shadow: var(--ui-shadow-raised) !important; }
+        body .app-shell > .app-sidebar.ui-drawer-open { display: flex !important; }
+        body :is(.assignment-workspace,.prompt-workspace,.detective-layout,.argument-workspace,.socratic-workspace,.gemini-grid,.profile-grid,.teacher-grid) { grid-template-columns: 1fr !important; }
+        body :is(.ui-review-grid,.trust-layout,.human-first-grid,.error-layout) { grid-template-columns: 1fr !important; }
+    }
+    @media (min-width: 1024px) {
+        body .ui-menu-toggle { display: none !important; }
+        body .ui-menu-toggle.ui-module-menu { display: block !important; }
+    }
+    @media (max-width: 767px) {
+        body .site-header { height: 68px !important; padding: 12px 16px !important; gap: 8px !important; }
+        body .brand { font-size: .875rem !important; gap: 8px !important; }
+        body .main-nav { display: none !important; }
+        body .header-actions { margin-left: auto !important; }
+        body .account-menu { min-width: 0 !important; max-width: 140px !important; font-size: .8125rem !important; }
+        body .account-menu summary { overflow-wrap: anywhere !important; }
+        body .app-shell,body .app-shell.module-shell { padding: 24px 16px !important; }
+        body h1,body .workshop-hero h1 { font-size: 1.5rem !important; }
+        body :is(.app-panel,.workshop-card,.compare-card,.detective-task,.detective-form,.piece-tray,.argument-canvas,.thinking-board,.socratic-chat-panel) { padding: 20px !important; }
+        body :is(.assignment-task-grid,.compare-grid,.assignment-writing-grid,.ui-metrics) { grid-template-columns: 1fr !important; }
+        body .compare-package-list { grid-template-columns: 1fr !important; }
+        body :is(.hero-stamp,.hero-symbol) { display: none !important; }
+        body .hero-skills { gap: 8px !important; }
+        body .socratic-stagebar { display: grid !important; grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+        body .auth-card { padding: 24px !important; }
+        body .assignment-consent-card { padding: 24px !important; }
+        body .radar-chart { min-height: 0 !important; }
+        body .assignment-chatbot { width: 100% !important; max-width: 100% !important; }
+        body .assignment-chat-panel { max-width: calc(100vw - 32px) !important; }
+        body .assignment-timer { width: 100% !important; }
+        body .assignment-task-box { min-height: 180px !important; }
+        body .ui-toolbar label { width: 100% !important; justify-content: space-between !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        body *,body *::before,body *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+}
+@keyframes ui-spin { to { transform: rotate(360deg); } }

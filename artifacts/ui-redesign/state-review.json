@@ -1,0 +1,146 @@
+{
+  "checks": [
+    {
+      "id": "02-dang-nhap-hoc-sinh",
+      "route": "/login?role=student",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "11-nhiem-vu-mo-chat-ai",
+      "route": "/app/modules/nhiem-vu/tasks/datatm-task-01",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "16-prompt-phan-bien",
+      "route": "/app/modules/prompt-phan-bien",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "34-gv-mo-form-sua-nhiem-vu",
+      "route": "/teacher/assignments",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 12,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "33-gv-mo-bai-nop",
+      "route": "/teacher/submissions",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1600,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "35-quan-tri",
+      "route": "/admin",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "43-dau-truong-lap-luan-battle",
+      "route": "/app/modules/dau-truong-lap-luan/battle",
+      "width": 360,
+      "status": 200,
+      "document": 360,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "02-dang-nhap-hoc-sinh",
+      "route": "/login?role=student",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "11-nhiem-vu-mo-chat-ai",
+      "route": "/app/modules/nhiem-vu/tasks/datatm-task-01",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "16-prompt-phan-bien",
+      "route": "/app/modules/prompt-phan-bien",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "34-gv-mo-form-sua-nhiem-vu",
+      "route": "/teacher/assignments",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 12,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "33-gv-mo-bai-nop",
+      "route": "/teacher/submissions",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1600,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "35-quan-tri",
+      "route": "/admin",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 2,
+      "color": "rgb(37, 99, 235)"
+    },
+    {
+      "id": "43-dau-truong-lap-luan-battle",
+      "route": "/app/modules/dau-truong-lap-luan/battle",
+      "width": 1440,
+      "status": 200,
+      "document": 1440,
+      "overflow": [],
+      "primary": 1,
+      "color": "rgb(37, 99, 235)"
+    }
+  ],
+  "browser_errors": [],
+  "horizontal_overflow": []
+}

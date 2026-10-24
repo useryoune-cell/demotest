@@ -9,15 +9,18 @@
         <h1>Tạo tài khoản học tập</h1>
         {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
 
+        <fieldset class="ui-fieldset"><legend>Thông tin cá nhân</legend>
         <label class="field-label" for="name">Tên hiển thị</label>
         <input id="name" name="name" autocomplete="name" placeholder="Tên của em">
 
+        </fieldset><fieldset class="ui-fieldset"><legend>Lớp và giáo viên</legend>
         <label class="field-label" for="school">Trường</label>
         <input id="school" name="school" required maxlength="150" value="{{ request.form.get('school', '') }}">
         <label class="field-label" for="class_name">Lớp</label>
         <input id="class_name" name="class_name" required maxlength="60" value="{{ request.form.get('class_name', '') }}">
         <label class="field-label" for="teacher_username">Giáo viên phụ trách</label>
         <select id="teacher_username" name="teacher_username" required><option value="">Chọn giáo viên</option>{% for t in teachers if t.active %}<option value="{{ t.username }}">{{ t.name }} ({{ t.username }})</option>{% endfor %}</select>
+        </fieldset><fieldset class="ui-fieldset"><legend>Tài khoản đăng nhập</legend>
         <label class="field-label" for="username">Tên đăng nhập</label>
         <input id="username" name="username" autocomplete="username" required>
 
@@ -27,6 +30,7 @@
             <button type="button" class="password-toggle" data-password-toggle="password" aria-label="Hiện mật khẩu"><i data-lucide="eye"></i></button>
         </div>
 
+        <p class="ui-help">Ghi nhớ tên đăng nhập và giữ mật khẩu riêng tư.</p></fieldset>
         <button class="button primary" type="submit"><i data-lucide="user-plus"></i><span>Tạo tài khoản</span></button>
         <div class="auth-links">
             <a class="text-link" href="{{ url_for('main.login', role='student') }}">Đã có tài khoản</a>

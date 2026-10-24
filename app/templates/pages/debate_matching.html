@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Ghép trận Solo Rank · AI Critical Thinking Lab{% endblock %}
+{% block title %}Ghép trận Tranh biện cá nhân · AI Critical Thinking Lab{% endblock %}
 
 {% block body_class %}game-page{% endblock %}
 
@@ -10,7 +10,7 @@
         <a class="sidebar-item" href="{{ url_for('main.module_detail', slug=module.slug) }}"><i data-lucide="arrow-left"></i><span>Thoát</span></a>
         {% for nav_item in modules %}
         <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
-            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.title }}</span>
         </a>
         {% endfor %}
     </aside>
@@ -22,9 +22,9 @@
                 <div class="solo-countdown-ring">
                     <span id="matchCountdown">23</span>
                 </div>
-                <p class="eyebrow dark">Solo Rank</p>
+                <p class="eyebrow dark">Tranh biện cá nhân</p>
                 <h1 id="matchmakingTitle">Đang ghép đối thủ</h1>
-                <p id="matchmakingHint">Hệ thống đang tìm AI Challenger cùng cấp lập luận.</p>
+                <p id="matchmakingHint">Hệ thống đang tìm Đối thủ AI cùng cấp lập luận.</p>
                 <div class="solo-match-actions">
                     <a class="button primary" id="readyDebateMatch" data-vs-url="{{ url_for('main.debate_vs', topic=topic_index) }}" href="{{ url_for('main.debate_vs', topic=topic_index) }}">Sẵn sàng</a>
                     <a class="button secondary" href="{{ url_for('main.module_detail', slug=module.slug) }}">Hủy</a>

@@ -15,7 +15,7 @@
         <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
         {% for nav_item in modules %}
         <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
-            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
+            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.title }}</span>
         </a>
         {% endfor %}
     </aside>
@@ -52,7 +52,7 @@
                 </div>
             </aside>
 
-            <section class="argument-canvas" aria-label="Canvas bản đồ lập luận">
+            <section class="argument-canvas" aria-label="Vùng phân loại bản đồ lập luận">
                 {% for bucket in argument_map.buckets %}
                 <div class="argument-bucket" data-bucket-key="{{ bucket.key }}">
                     <h3><i class="ti {{ bucket_icons.get(bucket.key, 'ti-circle') }}"></i><span>{{ bucket.label }}</span></h3>

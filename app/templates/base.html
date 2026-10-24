@@ -6,7 +6,11 @@
     <title>{% block title %}AI Critical Thinking Lab{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% if request.endpoint in ['main.landing', 'main.app_home'] %}
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    {% else %}
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {% endif %}
     <script>
         (function () {
             try {
@@ -22,6 +26,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', v='legacy-58eb4a1') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/learning-feedback.css', v='assignment-fix-2') }}">
     {% block head %}{% endblock %}
+    {% if request.endpoint not in ['main.landing', 'main.app_home'] %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-tokens.css', v='notebook-1') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css', v='notebook-1') }}">
+    {% endif %}
 </head>
 <body class="{% block body_class %}{% endblock %}{% if session.get('role') %} is-authenticated{% endif %}{% if request.path.startswith('/app/modules/') %} module-focus-page{% endif %}">
     {% if request.path.startswith('/app/modules/') %}
@@ -72,5 +80,8 @@
     <script src="{{ url_for('static', filename='js/learning-feedback.js', v='learning-1') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js', v='workshop-1') }}"></script>
     {% block scripts %}{% endblock %}
+    {% if request.endpoint not in ['main.landing', 'main.app_home'] %}
+    <script src="{{ url_for('static', filename='js/design-system.js', v='notebook-1') }}"></script>
+    {% endif %}
 </body>
 </html>
