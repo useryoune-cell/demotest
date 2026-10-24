@@ -24,6 +24,11 @@ def run():
                 errors = []
                 page.on('pageerror', lambda error: errors.append(str(error)))
                 page.goto(base + '/app/modules/nhiem-vu/tasks/task-source-checking-short-essay')
+                page.route('**/api/modules/assignments/start', lambda route: route.abort('failed'))
+                page.locator('#acceptAssignmentConsent').click()
+                page.wait_for_function("!document.querySelector('#acceptAssignmentConsent').disabled")
+                assert page.locator('#assignmentConsent').is_visible()
+                page.unroute('**/api/modules/assignments/start')
                 page.locator('#acceptAssignmentConsent').click()
                 page.wait_for_function("document.querySelector('.assignment-page').classList.contains('is-consent-accepted')")
                 assert not page.locator('.module-focus-back').is_visible()
@@ -68,9 +73,22 @@ def run():
                 assert page.locator('#assignmentChatInput').input_value() == ''
                 page.locator('#assignmentChatClose').click()
                 assert page.locator('#assignmentChatToggle').is_visible()
+                page.goto(base + '/app/modules/prompt-phan-bien')
+                prompt = page.locator('#criticPrompt')
+                prompt.fill('Verify this historical claim with evidence and opposing views.')
+                page.route('**/api/modules/prompt/score', lambda route: route.fulfill(
+                    status=500, content_type='text/html', body='<h1>Error</h1>'))
+                page.locator('#promptCriticForm button[type=submit]').click()
+                page.wait_for_function("!document.querySelector('#promptCriticForm button[type=submit]').disabled")
+                assert page.locator('#promptScoreMeta').inner_text()
+                assert prompt.input_value().startswith('Verify')
+                page.unroute('**/api/modules/prompt/score')
+                page.locator('#promptCriticForm button[type=submit]').click()
+                page.wait_for_function("!document.querySelector('#promptRubric').hidden")
+                assert page.locator('#promptSuggestion').inner_text()
                 assert not errors, errors
                 browser.close()
-                print('PASS: mobile layout, word limits, failed submit and HTML 500 chat handling')
+                print('PASS: assignment start retry, mobile layout, submit/chat errors and prompt error recovery')
         finally:
             server.shutdown()
             thread.join()

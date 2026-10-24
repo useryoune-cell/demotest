@@ -166,7 +166,7 @@ CRITIC_ASSISTANT_MODULE = {
     "area": "Phòng luyện phản biện",
     "area_key": "training",
     "icon": "sparkles",
-    "image": "images/modules/phanbien.png",
+    "image": "images/modules/tro-li-phan-bien.png",
     "description": "Bộ trợ lí luyện đánh giá câu trả lời AI và viết prompt phản biện.",
     "status": "4 công cụ",
     "progress": 58,
@@ -622,7 +622,7 @@ def module_detail(slug):
             module=module,
             modules=STUDENT_NAV_MODULES,
             profile=student_profile(username),
-            activities=student_activities(username),
+            activities=student_activities(username, limit=200),
             student=get_student(username),
             avatar_error=request.args.get("avatar_error", ""),
             avatar_success=request.args.get("avatar_success", ""),
@@ -1244,7 +1244,7 @@ def assignment_chat():
         messages = attempt.get('chat', [])[-12:]
         if not messages or messages[-1].get('content') != question or messages[-1].get('role') == 'assistant':
             messages.append({'role': 'student', 'content': question})
-        result = client.generate_text(build_assignment_chat_prompt(task, messages), deadline_seconds=18)
+        result = client.generate_text(build_assignment_chat_prompt(task, messages), deadline_seconds=35)
         answer = result.text
         meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
     except GeminiClientError:
@@ -1291,7 +1291,7 @@ def assignment_submit():
     ai_meta = {"model": "fallback", "key_label": "fallback"}
     try:
         client = GeminiClient.from_app_config(current_app.config)
-        result = client.generate_text(build_assignment_review_prompt(task, answer, chat_log, duration_label), deadline_seconds=18)
+        result = client.generate_text(build_assignment_review_prompt(task, answer, chat_log, duration_label), deadline_seconds=35)
         ai_review = result.text
         ai_meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
     except GeminiClientError:
@@ -1557,7 +1557,10 @@ def prompt_score():
     prompt = str(payload.get("prompt") or "").strip()
     if len(prompt) < 12:
         return jsonify({"error": "Prompt is too short."}), 400
-    result = score_prompt(prompt)
+    scenario_id = str(payload.get('scenario_id') or '')
+    if scenario_id and not any(s['id'] == scenario_id for s in PROMPT_SCENARIOS):
+        return jsonify(error='Tình huống không hợp lệ.'), 400
+    result = score_prompt(prompt, scenario_id=scenario_id)
     result.setdefault('feedback', result.get('suggestion', ''))
     record_student_activity(session.get("student_username"), "prompt-phan-bien", "score", score=None if result.get('provisional') else result.get("score"))
     return jsonify(result)
@@ -1570,7 +1573,7 @@ def profile_data():
     return jsonify(
         {
             "profile": student_profile(username),
-            "activities": student_activities(username),
+            "activities": student_activities(username, limit=200),
         }
     )
 

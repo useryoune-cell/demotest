@@ -8,6 +8,7 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
     DATA_DIR = os.getenv("DATA_DIR", os.path.join(os.getcwd(), "instance"))
+    SEED_DATA_BUNDLE = os.getenv("SEED_DATA_BUNDLE", os.path.join(os.path.dirname(__file__), 'data', 'deployment-seed.zip'))
     SEND_FILE_MAX_AGE_DEFAULT = 0
     TEMPLATES_AUTO_RELOAD = True
     GEMINI_API_KEYS = [

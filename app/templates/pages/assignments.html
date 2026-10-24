@@ -1,54 +1,27 @@
 {% extends "base.html" %}
-
 {% block title %}Nhiệm vụ học tập · AI Critical Thinking Lab{% endblock %}
-
+{% block body_class %}workshop-page {% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/workshop.css', v='workshop-1') }}">{% endblock %}
 {% block content %}
 <div class="app-shell module-shell">
-    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
-        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
-        {% for nav_item in modules %}
-        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
-            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
-        </a>
-        {% endfor %}
-    </aside>
-
-    <section class="app-content assignment-list-page">
-        <div class="module-detail-hero">
-            <div>
-                <h1>{{ module.title }}</h1>
-            </div>
-        </div>
-
+    {% include 'pages/workshop_sidebar.html' %}
+    <section class="app-content workshop-content assignment-list-page">
+        <header class="workshop-hero assignment-hero"><div class="hero-symbol" aria-hidden="true"><i data-lucide="notebook-pen"></i></div><div><span class="workshop-kicker">ĐỌC KỸ · KIỂM CHỨNG · LẬP LUẬN</span><h1>Nhiệm vụ học tập</h1><p>Mỗi nhiệm vụ là một cơ hội để em nhìn sâu hơn, nghĩ nhiều chiều hơn.</p><div class="hero-skills"><span><i data-lucide="check"></i> Phân tích vấn đề</span><span><i data-lucide="check"></i> Dùng bằng chứng</span><span><i data-lucide="check"></i> Kết luận có căn cứ</span></div></div><span class="hero-stamp" aria-hidden="true"><i data-lucide="brain-circuit"></i><span>AI gợi mở<br>Em tự suy nghĩ</span></span></header>
+        <div class="assignment-toolbar"><div class="task-filters" role="group" aria-label="Lọc nhiệm vụ"><button type="button" class="active" data-task-filter="all" aria-pressed="true">Tất cả <span>{{ tasks|length }}</span></button><button type="button" data-task-filter="history" aria-pressed="false">Lịch sử 11</button><button type="button" data-task-filter="other" aria-pressed="false">Chủ đề khác</button></div><label class="task-search"><i data-lucide="search"></i><input type="search" id="assignmentSearch" placeholder="Tìm nhiệm vụ…" aria-label="Tìm nhiệm vụ"></label></div>
+        <div class="assignment-list-heading"><h2>Chọn một vấn đề để khám phá</h2><span id="assignmentListCount" role="status">{{ tasks|length }} nhiệm vụ</span></div>
         <section class="assignment-task-grid" aria-label="Danh sách nhiệm vụ">
-            {% if tasks %}
-                {% for task in tasks %}
-                {% set task_text = (task.title ~ " " ~ task.prompt)|lower %}
-                {% set task_icon = "ti-pencil" %}
-                {% if "kiểm chứng" in task_text or "nguồn" in task_text %}
-                    {% set task_icon = "ti-file-search" %}
-                {% elif "lười" in task_text or "suy nghĩ" in task_text or "tư duy" in task_text %}
-                    {% set task_icon = "ti-brain" %}
-                {% elif "so sánh" in task_text %}
-                    {% set task_icon = "ti-arrows-left-right" %}
-                {% elif "prompt" in task_text %}
-                    {% set task_icon = "ti-terminal-2" %}
-                {% endif %}
-                <a class="assignment-task-box" href="{{ url_for('main.assignment_work', task_id=task.id) }}">
-                    <span class="assignment-task-icon"><i class="ti {{ task_icon }}"></i></span>
-                    <strong>{{ task.title }}</strong>
-                    <em>{{ task.teacher_name }}</em>
-                    <p>{{ task.prompt|truncate(140) }}</p>
-                    <span class="assignment-task-action">Vào làm bài <i class="ti ti-arrow-right"></i></span>
-                </a>
-                {% endfor %}
-            {% else %}
-                <article class="app-panel assignment-empty">
-                    <i data-lucide="clipboard-x"></i>
-                    <h2>Chưa có nhiệm vụ đang mở</h2>
-                </article>
-            {% endif %}
+            {% for task in tasks %}
+            {% set history = task.get('source_document') or 'SGK' in task.rubric %}
+            <a class="assignment-task-box workshop-task-card" data-task-topic="{{ 'history' if history else 'other' }}" href="{{ url_for('main.assignment_work', task_id=task.id) }}">
+                <div class="task-card-top"><span class="section-icon {{ ['amber', 'coral', 'purple', 'blue', 'green'][loop.index0 % 5] }}"><i data-lucide="{{ ['scroll-text', 'messages-square', 'scale', 'globe', 'landmark'][loop.index0 % 5] }}"></i></span><span class="task-subject">{{ 'Lịch sử 11' if history else 'Tư duy phản biện' }}</span><span class="task-number">{{ '%02d'|format(loop.index) }}</span></div>
+                <h3>{{ task.title }}</h3><p>{{ task.prompt.split('\n')[0]|truncate(130) }}</p>
+                <div class="task-card-bottom"><span><i data-lucide="pencil-line"></i> Viết lập luận</span><span class="task-open" aria-label="Mở nhiệm vụ"><i data-lucide="arrow-up-right"></i></span></div>
+            </a>
+            {% else %}<article class="workshop-card assignment-empty"><h2>Chưa có nhiệm vụ đang mở</h2><p>Quay lại sau khi giáo viên giao bài nhé.</p></article>{% endfor %}
         </section>
+        <div class="workshop-card task-search-empty" id="assignmentSearchEmpty" hidden><i data-lucide="search-x"></i><h3>Chưa tìm thấy nhiệm vụ</h3><p>Thử từ khóa khác hoặc chọn “Tất cả”.</p><button class="button secondary" id="assignmentClearSearch" type="button">Xóa bộ lọc</button></div>
+        <p class="workshop-footnote"><i data-lucide="sparkles"></i> Hãy chất vấn, kiểm chứng và phản biện khi dùng AI, thay vì chỉ nhận câu trả lời.</p>
     </section>
 </div>
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/workshop.js', v='workshop-1') }}"></script>{% endblock %}

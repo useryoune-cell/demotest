@@ -1,4 +1,5 @@
 {% set review = submission.get('ai_review') %}
+{% if submission.get('synthetic') %}<p>Dữ liệu mô phỏng · Lượt {{ submission.get('attempt_number', 1) }} · Điểm và nhận xét chưa được giáo viên xác nhận.</p>{% endif %}
 {% if review is mapping %}
 <section class="learning-feedback">
 <h3>Phản hồi học tập đã gửi học sinh</h3>

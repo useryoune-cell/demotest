@@ -253,10 +253,13 @@ def student_profile(username=None):
         return PROFILE
 
     scores = _student_scores(username)
+    scored_history = sorted((a for a in scores['activities'] if isinstance(a.get('score'), (int, float))),
+                            key=lambda a: a.get('created_at', ''))[-7:]
     profile = {
         **EMPTY_PROFILE,
         "skills": [dict(skill) for skill in EMPTY_PROFILE["skills"]],
-        "timeline": [0, 0, 0, 0, 0, 0, scores["progress"]],
+        "timeline": [a['score'] for a in scored_history],
+        "has_synthetic_data": any(a.get('synthetic') for a in scores['activities']),
         "common_errors": list(EMPTY_PROFILE["common_errors"]),
         "recommendations": list(EMPTY_PROFILE["recommendations"]),
     }

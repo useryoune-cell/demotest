@@ -31,7 +31,7 @@ Set these environment variables in Render:
 
 ```env
 SECRET_KEY=<generate a strong secret>
-DATA_DIR=/var/data
+DATA_DIR=/tmp/critical-thinking-data
 ADMIN_USERNAME=<admin username>
 ADMIN_PASSWORD=<admin password>
 GEMINI_API_KEYS=key1,key2,key3
@@ -40,7 +40,17 @@ GEMINI_TIMEOUT_SECONDS=45
 GEMINI_KEY_COOLDOWN_SECONDS=60
 ```
 
-The Blueprint mounts a 1 GB disk at `/var/data` so student accounts, teacher accounts, reports, reflections, activity logs, and uploaded avatars survive redeploys.
+The free Blueprint restores the bundled classroom data on each fresh instance.
+Free Render services do not support persistent disks: new activity after deployment
+is temporary and can be lost when an instance restarts. For permanent storage,
+attach a persistent disk on a supported paid plan and set `DATA_DIR` to its mount
+path, or move runtime storage to a database. The seed importer also works on an
+existing disk and preserves existing credentials, grades and student work.
+
+The deployment bundle includes accounts and the imported learning data, with
+password hashes instead of plaintext credentials. It does not contain `.env`,
+API keys, private source spreadsheets, PDF books, logs or local backups.
+See [docs/render-data.md](docs/render-data.md) for details.
 
 ## Gemini Config
 

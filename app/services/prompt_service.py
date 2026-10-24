@@ -17,36 +17,32 @@ PROMPT_SCENARIOS = [
 RUBRIC = [
     {
         "key": "multi_perspective",
-        "label": "Đa góc nhìn",
+        "label": "Có xem xét góc nhìn khác",
         "keywords": ["góc nhìn", "quan điểm trái chiều", "mặt khác", "phản biện", "hạn chế"],
     },
     {
         "key": "evidence",
-        "label": "Bằng chứng",
+        "label": "Có yêu cầu bằng chứng",
         "keywords": ["bằng chứng", "dẫn chứng", "nguồn", "trích dẫn", "dữ liệu"],
     },
     {
         "key": "verification",
-        "label": "Kiểm chứng",
+        "label": "Có yêu cầu kiểm chứng",
         "keywords": ["kiểm chứng", "đối chiếu", "nguồn tin cậy", "xác minh", "sai"],
     },
     {
-        "key": "assumptions",
-        "label": "Giả định",
-        "keywords": ["giả định", "điều chưa biết", "chưa chắc", "mức độ chắc chắn"],
-    },
-    {
         "key": "self_review",
-        "label": "Tự đánh giá",
+        "label": "Có điều chỉnh kết luận",
         "keywords": ["tự phản biện", "điểm yếu", "thiếu sót", "cải thiện", "rủi ro"],
     },
 ]
 
 
-def score_prompt(prompt):
+def score_prompt(prompt, scenario_id=None):
     from app.services.learning_feedback import criterion, review_text, level
-    review = review_text('Đánh giá prompt yêu cầu AI suy nghĩ phản biện; kiểm tra yêu cầu cụ thể thay vì chỉ đếm từ khóa.',
-                         {'prompt': str(prompt or '')}, [criterion(c['key'], c['label'], 20, _hint_for(c['key'], 0)) for c in RUBRIC])
+    scenario = next((s for s in PROMPT_SCENARIOS if s['id'] == scenario_id), None)
+    review = review_text({'instruction': 'Đánh giá yêu cầu AI kiểm chứng, đưa bằng chứng, xét góc nhìn khác và điều chỉnh kết luận có điều kiện; kiểm tra yêu cầu cụ thể thay vì chỉ đếm từ khóa.', 'scenario': scenario},
+                         {'prompt': str(prompt or '')}, [criterion(c['key'], c['label'], 25, _hint_for(c['key'], 0)) for c in RUBRIC], deadline_seconds=35)
     for row in review['rubric']:
         row['hint'] = row['feedback']
     score = sum(r['score'] for r in review['rubric'])
@@ -62,7 +58,7 @@ def _hint_for(key, score):
         "evidence": "Thêm yêu cầu nêu nguồn, bằng chứng hoặc dữ liệu.",
         "verification": "Thêm yêu cầu kiểm chứng và đối chiếu nguồn.",
         "assumptions": "Thêm yêu cầu chỉ ra giả định và mức độ chắc chắn.",
-        "self_review": "Thêm yêu cầu AI tự phản biện câu trả lời của chính nó.",
+        "self_review": "Yêu cầu AI điều chỉnh kết luận và nêu mức độ chắc chắn khi chưa đủ căn cứ.",
     }
     return hints.get(key, "Cần cụ thể hơn.")
 

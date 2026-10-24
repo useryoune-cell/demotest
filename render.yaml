@@ -6,15 +6,13 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn run:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
     healthCheckPath: /
-    disk:
-      name: ai-critical-thinking-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.4
       - key: DATA_DIR
-        value: /var/data
+        value: /tmp/critical-thinking-data
+      - key: SEED_DATA_BUNDLE
+        value: app/data/deployment-seed.zip
       - key: SECRET_KEY
         generateValue: true
       - key: ADMIN_USERNAME

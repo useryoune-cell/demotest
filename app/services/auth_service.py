@@ -2,6 +2,7 @@ import hmac
 import os
 from datetime import datetime, timezone
 from uuid import uuid4
+from werkzeug.security import check_password_hash
 
 from app.services.storage import load_json, save_json
 
@@ -98,7 +99,7 @@ def verify_teacher(username, password):
     teacher = get_teacher(username)
     if not teacher or not teacher["active"]:
         return None
-    if not hmac.compare_digest(password, teacher["password"]):
+    if not _password_matches(teacher, password):
         return None
     return teacher
 
@@ -107,9 +108,15 @@ def verify_student(username, password):
     student = get_student(username)
     if not student or not student["active"]:
         return None
-    if not hmac.compare_digest(password, student["password"]):
+    if not _password_matches(student, password):
         return None
     return student
+
+
+def _password_matches(account, password):
+    if account.get('password_hash'):
+        return check_password_hash(account['password_hash'], password)
+    return hmac.compare_digest(password, account.get('password', ''))
 
 
 def get_teacher(username):

@@ -18,6 +18,7 @@
             <div>
                 <p class="eyebrow dark">{{ module.area }}</p>
                 <h1>{{ module.title }}</h1>
+                {% if profile.get('has_synthetic_data') %}<p>Dữ liệu mô phỏng để kiểm tra hệ thống; không phải kết quả thực nghiệm.</p>{% endif %}
             </div>
             <a class="button primary" href="#savedActivities"><i data-lucide="save"></i><span>Hoạt động đã lưu</span></a>
         </div>
@@ -100,9 +101,24 @@
                 {% if activities %}
                     {% for activity in activities %}
                     <article>
-                        <span>{{ activity.created_at[:10] }}</span>
+                        <span>{{ activity.created_at[:10] }}{% if activity.get('synthetic') %} · Mô phỏng{% endif %}</span>
                         <strong>{{ activity.module }} · {{ activity.action }}</strong>
                         <p>{% if activity.score is not none %}Điểm: {{ activity.score }}{% else %}Đã lưu bài làm.{% endif %}</p>
+                        {% if activity.get('synthetic') %}
+                        {% set payload = activity.get('payload', {}) %}
+                        <details>
+                            <summary>Xem bài làm và nhận xét mô phỏng</summary>
+                            <p>{{ payload.get('title', '') }}</p>
+                            {% for key, label in [('answer', 'Bài làm'), ('selected', 'Lựa chọn'), ('criteria', 'Lý do'), ('synthesis', 'Tổng hợp'), ('suspicious_text', 'Chi tiết đáng nghi'), ('error_type', 'Loại lỗi'), ('explanation', 'Giải thích'), ('evidence', 'Bằng chứng'), ('rewrite', 'Viết lại')] %}
+                            {% if payload.get('work', {}).get(key) %}<p><strong>{{ label }}:</strong> {{ payload.work[key] }}</p>{% endif %}
+                            {% endfor %}
+                            {% for placement in payload.get('work', {}).get('placements', []) %}<p>{{ placement.piece_text }} → {{ placement.bucket_label }}</p>{% endfor %}
+                            {% if payload.get('prompt') %}<p>{{ payload.prompt }}</p>{% endif %}
+                            {% if payload.get('assessment') %}<p>{{ payload.assessment.feedback }}</p>{% endif %}
+                            {% for message in payload.get('messages', []) %}<p><strong>{{ 'HS' if message.role == 'student' else 'AI mô phỏng' }}:</strong> {{ message.content }}</p>{% endfor %}
+                            {% if activity.action == 'reflection' %}<p>{{ payload.get('answers', {}).get('takeaway', '') }}</p>{% endif %}
+                        </details>
+                        {% endif %}
                     </article>
                     {% endfor %}
                 {% else %}

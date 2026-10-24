@@ -193,7 +193,7 @@ class GeminiClient:
                 url,
                 params=params,
                 json=payload,
-                timeout=(min(3, remaining / 2), min(self.timeout_seconds, remaining / 2))
+                timeout=(min(3, remaining / 2), min(self.timeout_seconds, remaining - min(3, remaining / 2)))
                 if remaining is not None else self.timeout_seconds,
             )
         except requests.RequestException as exc:

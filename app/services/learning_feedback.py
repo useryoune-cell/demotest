@@ -11,7 +11,7 @@ def level(score):
     return "Thành thạo" if score >= 90 else "Đạt" if score >= 70 else "Đang hình thành" if score >= 40 else "Cần xem lại"
 
 
-def review_text(context, answers, criteria):
+def review_text(context, answers, criteria, deadline_seconds=None):
     """Return a validated rubric or explicit pending feedback, never length scores."""
     fallback = [{"key": c["key"], "label": c["label"], "score": 0, "max": c["max"],
                  "status": "Chưa đủ bằng chứng", "feedback": c["hint"]} for c in criteria]
@@ -34,7 +34,8 @@ Trả JSON duy nhất: {"rubric":[{"key":"...","score":0,"status":"Đúng|Chưa 
 DATA:
 """ + json.dumps({"context": context, "answers": answers, "criteria": criteria}, ensure_ascii=False)
     try:
-        response = GeminiClient.from_app_config(current_app.config).generate_text(prompt)
+        client = GeminiClient.from_app_config(current_app.config)
+        response = client.generate_text(prompt, deadline_seconds=deadline_seconds) if deadline_seconds else client.generate_text(prompt)
         raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", response.text.strip())
         data = json.loads(raw)
         rows = data["rubric"]

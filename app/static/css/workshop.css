@@ -1,0 +1,235 @@
+/* Scoped to the two learning workshops; the rest of the site keeps its styles. */
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page).module-focus-page { background: #f6f8fc !important; color: #20314f !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) main::before, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) main::after { display: none !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .app-shell.module-shell { max-width: 1220px !important; width: calc(100% - 64px) !important; margin: 0 auto !important; padding: 80px 0 40px !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .app-shell.module-shell .app-content.workshop-content { width: 100%; max-width: none !important; padding: 0 !important; min-width: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content { font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px; line-height: 1.65; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h1, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h2, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h3 { color: #20314f !important; font-family: 'Be Vietnam Pro', sans-serif; letter-spacing: -.025em; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h1 { margin: 7px 0 8px; font-size: clamp(25px, 3vw, 36px) !important; line-height: 1.25; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h2 { margin: 0; font-size: 17px !important; line-height: 1.5; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h3 { font-size: 16px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content p { color: #596982 !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content strong { color: #20314f !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-card { background: #fff !important; border: 1px solid #e1e8f3 !important; border-radius: 18px !important; padding: 24px; box-shadow: 0 4px 20px #233c6410 !important; min-width: 0; }
+.workshop-hero { display: flex; align-items: center; gap: 24px; position: relative; overflow: hidden; padding: 30px 34px; border-radius: 22px; border: 1px solid #d9e7f9; background: linear-gradient(115deg, #e1f0ff, #f0f7ff 62%, #dff3ee); }
+.workshop-hero.prompt-hero { background: linear-gradient(110deg, #fff0e9, #fff6f1 50%, #eef2ff); border-color: #f1e4e0; }
+.workshop-kicker { font-size: 10px; letter-spacing: .12em; font-weight: 700; color: #56728f; }
+.workshop-hero p { margin: 0; max-width: 650px; font-size: 14px; }
+.hero-symbol { flex: 0 0 auto; width: 86px; height: 100px; border-radius: 24px 24px 34px 24px; background: #fff9; display: grid; place-items: center; color: #3973bf; transform: rotate(-5deg); box-shadow: 5px 6px 0 #739bd21a; }
+.hero-symbol svg { width: 44px; height: 44px; stroke-width: 1.5; transform: rotate(5deg); }
+.prompt-hero .hero-symbol { color: #d8783b; }
+.hero-stamp { margin-left: auto; flex: 0 0 140px; text-align: center; font-size: 11px; color: #6981a2; }
+.hero-stamp > svg { display: block; margin: 0 auto 10px; width: 46px; height: 46px; stroke-width: 1.3; }
+.hero-skills { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 18px; font-size: 11px; color: #3c6285; }
+.hero-skills span { display: flex; align-items: center; gap: 5px; }
+.hero-skills svg { width: 16px; height: 16px; color: #218d75; }
+.workshop-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 20px 2px; color: #71809a; font-size: 12px; }
+.workshop-breadcrumb a:hover { color: #336aca; }
+.workshop-breadcrumb svg { width: 16px; height: 16px; vertical-align: middle; }
+.workshop-heading { display: flex; align-items: center; gap: 11px; margin-bottom: 21px; }
+.workshop-heading p { font-size: 11px; margin: 3px 0 0; }
+.section-icon { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; flex: 0 0 auto; }
+.section-icon svg { width: 20px; height: 20px; }
+.blue { color: #3774d0; background: #e8f1ff; }
+.coral { color: #d66354; background: #fff0eb; }
+.green { color: #23896c; background: #e4f6ee; }
+.amber { color: #b67a15; background: #fff3d4; }
+.purple { color: #8165bd; background: #f0eafb; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content .button { min-height: 43px; border-radius: 10px !important; padding: 11px 17px; font-size: 12px; font-family: inherit; font-weight: 600; display: inline-flex; gap: 8px; align-items: center; justify-content: center; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content .button.primary { background: #df6755 !important; border: 1px solid #df6755 !important; color: white !important; box-shadow: 0 4px 12px #de665523 !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content .button.secondary { background: white !important; border: 1px solid #d8e0ed !important; color: #526581 !important; box-shadow: none !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content button:disabled { opacity: .5; cursor: not-allowed; }
+.workshop-content button, .workshop-content a, .workshop-content summary { -webkit-tap-highlight-color: transparent; }
+.workshop-content :is(button, a, summary, input, select, textarea):focus-visible { outline: 3px solid #a0c3ff; outline-offset: 3px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content textarea, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content select, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content input[type='search'] { background: #fff !important; border: 1px solid #dce4ef !important; border-radius: 10px !important; box-shadow: none !important; color: #344662 !important; padding: 12px 14px; font: inherit; width: 100%; min-width: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content textarea { font-size: 14px; line-height: 1.9; resize: vertical; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content textarea::placeholder { color: #97a1b2 !important; }
+html body.workshop-page .workshop-content .field-label { display: block; margin: 18px 0 8px; font-size: 12px; font-weight: 600; color: #435572 !important; }
+.field-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+.field-label-row > span { color: #8a97aa; font-size: 11px; }
+.workshop-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.workshop-hint { display: flex; align-items: flex-start; gap: 7px; font-size: 11px; margin: 10px 0 0; }
+.workshop-hint svg { flex: 0 0 15px; width: 15px; height: 15px; margin-top: 3px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content .workshop-status { font-size: 12px; line-height: 1.6; white-space: normal; max-width: none; display: block; margin: 12px 0 0; }
+.workshop-status:empty { display: none !important; }
+.workshop-footnote { display: flex; justify-content: center; align-items: center; gap: 7px; font-size: 11px; text-align: center; margin: 26px 0 0; }
+.workshop-footnote svg { flex-shrink: 0; width: 15px; height: 15px; }
+/* Prompt studio. */
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.prompt-guide-column { display: grid; gap: 18px; min-width: 0; }
+.prompt-mission { background: #fff5ef; border: 1px solid #f8e2d8; border-radius: 12px; padding: 16px; margin: 18px 0 3px; }
+.prompt-mission .workshop-kicker { color: #be7057; display: flex; gap: 6px; align-items: center; }
+.prompt-mission svg { width: 14px; height: 14px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-mission > p { color: #704c43 !important; font-size: 13px; line-height: 1.85; margin: 12px 0; }
+.prompt-mission > div { display: grid; grid-template-columns: 56px 1fr; gap: 8px; border-top: 1px solid #efdcd2; padding-top: 12px; font-size: 11px; color: #947366; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-framework { padding: 0; margin: 0; list-style: none; display: grid; gap: 17px; }
+.prompt-framework li { display: flex; align-items: flex-start; gap: 12px; }
+.step-number { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 10px; flex: 0 0 auto; font-size: 12px; font-weight: 700; }
+.prompt-framework li strong { font-size: 12px; }
+.prompt-framework li p { font-size: 11px; line-height: 1.7; margin: 3px 0 0; }
+.prompt-structure { margin-top: 23px; padding-top: 17px; border-top: 1px solid #e9eef6; }
+.prompt-structure > div:first-child { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; color: #648195; }
+.structure-meter { height: 4px; margin: 12px 0; border-radius: 4px; overflow: hidden; background: #eaf0f5; }
+.structure-meter > span { display: block; height: 100%; width: 0; background: #52a795; transition: width .2s; }
+.structure-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.structure-chips span { padding: 4px 8px; border-radius: 6px; background: #f3f5f8; color: #7a8799; font-size: 10px; }
+.structure-chips span.present { background: #e8f5ee; color: #247356; }
+.prompt-structure > p { font-size: 10px; margin: 9px 0 0; }
+.feedback-empty { padding: 16px; background: #f7f9fc; border: 1px dashed #dce5f0; border-radius: 12px; text-align: center; }
+.feedback-empty > svg { width: 28px; height: 28px; color: #abb9cc; }
+.feedback-empty p { font-size: 11px; line-height: 1.8; margin-bottom: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-feedback-list { display: grid; gap: 0; margin: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-rubric-row { padding: 11px 0; border: 0; border-bottom: 1px solid #edf0f6; background: transparent; border-radius: 0; }
+.prompt-rubric-row > div { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+.prompt-rubric-row strong { font-size: 11px; }
+.prompt-rubric-row div span { font-size: 10px; flex-shrink: 0; border-radius: 5px; background: #fff2df; padding: 3px 6px; color: #8e6b28; }
+.prompt-rubric-row[data-status='achieved'] div span { background: #e8f5ee; color: #247356; }
+.prompt-rubric-row p { font-size: 11px; margin: 7px 0 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-suggestion { background: #edf5ff; border: 0; border-radius: 12px; margin-top: 16px; padding: 15px; font-size: 12px; line-height: 1.8; }
+.prompt-suggestion h3 { margin: 0 0 8px; font-size: 12px !important; }
+.prompt-suggestion p { margin: 0; font-size: 11px; }
+.prompt-previous { margin-top: 18px; font-size: 12px; }
+.prompt-previous p { white-space: pre-wrap; }
+/* Assignment library. */
+.assignment-toolbar { display: flex; gap: 20px; align-items: center; justify-content: space-between; margin: 26px 0; }
+.task-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.task-filters button { background: #fff; border: 1px solid #e0e6f1; border-radius: 10px; color: #60718c; font: inherit; font-size: 12px; padding: 10px 15px; cursor: pointer; }
+.task-filters button.active { color: #fff; background: #3872cb; border-color: #3872cb; box-shadow: 0 3px 8px #3872cb20; }
+.task-filters button span { opacity: .7; padding-left: 4px; }
+.task-search { display: flex; gap: 10px; align-items: center; position: relative; width: 270px; }
+.task-search svg { position: absolute; left: 14px; width: 16px; height: 16px; color: #91a0b8; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content .task-search input { padding-left: 39px; font-size: 12px; }
+.assignment-list-heading { display: flex; align-items: center; gap: 15px; justify-content: space-between; margin-bottom: 18px; }
+.assignment-list-heading > span { font-size: 11px; color: #8592a6; flex-shrink: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-task-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-task-card { display: flex; flex-direction: column; padding: 23px; gap: 0; border: 1px solid #e0e8f3 !important; border-radius: 16px !important; background: #fff !important; box-shadow: 0 3px 14px #233c6408 !important; min-height: 270px; transition: transform .18s, box-shadow .18s; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-task-card:hover { transform: translateY(-3px); border-color: #9cbee9 !important; box-shadow: 0 7px 24px #233c6412 !important; }
+.task-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.task-card-top .section-icon { width: 42px; height: 42px; border-radius: 14px; }
+.task-subject { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; background: #eef5ff; color: #4c79ad; }
+.task-number { margin-left: auto; font-size: 11px; color: #a8b4c5; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-task-card h3 { font-size: 16px; line-height: 1.6; margin: 0 0 9px; font-weight: 700; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-task-card > p { font-size: 12px; line-height: 1.8; margin: 0 0 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.task-card-bottom { margin-top: auto; display: flex; align-items: center; justify-content: space-between; color: #798ba6; font-size: 11px; }
+.task-card-bottom > span:first-child { display: flex; align-items: center; gap: 6px; }
+.task-card-bottom svg { width: 16px; height: 16px; }
+.task-open { display: grid; place-items: center; width: 30px; height: 30px; background: #edf5ff; color: #3774d0; border-radius: 50%; }
+.task-search-empty { padding: 40px; text-align: center; }
+/* Assignment desk. */
+html body.workshop-page.module-focus-page .app-shell.module-shell > .app-sidebar { display: none !important; }
+html body.workshop-page.module-focus-page .assignment-chatbot { inset: auto !important; pointer-events: auto !important; }
+html body.workshop-page.module-focus-page .assignment-chat-toggle { position: static !important; inset: auto !important; }
+html body.workshop-page.module-focus-page .assignment-chat-panel { transform: none !important; visibility: visible !important; opacity: 1 !important; inset: auto !important; }
+html body.workshop-page.module-focus-page .assignment-submit-bar { position: static !important; background: transparent !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-work-hero { display: flex; justify-content: space-between; gap: 28px; padding: 22px 0 28px; margin: 0; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-work-hero h1 { max-width: 800px; font-size: clamp(23px, 2.5vw, 32px) !important; margin-top: 12px; }
+.assignment-work-meta { display: flex; flex-wrap: wrap; gap: 20px; font-size: 11px; color: #7788a2; }
+.assignment-work-meta span { display: flex; align-items: center; gap: 7px; }
+.assignment-work-meta svg { width: 16px; height: 16px; color: #5287ce; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer { display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 10px; align-self: center; flex: 0 0 155px; min-width: 0; padding: 14px 17px !important; background: #fff0e6 !important; border: 1px solid #f9dfcc !important; border-radius: 14px !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer .ti { font-size: 29px; color: #db7b47; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer strong { font-size: 23px; line-height: 1.25; color: #b9673f !important; font-variant-numeric: tabular-nums; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer span, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer small { color: #ad7961 !important; font-size: 9px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer small { flex-basis: 100%; text-align: center; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-page.chat-open { padding-right: 0 !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-workspace { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .9fr); gap: 20px; align-items: start; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-task-card { background: #edf5ff !important; border-color: #dae8fa !important; }
+.assignment-full-prompt { white-space: pre-line; margin: 0; line-height: 1.95; font-size: 13px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-direction { background: #fff9e9 !important; border-color: #f2eacb !important; }
+.assignment-direction summary { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-weight: 700; cursor: pointer; list-style: none; font-size: 15px; }
+.assignment-direction summary > span { display: flex; align-items: center; gap: 9px; }
+.assignment-direction summary svg { width: 19px; height: 19px; color: #c5992a; }
+.direction-steps { list-style: none; margin: 23px 0 0; padding: 0; display: grid; gap: 20px; }
+.direction-steps li { display: flex; gap: 12px; align-items: flex-start; }
+.direction-steps li > span { display: grid; place-items: center; background: #e3edff; border-radius: 50%; color: #4b76b8; width: 28px; height: 28px; flex-shrink: 0; font-size: 12px; font-weight: 700; }
+.direction-steps strong { font-size: 12px; }
+.direction-steps p { font-size: 11px; margin: 5px 0 0; line-height: 1.8; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-form { grid-column: 1 / -1; padding: 23px; }
+.assignment-writing-grid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 20px; }
+.assignment-answer-wrap { min-width: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-answer-wrap textarea { min-height: 250px; padding: 18px; margin: 0; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-counter { position: static; margin-left: auto; background: transparent; font-size: 10px; color: #8c99ad; padding: 0; text-align: right; }
+.editor-note { font-size: 10px; display: flex; gap: 6px; align-items: center; margin: 8px 0; }
+.editor-note svg { width: 13px; height: 13px; flex-shrink: 0; }
+.assignment-rubric-card { background: #f7faff; border: 1px solid #e7edf7; padding: 16px; border-radius: 12px; font-size: 11px; }
+.assignment-rubric-card h3 { display: flex; gap: 7px; align-items: center; margin: 0 0 14px; font-size: 12px !important; }
+.assignment-rubric-card h3 svg { width: 17px; height: 17px; color: #5c91d2; }
+.assignment-rubric-criteria > p { display: flex; align-items: baseline; gap: 7px; font-size: 11px; line-height: 1.8; padding-bottom: 10px; margin: 10px 0; border-bottom: 1px solid #e5ebf5; }
+.rubric-dot { flex: 0 0 6px; height: 6px; background: #55a68d; border-radius: 50%; }
+.assignment-rubric-card details { font-size: 10px; }
+.assignment-rubric-card summary { cursor: pointer; color: #5a7ca4; }
+.rubric-original { white-space: pre-line; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-submit-bar { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid #edf0f6; padding-top: 18px; margin-top: 12px; }
+.assignment-submit-bar > div { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.draft-status { font-size: 10px; color: #7a8b9b; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chatbot { position: static !important; width: 100% !important; margin-top: 20px; z-index: auto; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-toggle { display: flex; align-items: center; width: 100%; height: auto; gap: 15px; padding: 18px 23px; background: #edf5ff !important; border: 1px solid #dce8f9 !important; border-radius: 14px !important; box-shadow: none !important; text-align: left; color: #4176bc !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-toggle > svg { width: 27px; height: 27px; flex-shrink: 0; }
+.assignment-chat-toggle strong { display: block; font-size: 13px; }
+.assignment-chat-toggle small { display: block; margin-top: 3px; font-size: 11px; font-weight: 400; color: #7188a6; }
+.chat-open-label { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 11px; }
+.chat-open-label svg { width: 15px; height: 15px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chatbot.is-open .assignment-chat-toggle { display: none; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-panel { position: static !important; width: 100% !important; height: auto !important; max-height: none !important; border: 1px solid #dce8f9 !important; background: #fff !important; border-radius: 16px !important; box-shadow: none !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-head { background: #edf5ff !important; color: #365f96 !important; padding: 16px 20px; }
+.assignment-chat-head small { display: block; font-size: 10px; margin-top: 3px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-thread { max-height: 290px; min-height: 80px; padding: 18px; }
+html body.workshop-page.module-focus-page .workshop-content .assignment-chat-thread .socratic-message.user p { color: #fff !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-form { padding: 15px; gap: 10px; background: #fff !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-form > button { background: #3974ca !important; color: #fff !important; border: 0 !important; border-radius: 10px; padding: 12px 16px; white-space: nowrap; font-size: 12px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-result { margin-top: 20px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-result > p { white-space: pre-line; font-size: 13px; line-height: 1.9; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-consent { z-index: 100; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .chatbot-rating { margin-top: 25px; border-radius: 14px !important; padding: 18px !important; background: #fff !important; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .chatbot-rating label { font-size: 12px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .chatbot-rating select { width: auto; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .chatbot-rating textarea { min-height: 65px; margin: 10px 0; font-size: 12px; }
+html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) [hidden] { display: none !important; }
+@media (max-width: 1000px) {
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-task-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-workspace { grid-template-columns: minmax(0, 1.15fr) minmax(240px, .85fr); }
+    .assignment-writing-grid { grid-template-columns: minmax(0, 1fr) 240px; }
+    .hero-stamp { display: none; }
+}
+@media (max-width: 760px) {
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .app-shell.module-shell { width: calc(100% - 32px) !important; padding-top: 70px !important; }
+    .workshop-hero { padding: 23px; gap: 17px; }
+    .hero-symbol { width: 58px; height: 72px; border-radius: 18px; }
+    .hero-symbol svg { width: 33px; height: 33px; }
+    .workshop-hero p { font-size: 12px; }
+    .workshop-kicker { font-size: 8px; letter-spacing: .08em; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .prompt-layout, html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-workspace, .assignment-writing-grid { grid-template-columns: minmax(0, 1fr); }
+    .assignment-toolbar { align-items: stretch; flex-direction: column; gap: 14px; }
+    .task-search { width: 100%; }
+    .hero-skills { gap: 8px 15px; font-size: 10px; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-work-hero { align-items: start; gap: 16px; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer { flex: 0 0 116px; padding: 10px !important; gap: 6px; }
+    .assignment-work-meta { font-size: 10px; gap: 8px; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-work-hero h1 { font-size: 23px !important; }
+    .chat-open-label { display: none; }
+}
+@media (max-width: 480px) {
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-task-grid { grid-template-columns: minmax(0, 1fr); }
+    .workshop-hero { padding: 22px 18px; }
+    .hero-symbol { display: none; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-content h1 { font-size: 26px !important; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .workshop-card { padding: 19px; border-radius: 14px !important; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-work-hero { flex-wrap: wrap; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer { flex-basis: auto; margin-top: 2px; width: 100%; justify-content: start; padding: 9px 14px !important; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer > div { display: flex; align-items: baseline; gap: 10px; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer small { flex-basis: auto; margin-left: auto; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-timer strong { font-size: 19px; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-work-hero h1 { font-size: 23px !important; }
+    .assignment-list-heading h2 { font-size: 14px !important; }
+    .workshop-actions .button { flex: 1 1 auto; }
+    .task-filters button { padding: 9px 11px; font-size: 11px; }
+    .assignment-form .workshop-heading { flex-wrap: wrap; }
+    html body.workshop-page.module-focus-page:not(.game-page):not(.landing-page) .assignment-chat-form { grid-template-columns: minmax(0, 1fr); }
+    .assignment-chat-form > button { width: 100%; }
+    .assignment-submit-bar > div { flex: 1; }
+    .draft-status { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .workshop-task-card, .structure-meter > span { transition: none !important; }
+}

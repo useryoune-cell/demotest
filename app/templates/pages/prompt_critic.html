@@ -1,73 +1,51 @@
 {% extends "base.html" %}
-
 {% block title %}Prompt phản biện · AI Critical Thinking Lab{% endblock %}
-
+{% block body_class %}workshop-page {% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/workshop.css', v='workshop-1') }}">{% endblock %}
 {% block content %}
 <div class="app-shell module-shell">
-    <aside class="app-sidebar" aria-label="Danh sách mô-đun">
-        <a class="sidebar-item" href="{{ url_for('main.app_home') }}"><i data-lucide="arrow-left"></i><span>Quay lại</span></a>
-        {% for nav_item in modules %}
-        <a class="sidebar-item {% if nav_item.slug == module.slug %}active{% endif %}" href="{{ url_for('main.module_detail', slug=nav_item.slug) }}">
-            <i data-lucide="{{ nav_item.icon }}"></i><span>{{ nav_item.number }}</span>
-        </a>
-        {% endfor %}
-    </aside>
-
-    <section class="app-content">
-        <div class="module-detail-hero">
-            <div>
-                <p class="eyebrow dark">{{ module.area }}</p>
-                <h1>{{ module.title }}</h1>
-            </div>
-        </div>
-
+    {% include 'pages/workshop_sidebar.html' %}
+    <section class="app-content workshop-content prompt-workshop">
+        <header class="workshop-hero prompt-hero">
+            <div class="hero-symbol" aria-hidden="true"><i data-lucide="lightbulb"></i></div>
+            <div><span class="workshop-kicker">HỎI SÂU HƠN · NGHĨ ĐỘC LẬP HƠN</span><h1>Prompt phản biện</h1><p>Biến AI thành đối tượng để em chất vấn, kiểm chứng và phản biện.</p></div>
+            <span class="hero-stamp" aria-hidden="true"><i data-lucide="messages-square"></i><span>Hỏi có căn cứ<br>Nghĩ nhiều góc nhìn</span></span>
+        </header>
+        <div class="workshop-breadcrumb"><a href="{{ url_for('main.app_home') }}">Không gian học tập</a><span>/</span><span>Prompt phản biện</span></div>
         <section class="prompt-layout">
-            <form class="app-panel prompt-panel" id="promptCriticForm">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow dark">Bài làm</p>
-                        <h2>Viết prompt của em</h2>
-                    </div>
-                    <span class="response-meta" id="promptScoreMeta"></span>
-                </div>
-
-                <label class="field-label" for="promptScenario">Tình huống</label>
-                <select id="promptScenario">
-                    {% for scenario in scenarios %}
-                    <option value="{{ scenario.id }}">{{ scenario.title }} · {{ scenario.task }}</option>
-                    {% endfor %}
-                </select>
-
-                <label class="field-label" for="criticPrompt">Prompt học sinh viết</label>
-                <textarea id="criticPrompt" rows="10" placeholder="Nhập prompt..."></textarea>
-                <button class="button primary" type="submit"><i data-lucide="message-square-text"></i><span>Nhận xét bằng AI</span></button>
+            <form class="workshop-card prompt-panel" id="promptCriticForm">
+                <div class="workshop-heading"><span class="section-icon coral"><i data-lucide="pencil-line"></i></span><div><h2>Viết prompt của em</h2><p>Chất vấn thông tin, thay vì chỉ xin một đáp án.</p></div></div>
+                <label class="field-label" for="promptScenario">Chọn tình huống</label>
+                <select id="promptScenario">{% for scenario in scenarios %}<option value="{{ scenario.id }}" data-task="{{ scenario.task }}">{{ scenario.title }}</option>{% endfor %}</select>
+                <article class="prompt-mission" aria-labelledby="promptMissionTitle"><span class="workshop-kicker" id="promptMissionTitle"><i data-lucide="flag"></i> NHIỆM VỤ TƯ DUY</span><p id="promptSituation">{{ scenarios[0].task }}</p><div><strong>Mục tiêu</strong><span>Buộc AI đưa căn cứ, phát hiện điểm chưa chắc và tự kiểm tra kết luận.</span></div></article>
+                <div class="field-label-row"><label class="field-label" for="criticPrompt">Prompt của em</label><span id="promptWordCount">0 từ</span></div>
+                <textarea id="criticPrompt" rows="10" placeholder="Em muốn AI kiểm tra điều gì? Cần căn cứ nào? Có cách nhìn nào khác?" aria-describedby="promptWritingHint"></textarea>
+                <p class="workshop-hint" id="promptWritingHint"><i data-lucide="route"></i> Điểm cần kiểm chứng → Nguồn / căn cứ → Khả năng phản bác → Kết luận lại.</p>
+                <div class="workshop-actions"><button class="button primary" type="submit"><i data-lucide="sparkles"></i><span>Phân tích prompt của em</span></button><button class="button secondary" id="promptRewrite" type="button" disabled><i data-lucide="pencil-line"></i><span>Thử viết lại</span></button></div>
+                <p class="response-meta workshop-status" id="promptScoreMeta" role="status" aria-live="polite"></p>
+                <details class="prompt-previous" id="promptPrevious" hidden><summary>Xem prompt trước khi sửa</summary><p id="promptPreviousText"></p></details>
             </form>
-
-            <aside class="app-panel prompt-rubric">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow dark">Khung mẫu</p>
-                        <h2>Prompt phản biện nên có</h2>
-                    </div>
-                </div>
-                <div class="prompt-framework">
-                    <article><strong>1. Vai trò</strong><span>Yêu cầu AI đóng vai người phản biện, không làm thay.</span></article>
-                    <article><strong>2. Kiểm chứng</strong><span>Yêu cầu nêu nguồn, dữ liệu, điều chưa chắc.</span></article>
-                    <article><strong>3. Phản biện</strong><span>Yêu cầu chỉ ra giả định, điểm yếu và góc nhìn trái chiều.</span></article>
-                </div>
-
-                <div class="prompt-suggestion" id="promptSuggestion" hidden></div>
-
-                <div id="promptRubric" class="prompt-feedback-list" hidden>
-                    {% for item in rubric %}
-                    <article class="prompt-rubric-row" data-rubric-key="{{ item.key }}">
-                        <div><strong>{{ item.label }}</strong><span>Đang chờ</span></div>
-                        <p></p>
-                    </article>
-                    {% endfor %}
-                </div>
-            </aside>
+            <div class="prompt-guide-column">
+                <aside class="workshop-card prompt-rubric">
+                    <div class="workshop-heading"><span class="section-icon blue"><i data-lucide="book-open-check"></i></span><div><h2>Một prompt phản biện tốt cần có</h2><p>Bốn bước để AI phải giải thích và tự kiểm tra.</p></div></div>
+                    <ol class="prompt-framework">
+                        <li><span class="step-number blue">1</span><div><strong>Xác định vai trò</strong><p>Người kiểm chứng thông tin hoặc nhà nghiên cứu lịch sử.</p></div></li>
+                        <li><span class="step-number green">2</span><div><strong>Yêu cầu kiểm chứng</strong><p>Đưa căn cứ, nêu nguồn và đối chiếu với tài liệu đã cho.</p></div></li>
+                        <li><span class="step-number amber">3</span><div><strong>Yêu cầu phản biện</strong><p>Tìm điểm chưa chắc, ý kiến đối lập và khả năng sai.</p></div></li>
+                        <li><span class="step-number purple">4</span><div><strong>Kết luận có điều kiện</strong><p>Nêu mức độ chắc chắn, điều chỉnh khi chưa đủ bằng chứng.</p></div></li>
+                    </ol>
+                    <div class="prompt-structure"><div><strong>Cấu trúc prompt của em</strong><span id="promptStructureCount">0/4 bước</span></div><div class="structure-meter" aria-hidden="true"><span id="promptStructureProgress"></span></div><div class="structure-chips" aria-live="polite"><span data-prompt-step="role">○ Vai trò</span><span data-prompt-step="verify">○ Kiểm chứng</span><span data-prompt-step="counter">○ Phản biện</span><span data-prompt-step="conclude">○ Kết luận lại</span></div><p>Nhận diện theo cách diễn đạt, chỉ để gợi ý; AI sẽ phân tích nội dung.</p></div>
+                </aside>
+                <section class="workshop-card prompt-feedback-card" aria-labelledby="promptFeedbackTitle">
+                    <div class="workshop-heading"><span class="section-icon coral"><i data-lucide="message-square-text"></i></span><div><h2 id="promptFeedbackTitle">Nhận xét cho em</h2><p>Kiểm tra cách em yêu cầu AI suy nghĩ.</p></div></div>
+                    <div class="feedback-empty" id="promptFeedbackEmpty"><i data-lucide="scan-text"></i><p>Viết prompt rồi chọn “Phân tích”.<br>Em sẽ thấy điểm mạnh và điều cần bổ sung ở đây.</p></div>
+                    <div id="promptRubric" class="prompt-feedback-list" hidden>{% for item in rubric %}<article class="prompt-rubric-row" data-rubric-key="{{ item.key }}"><div><strong>{{ item.label }}</strong><span>Đang chờ</span></div><p></p></article>{% endfor %}</div>
+                    <div class="prompt-suggestion" id="promptSuggestion" hidden></div>
+                </section>
+            </div>
         </section>
+        <p class="workshop-footnote"><i data-lucide="shield-check"></i> Prompt tốt giúp em kiểm tra AI và tự đưa ra kết luận có căn cứ.</p>
     </section>
 </div>
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/workshop.js', v='workshop-1') }}"></script>{% endblock %}

@@ -1,3 +1,29 @@
+async function learningRequest(url, payload) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 45000);
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+        });
+        const data = await response.json().catch(() => null);
+        if (!response.ok || !data) {
+            throw new Error(data?.error || 'Máy chủ đang bận. Vui lòng thử lại.');
+        }
+        return data;
+    } catch (error) {
+        if (error.name === 'AbortError' || error instanceof TypeError) {
+            throw new Error('Kết nối bị gián đoạn hoặc quá thời gian chờ. Nội dung vẫn được giữ, bạn hãy thử lại.');
+        }
+        throw error;
+    } finally {
+        window.clearTimeout(timeout);
+    }
+}
+
+
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const isLandingPage = document.body.classList.contains("landing-page");
 
@@ -1046,34 +1072,11 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
         timerId: null,
         chat: [],
     };
+    const assignmentChatToggleMarkup = chatToggle?.innerHTML || '';
     const assignmentSoftLimitSeconds = 45 * 60;
-    const wordRange = assignmentPage.querySelector('.assignment-task-card p')?.textContent.match(/(\d+)\s*[-–—]\s*(\d+)\s+từ(?=\s|[.,;:]|$)/iu);
+    const wordRange = (assignmentPage.querySelector('.assignment-full-prompt') || assignmentPage.querySelector('.assignment-task-card p'))?.textContent.match(/(\d+)\s*[-–—]\s*(\d+)\s+từ(?=\s|[.,;:]|$)/iu);
     let submitting = false;
 
-    async function assignmentRequest(url, payload) {
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), 25000);
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-                signal: controller.signal,
-            });
-            const data = await response.json().catch(() => null);
-            if (!response.ok || !data) {
-                throw new Error(data?.error || 'Máy chủ đang bận. Vui lòng thử lại.');
-            }
-            return data;
-        } catch (error) {
-            if (error.name === 'AbortError' || error instanceof TypeError) {
-                throw new Error('Kết nối bị gián đoạn hoặc quá thời gian chờ. Nội dung vẫn được giữ, bạn hãy thử lại.');
-            }
-            throw error;
-        } finally {
-            window.clearTimeout(timeout);
-        }
-    }
 
     function formatAssignmentTime(seconds) {
         const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -1113,7 +1116,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
         assignmentChatbot.classList.remove("is-open");
         assignmentPage.classList.remove("chat-open");
         chatToggle.setAttribute("aria-expanded", "false");
-        chatToggle.innerHTML = '<i data-lucide="message-circle"></i>';
+        chatToggle.innerHTML = assignmentChatToggleMarkup;
         chatPanel.hidden = true;
         if (window.lucide) {
             window.lucide.createIcons();
@@ -1147,15 +1150,16 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
     }
 
     async function startAssignmentAttempt() {
-        const response = await fetch("/api/modules/assignments/start", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ task_id: taskId }),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            assignmentMeta.textContent = data.error || "Không bắt đầu được phiên làm bài.";
-            return;
+        setAssignmentLocked(true);
+        let data;
+        try {
+            data = await learningRequest("/api/modules/assignments/start", { task_id: taskId });
+            if (!data.attempt?.id) throw new Error("Không bắt đầu được phiên làm bài.");
+        } catch (error) {
+            assignmentMeta.textContent = error.message;
+            consentModal.hidden = false;
+            acceptConsentButton.disabled = false;
+            return false;
         }
         assignmentState.attemptId = data.attempt.id;
         assignmentState.startedAt = data.attempt.started_at ? new Date(data.attempt.started_at).getTime() : Date.now();
@@ -1177,20 +1181,12 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
     if (acceptConsentButton) {
         acceptConsentButton.addEventListener("click", async () => {
             acceptConsentButton.disabled = true;
-            const response = await fetch("/api/modules/assignments/consent", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ task_id: taskId }),
-            });
-            if (response.ok) {
-                await startAssignmentAttempt();
-                if (assignmentState.attemptId) {
-                    consentModal.hidden = true;
-                    consentModal.setAttribute("hidden", "");
-                } else {
-                    acceptConsentButton.disabled = false;
-                }
-            } else {
+            try {
+                await learningRequest("/api/modules/assignments/consent", { task_id: taskId });
+                if (await startAssignmentAttempt()) consentModal.hidden = true;
+            } catch (error) {
+                assignmentMeta.textContent = error.message;
+            } finally {
                 acceptConsentButton.disabled = false;
             }
         });
@@ -1206,7 +1202,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
             assignmentChatbot.classList.toggle("is-open", willOpen);
             assignmentPage.classList.toggle("chat-open", willOpen);
             chatToggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
-            chatToggle.innerHTML = `<i data-lucide="${willOpen ? "x" : "message-circle"}"></i>`;
+            chatToggle.innerHTML = willOpen ? '<i data-lucide="x"></i>' : assignmentChatToggleMarkup;
             if (!willOpen) {
                 chatPanel.hidden = true;
             } else {
@@ -1243,7 +1239,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
             chatThread.appendChild(loading);
 
             try {
-                const data = await assignmentRequest("/api/modules/assignments/chat", {
+                const data = await learningRequest("/api/modules/assignments/chat", {
                         task_id: taskId,
                         attempt_id: assignmentState.attemptId,
                         message,
@@ -1276,7 +1272,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
                 : 0;
             assignmentMeta.textContent = "Đang nộp bài...";
             try {
-                const data = await assignmentRequest("/api/modules/assignments/submit", {
+                const data = await learningRequest("/api/modules/assignments/submit", {
                     task_id: taskId,
                     attempt_id: assignmentState.attemptId,
                     answer,
@@ -1287,6 +1283,7 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
                 assignmentMeta.textContent = "Đã nộp bài.";
                 assignmentAiReview.textContent = cleanAiText(data.submission.ai_review);
                 assignmentResult.hidden = false;
+                assignmentPage.dispatchEvent(new CustomEvent('assignment:submitted'));
                 closeAssignmentChat();
                 assignmentForm.querySelectorAll("textarea, button").forEach((node) => {
                     node.disabled = true;
@@ -2032,32 +2029,47 @@ if (promptCriticForm) {
             meta.textContent = "Prompt cần dài hơn.";
             return;
         }
-        const response = await fetch("/api/modules/prompt/score", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt }),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            meta.textContent = data.error || "Không chấm được prompt.";
-            return;
-        }
-        meta.textContent = data.feedback || "AI đã nhận xét. Giáo viên chấm cuối cùng.";
-        const promptRubric = document.getElementById("promptRubric");
-        if (promptRubric) {
-            promptRubric.hidden = false;
-        }
-        data.rubric.forEach((item) => {
-            const row = document.querySelector(`[data-rubric-key="${item.key}"]`);
-            if (!row) {
-                return;
+        const button = promptCriticForm.querySelector('button[type="submit"]');
+        if (button.disabled) return;
+        button.disabled = true;
+        document.getElementById('promptScenario').disabled = true;
+        document.getElementById('criticPrompt').disabled = true;
+        meta.textContent = "AI đang phân tích prompt...";
+        document.getElementById("promptRubric").hidden = true;
+        document.getElementById("promptSuggestion").hidden = true;
+        try {
+            const data = await learningRequest("/api/modules/prompt/score", { prompt, scenario_id: document.getElementById('promptScenario').value });
+            meta.textContent = data.ai_available ? 'Đã phân tích. Đọc nhận xét và thử viết lại prompt của em.' : 'AI chưa đánh giá được. Em có thể dùng gợi ý để tự sửa và thử lại.';
+            const promptRubric = document.getElementById("promptRubric");
+            if (promptRubric) {
+                promptRubric.hidden = false;
             }
-            row.querySelector("span").textContent = item.score >= 14 ? "Đã có" : "Cần bổ sung";
-            row.querySelector("p").textContent = item.hint;
-        });
-        const suggestion = document.getElementById("promptSuggestion");
-        suggestion.hidden = false;
-        suggestion.textContent = data.suggestion;
+            data.rubric.forEach((item) => {
+                const row = document.querySelector(`[data-rubric-key="${item.key}"]`);
+                if (!row) {
+                    return;
+                }
+                const ratio = item.score / item.max;
+                row.querySelector("span").textContent = !data.ai_available ? "Chờ đánh giá" : ratio >= .7 ? "Đạt" : ratio >= .4 ? "Chưa rõ" : "Cần bổ sung";
+                row.dataset.status = data.ai_available && ratio >= .7 ? 'achieved' : 'improve';
+                row.querySelector("p").textContent = item.hint;
+            });
+            const suggestion = document.getElementById("promptSuggestion");
+            suggestion.hidden = false;
+            suggestion.replaceChildren();
+            const title = document.createElement('h3');
+            title.textContent = 'Prompt của em có thể cải thiện ở đâu?';
+            const feedback = document.createElement('p');
+            feedback.textContent = data.suggestion;
+            suggestion.append(title, feedback);
+            promptCriticForm.dispatchEvent(new CustomEvent('prompt:reviewed', { detail: { prompt, data } }));
+        } catch (error) {
+            meta.textContent = error.message;
+        } finally {
+            button.disabled = false;
+            document.getElementById('promptScenario').disabled = false;
+            document.getElementById('criticPrompt').disabled = false;
+        }
     });
 }
 

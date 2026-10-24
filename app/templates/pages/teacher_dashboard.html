@@ -100,7 +100,7 @@
 
         {% if teacher_page == "detective" %}
         <section class="app-panel">
-            <div class="panel-heading"><div><h2>Dữ kiện Thám tử thông tin</h2></div></div>
+            <div class="panel-heading"><div><h2>Dữ kiện Thám tử AI</h2></div></div>
             <details class="teacher-topic-add" id="newDetectiveCase">
                 <summary><i data-lucide="plus"></i><span>Thêm vụ án</span></summary>
                 <form class="admin-form teacher-topic-new" method="post" action="{{ url_for('main.teacher_detective_case_save') }}">
@@ -353,6 +353,7 @@
                         <details class="teacher-topic-editor">
                             <summary><span>{{ submission.teacher_score or "Chờ chấm" }}</span><strong>{{ submission.student_name }} · {{ submission.task_title }}</strong><em>{{ format_duration(submission.duration_seconds) }} · {{ submission.submitted_at[:10] }}</em></summary>
                             <div class="assignment-review-body">
+                                {% if submission.get('synthetic') %}<p>Dữ liệu mô phỏng · Lượt {{ submission.get('attempt_number', 1) }} · Điểm mô phỏng: {{ submission.score }}/100. Chưa được giáo viên xác nhận.</p>{% endif %}
                                 <h3>Bài làm</h3>
                                 <p>{{ submission.answer }}</p>
                                 <h3>AI nhận xét sơ bộ</h3>
@@ -451,7 +452,7 @@
                     </article>
                     {% endfor %}
                 {% else %}
-                    <p class="muted-note">Chưa có bài nộp từ Bản đồ lập luận hoặc Thám tử thông tin.</p>
+                    <p class="muted-note">Chưa có bài nộp từ Bản đồ lập luận hoặc Thám tử AI.</p>
                 {% endif %}
             </div>
         </section>
