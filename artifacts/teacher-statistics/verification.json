@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "width": 360,
+      "students": 50,
+      "activities": 1800,
+      "synthetic": 1800,
+      "pending": 1600
+    },
+    {
+      "width": 768,
+      "students": 50,
+      "activities": 1800,
+      "synthetic": 1800,
+      "pending": 1600
+    },
+    {
+      "width": 1024,
+      "students": 50,
+      "activities": 1800,
+      "synthetic": 1800,
+      "pending": 1600
+    },
+    {
+      "width": 1440,
+      "students": 50,
+      "activities": 1800,
+      "synthetic": 1800,
+      "pending": 1600
+    }
+  ],
+  "browser_errors": [],
+  "empty_state": true,
+  "filter_submit": true
+}

@@ -31,11 +31,6 @@
         </div>
 
         {% if teacher_page == "overview" %}
-        <div class="ui-metrics" aria-label="Thống kê lớp phụ trách">
-            <article class="ui-metric"><strong>{{ learning.students|length }}</strong><span>Học sinh phụ trách</span></article>
-            <article class="ui-metric"><strong>{{ assignment_submissions|rejectattr('teacher_score')|list|length }}</strong><span>Bài viết chờ giáo viên chấm</span></article>
-            <article class="ui-metric"><strong>{{ assignment_tasks|selectattr('active')|list|length }}</strong><span>Nhiệm vụ đang mở</span></article>
-        </div>
         {% include 'pages/teacher_learning_overview.html' %}
         {% endif %}
 

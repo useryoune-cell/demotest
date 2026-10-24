@@ -1,9 +1,61 @@
-<form class="app-panel admin-form" method="get">
-<label>Khoảng thời gian <select name="period"><option value="week" {% if learning.period == 'week' %}selected{% endif %}>7 ngày gần nhất</option><option value="month" {% if learning.period == 'month' %}selected{% endif %}>30 ngày gần nhất</option></select></label>
+<form class="app-panel admin-form" method="get" action="#quantityStatistics">
+<label>Khoảng thời gian <select name="period"><option value="week" {% if learning.period == 'week' %}selected{% endif %}>7 ngày gần nhất</option><option value="month" {% if learning.period == 'month' %}selected{% endif %}>30 ngày gần nhất</option><option value="all" {% if learning.period == 'all' %}selected{% endif %}>Toàn bộ thời gian</option></select></label>
 <label>Trường <select name="school"><option value="">Tất cả trường phụ trách</option>{% for s in learning.available_classes|map(attribute=0)|unique %}<option value="{{ s }}" {% if learning.school == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label>
 <label>Lớp <select name="class_name"><option value="">Tất cả lớp phụ trách</option>{% for c in learning.available_classes|map(attribute=1)|unique %}<option value="{{ c }}" {% if learning.class_name == c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></label>
 <button class="button primary">Xem thống kê</button>
 </form>
+{% set stats = learning.quantity %}
+<section id="quantityStatistics" class="quantity-statistics" aria-labelledby="quantityTitle">
+    <div class="panel-heading"><div><h2 id="quantityTitle">Thống kê hoạt động học tập</h2><p>{{ 'Toàn bộ thời gian' if learning.period == 'all' else ('7 ngày gần nhất' if learning.period == 'week' else '30 ngày gần nhất') }} · {{ learning.class_name or 'Tất cả lớp phụ trách' }} · Ngày thống kê theo giờ Việt Nam.</p></div></div>
+    <div class="ui-metrics">
+        <article class="ui-metric"><strong>{{ stats.total_students }}</strong><span>Học sinh trong bộ lọc</span></article>
+        <article class="ui-metric"><strong>{{ stats.total }}</strong><span>Lượt bài làm và hoạt động</span></article>
+        <article class="ui-metric"><strong>{{ stats.reviews.pending }}</strong><span>Bài nộp chờ giáo viên chấm</span></article>
+    </div>
+    <p class="stats-legend"><span><i class="stats-key real"></i>Hoạt động thực: {{ stats.real }}</span><span><i class="stats-key synthetic"></i>Dữ liệu mô phỏng: {{ stats.synthetic }}</span></p>
+    {% if stats.synthetic %}<p class="app-panel">Có {{ stats.synthetic }} lượt mô phỏng trong biểu đồ. Đây là dữ liệu kiểm tra hệ thống, không phải kết quả học tập thực nghiệm.</p>{% endif %}
+    {% if not stats.total %}<p class="app-panel" role="status">Chưa ghi nhận hoạt động trong khoảng thời gian đã chọn. Có thể chọn “30 ngày gần nhất” hoặc “Toàn bộ thời gian” để xem dữ liệu cũ.</p>{% endif %}
+    <div class="stats-grid">
+        <article class="app-panel">
+            <h3>Học sinh có hoạt động / chưa có hoạt động</h3>
+            <div class="stats-participation">
+                <svg viewBox="0 0 120 120" role="img" aria-label="{{ stats.active_students }} trên {{ stats.total_students }} học sinh có hoạt động">
+                    <circle class="stats-ring-track" cx="60" cy="60" r="42"/>
+                    <circle class="stats-ring-value" cx="60" cy="60" r="42" stroke-dasharray="{{ 263.89 * stats.active_students / ([stats.total_students, 1]|max) }} 263.89" transform="rotate(-90 60 60)"/>
+                    <text x="60" y="58" text-anchor="middle">{{ ((100 * stats.active_students / stats.total_students)|round|int) if stats.total_students else 0 }}%</text>
+                    <text class="stats-ring-label" x="60" y="75" text-anchor="middle">có hoạt động</text>
+                </svg>
+                <dl><dt>Có hoạt động</dt><dd>{{ stats.active_students }} học sinh</dd><dt>Chưa có hoạt động</dt><dd>{{ stats.inactive_students }} học sinh</dd></dl>
+            </div>
+            <p class="ui-help">Mỗi học sinh được tính một lần, kể cả khi làm nhiều lượt. Có tính hoạt động mô phỏng; không đồng nghĩa đã hoàn thành toàn bộ bài.</p>
+        </article>
+        <article class="app-panel">
+            <h3>Bài nộp cần giáo viên đánh giá</h3>
+            {% for label, value in [('Chờ chấm', stats.reviews.pending), ('Đã chấm', stats.reviews.reviewed)] %}
+            <div class="stats-bar-row"><div><span>{{ label }}</span><strong>{{ value }} bài</strong></div><div class="stats-bar-track"><span class="stats-bar real" style="width: {{ 100 * value / stats.review_max }}%"></span></div></div>
+            {% endfor %}
+            <p class="ui-help">Nhiệm vụ, đánh giá lập luận, bản đồ và thám tử. Chỉ tính bài được giao cho giáo viên đang đăng nhập; {{ stats.reviews.synthetic }} bài mô phỏng. Điểm 0 do giáo viên chấm vẫn được tính là đã chấm.</p>
+        </article>
+        <article class="app-panel stats-wide">
+            <h3>Số lượt theo mô-đun</h3>
+            {% for row in stats.modules %}
+            <div class="stats-bar-row"><div><span>{{ row.label }}</span><strong>{{ row.total }} lượt</strong></div><div class="stats-bar-track" role="img" aria-label="{{ row.label }}: {{ row.real }} lượt thực, {{ row.synthetic }} lượt mô phỏng"><span class="stats-bar real" style="width: {{ 100 * row.real / stats.module_max }}%"></span><span class="stats-bar synthetic" style="width: {{ 100 * row.synthetic / stats.module_max }}%"></span></div></div>
+            {% endfor %}
+            <p class="ui-help">Đếm lượt nộp/chấm bài, phiên Socratic đã lưu và nhật ký phản tư trong sổ hoạt động; làm lại được tính thành lượt mới. Không cộng lần mở bài, đổi ảnh hay tin nhắn gợi ý vào số lượt này.</p>
+        </article>
+        <article class="app-panel stats-wide">
+            <h3>Hoạt động theo ngày</h3>
+            <p class="ui-help">Trục ngang: ngày · Trục dọc: số lượt (mốc cao nhất {{ stats.day_max }}).</p>
+            <div class="stats-timeline" tabindex="0" aria-label="Biểu đồ cột hoạt động từng ngày, có thể cuộn ngang">
+                {% for row in stats.days %}
+                <div class="stats-day" title="{{ row.date }}: {{ row.real }} lượt thực, {{ row.synthetic }} lượt mô phỏng">
+                    <strong>{{ row.total }}</strong><div class="stats-day-track" role="img" aria-label="Ngày {{ row.label }}: {{ row.total }} lượt, trong đó {{ row.synthetic }} mô phỏng"><span class="stats-bar synthetic" style="height: {{ 100 * row.synthetic / stats.day_max }}%"></span><span class="stats-bar real" style="height: {{ 100 * row.real / stats.day_max }}%"></span></div><span>{{ row.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </article>
+    </div>
+</section>
 <section class="app-panel">
 <h2>Tự đánh giá tư duy phản biện theo lớp</h2>
 <p>Tham khảo 5 nhóm kỹ năng WGCTA. Thang tự nhận định 1–5; không phải điểm WGCTA chuẩn hóa. Mỗi HS được tính lần tự đánh giá mới nhất trong kỳ.</p>

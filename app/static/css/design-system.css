@@ -1,6 +1,31 @@
 /* Important declarations in this named layer supersede legacy overrides.
    The file is excluded entirely from / and /app to preserve their rendering. */
 @layer notebook {
+    body #quantityStatistics { scroll-margin-top: 100px !important; }
+    body .stats-grid { display: grid !important; grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 24px !important; }
+    body .stats-wide { grid-column: 1 / -1 !important; }
+    body .stats-legend { display: flex !important; flex-wrap: wrap !important; gap: 24px !important; }
+    body .stats-legend > span { display: inline-flex !important; align-items: center !important; gap: 8px !important; }
+    body .stats-key { display: inline-block !important; width: 14px !important; height: 14px !important; border-radius: 4px !important; }
+    body :is(.stats-key,.stats-bar).real { background: var(--ui-primary) !important; }
+    body :is(.stats-key,.stats-bar).synthetic { background: var(--ui-ai) !important; }
+    body .stats-bar-row { margin: 20px 0 !important; }
+    body .stats-bar-row > div:first-child { display: flex !important; justify-content: space-between !important; gap: 16px !important; margin-bottom: 8px !important; }
+    body .stats-bar-row strong { white-space: nowrap !important; }
+    body .stats-bar-track { display: flex !important; height: 16px !important; border-radius: var(--ui-radius-pill) !important; background: var(--ui-border) !important; overflow: hidden !important; }
+    body .stats-bar { display: block !important; flex-shrink: 0 !important; }
+    body .stats-participation { display: flex !important; align-items: center !important; gap: 24px !important; flex-wrap: wrap !important; }
+    body .stats-participation svg { width: 200px !important; max-width: 100% !important; height: auto !important; }
+    body .stats-participation circle { fill: none !important; stroke-width: 13px !important; }
+    body .stats-ring-track { stroke: var(--ui-border) !important; }
+    body .stats-ring-value { stroke: var(--ui-primary) !important; }
+    body .stats-participation text { fill: var(--ui-text) !important; font-size: 22px !important; font-weight: 700 !important; }
+    body .stats-participation .stats-ring-label { font-size: 8px !important; font-weight: 400 !important; }
+    body .stats-participation dd { margin: 0 0 16px !important; font-weight: 700 !important; }
+    body .stats-timeline { display: flex !important; gap: 12px !important; overflow-x: auto !important; padding: 16px 4px !important; align-items: end !important; }
+    body .stats-day { flex: 1 0 44px !important; text-align: center !important; font-size: .8125rem !important; }
+    body .stats-day-track { height: 180px !important; display: flex !important; flex-direction: column !important; justify-content: end !important; background: var(--ui-bg) !important; margin: 8px 0 !important; border-bottom: 1px solid var(--ui-border) !important; }
+    @media (max-width: 767px) { body .stats-grid { grid-template-columns: 1fr !important; } }
     body { background: var(--ui-bg) !important; color: var(--ui-text) !important; font-family: var(--ui-font) !important; font-size: 16px !important; line-height: 1.6 !important; }
     body *, body *::before, body *::after { box-sizing: border-box !important; }
     body *:not(.ti) { font-family: var(--ui-font) !important; }
