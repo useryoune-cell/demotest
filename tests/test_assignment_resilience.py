@@ -5,6 +5,18 @@ from app.services.gemini_client import GeminiClient, GeminiClientError, GeminiKe
 
 
 class GeminiResilience(unittest.TestCase):
+    def test_structured_output_and_attempt_budget_reach_provider(self):
+        response = Mock(status_code=200, ok=True)
+        response.json.return_value = {'candidates': [{'content': {'parts': [{'text': '{"ok": true}'}]}}]}
+        client = GeminiClient(GeminiKeyManager(['test']), 'test-model')
+        schema = {'type': 'OBJECT', 'properties': {'ok': {'type': 'BOOLEAN'}}}
+        with patch('app.services.gemini_client.requests.post', return_value=response) as request:
+            client.generate_text('question', response_schema=schema, per_attempt_seconds=15)
+        generation = request.call_args.kwargs['json']['generationConfig']
+        self.assertEqual(generation['responseMimeType'], 'application/json')
+        self.assertEqual(generation['responseSchema'], schema)
+        self.assertLessEqual(sum(request.call_args.kwargs['timeout']), 15)
+
     def test_fast_thinking_is_sent_only_to_gemini_3_flash(self):
         response = Mock(status_code=200, ok=True)
         response.json.return_value = {'candidates': [{'content': {'parts': [{'text': 'hint'}]}}]}

@@ -145,7 +145,7 @@ class GeminiClient:
             "keys": client.key_manager.status(),
         }
 
-    def generate_text(self, prompt, max_attempts=None, deadline_seconds=None):
+    def generate_text(self, prompt, max_attempts=None, deadline_seconds=None, response_schema=None, per_attempt_seconds=None):
         attempts_allowed = max_attempts or self.key_manager.total_keys
         last_error = None
         # A timeout per key otherwise permits eight keys to block for six minutes.
@@ -158,7 +158,11 @@ class GeminiClient:
                 break
             state = self.key_manager.next_key()
             try:
-                text = self._request_with_key(state, prompt, remaining)
+                attempt_remaining = min(remaining, per_attempt_seconds) if per_attempt_seconds else remaining
+                if response_schema is not None:
+                    text = self._request_with_key(state, prompt, attempt_remaining, response_schema=response_schema)
+                else:
+                    text = self._request_with_key(state, prompt, attempt_remaining)
                 self.key_manager.mark_success(state)
                 return GeminiResponse(
                     text=text,
@@ -173,7 +177,7 @@ class GeminiClient:
 
         raise GeminiClientError(str(last_error or "Gemini request failed."), retryable=True)
 
-    def _request_with_key(self, state, prompt, remaining=None):
+    def _request_with_key(self, state, prompt, remaining=None, response_schema=None):
         url = (
             "https://generativelanguage.googleapis.com/v1beta/models/"
             f"{self.model}:generateContent"
@@ -195,6 +199,9 @@ class GeminiClient:
         # short tutoring replies. Older model families use different controls.
         if self.model.startswith('gemini-3') and 'flash' in self.model and self.thinking_level:
             payload['generationConfig']['thinkingConfig'] = {'thinkingLevel': self.thinking_level}
+        if response_schema is not None:
+            payload['generationConfig']['responseMimeType'] = 'application/json'
+            payload['generationConfig']['responseSchema'] = response_schema
 
         try:
             response = requests.post(

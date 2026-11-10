@@ -2041,7 +2041,10 @@ if (promptCriticForm) {
         document.getElementById("promptSuggestion").hidden = true;
         try {
             const data = await learningRequest("/api/modules/prompt/score", { prompt, scenario_id: document.getElementById('promptScenario').value });
-            meta.textContent = data.ai_available ? 'Đã phân tích. Đọc nhận xét và thử viết lại prompt của em.' : 'AI chưa đánh giá được. Em có thể dùng gợi ý để tự sửa và thử lại.';
+            meta.textContent = data.ai_available ? 'Đã phân tích. Đọc nhận xét và thử viết lại prompt của em.'
+                : data.failure_reason === 'invalid_response'
+                    ? 'Nhận xét AI chưa đúng định dạng. Prompt vẫn được giữ; em hãy bấm phân tích để thử lại.'
+                    : 'Chưa nhận được nhận xét từ dịch vụ AI. Prompt vẫn được giữ; em hãy bấm phân tích để thử lại.';
             const promptRubric = document.getElementById("promptRubric");
             if (promptRubric) {
                 promptRubric.hidden = false;

@@ -42,7 +42,7 @@ def score_prompt(prompt, scenario_id=None):
     from app.services.learning_feedback import criterion, review_text, level
     scenario = next((s for s in PROMPT_SCENARIOS if s['id'] == scenario_id), None)
     review = review_text({'instruction': 'Đánh giá yêu cầu AI kiểm chứng, đưa bằng chứng, xét góc nhìn khác và điều chỉnh kết luận có điều kiện; kiểm tra yêu cầu cụ thể thay vì chỉ đếm từ khóa.', 'scenario': scenario},
-                         {'prompt': str(prompt or '')}, [criterion(c['key'], c['label'], 25, _hint_for(c['key'], 0)) for c in RUBRIC], deadline_seconds=35)
+                         {'prompt': str(prompt or '')}, [criterion(c['key'], c['label'], 25, _hint_for(c['key'], 0)) for c in RUBRIC], deadline_seconds=35, structured=True)
     for row in review['rubric']:
         row['hint'] = row['feedback']
     score = sum(r['score'] for r in review['rubric'])
