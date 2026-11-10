@@ -23,6 +23,8 @@ services:
         sync: false
       - key: GEMINI_MODEL
         value: gemini-3.5-flash
+      - key: GEMINI_THINKING_LEVEL
+        value: minimal
       - key: GEMINI_TIMEOUT_SECONDS
         value: 45
       - key: GEMINI_KEY_COOLDOWN_SECONDS

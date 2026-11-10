@@ -10,7 +10,7 @@ async function learningRequest(url, payload) {
         });
         const data = await response.json().catch(() => null);
         if (!response.ok || !data) {
-            throw new Error(data?.error || 'Máy chủ đang bận. Vui lòng thử lại.');
+            throw new Error(data?.error || `Máy chủ trả lỗi HTTP ${response.status} hoặc phản hồi không hợp lệ. Vui lòng thử lại.`);
         }
         return data;
     } catch (error) {
@@ -580,7 +580,7 @@ if (socraticForm) {
     socraticForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const content = socraticInput.value.trim();
-        if (!content) {
+        if (!content || socraticInput.disabled) {
             return;
         }
 
@@ -588,42 +588,41 @@ if (socraticForm) {
         socraticState.messages.push({ role: "user", content });
         socraticInput.value = "";
         socraticInput.disabled = true;
+        const submitButton = socraticForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        socraticModeButtons.forEach((button) => { button.disabled = true; });
 
         const loading = appendSocraticMessage("assistant", socraticModeLoading[socraticState.mode] || socraticModeLoading.easy, "loading");
         socraticMeta.textContent = "Đang gọi Gemini...";
 
         try {
-            const response = await fetch("/api/modules/socratic/message", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    messages: socraticState.messages,
-                    stage_index: socraticState.stageIndex,
-                    board: socraticState.board,
-                    mode: socraticState.mode,
-                }),
+            const data = await learningRequest("/api/modules/socratic/message", {
+                messages: socraticState.messages,
+                stage_index: socraticState.stageIndex,
+                board: socraticState.board,
+                mode: socraticState.mode,
             });
-            const data = await response.json();
+            if (typeof data.ai_message !== 'string' || !data.ai_message.trim() || !data.meta || !data.stage) {
+                throw new Error('AI trả về nội dung không hợp lệ. Em hãy thử gửi lại.');
+            }
             loading.remove();
 
-            if (!response.ok) {
-                appendSocraticMessage("assistant", data.error || "Không gọi được Gemini.", "error");
-                socraticMeta.textContent = "Lỗi Gemini";
-                return;
-            }
-
             appendSocraticMessage("assistant", data.ai_message);
-            socraticState.messages.push({ role: "assistant", content: data.ai_message });
             setSocraticStage(Number(data.stage_index || 0));
             addBoardUpdates(data.board_updates || {});
             addSocraticLabels(data.labels || []);
             socraticMeta.textContent = `${data.meta.mode_label || "Socratic"} · ${data.stage.key} · ${data.meta.model} · ${data.meta.key_label}`;
+            socraticState.messages.push({ role: "assistant", content: data.ai_message });
         } catch (error) {
             loading.remove();
-            appendSocraticMessage("assistant", `Không gọi được API: ${error}`, "error");
-            socraticMeta.textContent = "Lỗi kết nối";
+            appendSocraticMessage("assistant", error.message, "error");
+            socraticMeta.textContent = "AI chưa trả lời được. Câu hỏi được giữ lại để em thử gửi lại.";
+            socraticState.messages.pop();
+            socraticInput.value = content;
         } finally {
             socraticInput.disabled = false;
+            submitButton.disabled = false;
+            socraticModeButtons.forEach((button) => { button.disabled = false; });
             socraticInput.focus();
         }
     });
@@ -1245,9 +1244,12 @@ if (assignmentPage && assignmentPage.dataset.taskId) {
                         message,
                         messages: assignmentState.chat,
                 });
-                chatInput.value = "";
+                chatInput.value = data.ai_available === false ? message : "";
                 loading.remove();
                 appendAssignmentChat("assistant", data.answer || data.error || "AI chưa trả lời được.");
+                if (data.ai_available === false) {
+                    appendAssignmentChat("assistant", "Đây là gợi ý tự học dự phòng. Câu hỏi vẫn ở ô nhập để em có thể gửi lại.");
+                }
             } catch (error) {
                 loading.remove();
                 appendAssignmentChat("assistant", error.message);

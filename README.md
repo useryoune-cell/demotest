@@ -36,6 +36,7 @@ ADMIN_USERNAME=<admin username>
 ADMIN_PASSWORD=<admin password>
 GEMINI_API_KEYS=key1,key2,key3
 GEMINI_MODEL=gemini-3.5-flash
+GEMINI_THINKING_LEVEL=minimal
 GEMINI_TIMEOUT_SECONDS=45
 GEMINI_KEY_COOLDOWN_SECONDS=60
 ```
@@ -62,6 +63,19 @@ GEMINI_MODEL=gemini-3.5-flash
 ```
 
 The backend rotates keys per request, cools down a key after HTTP 429, disables invalid/auth-failed keys, and avoids logging raw key values.
+
+Gemini 3 Flash uses `GEMINI_THINKING_LEVEL=minimal` by default to reduce latency
+for short tutoring responses. Set it to `high` if more internal reasoning is
+needed, or an empty value to use the provider default. This setting is sent only
+for Gemini 3 Flash models; other model families retain their own defaults.
+
+AI requests share a 35-second retry budget by default; `GEMINI_TIMEOUT_SECONDS`
+limits each network read rather than multiplying the total wait by the number of
+keys. Socratic chat also stops waiting in the browser after 45 seconds, restores
+the question on failure, and allows retry. Assignment chat returns an explicitly
+labelled self-study hint if Gemini is unavailable. Check Render logs for
+`Socratic Gemini unavailable` or `Assignment chat Gemini unavailable` to diagnose
+provider errors; a healthy `/health` endpoint alone does not verify AI responses.
 
 ## Gemini Test Page
 

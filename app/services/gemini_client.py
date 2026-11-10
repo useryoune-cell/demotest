@@ -111,10 +111,11 @@ class GeminiClient:
     _manager_signature = None
     _manager_lock = threading.Lock()
 
-    def __init__(self, key_manager, model, timeout_seconds=45):
+    def __init__(self, key_manager, model, timeout_seconds=45, thinking_level="minimal"):
         self.key_manager = key_manager
         self.model = model
         self.timeout_seconds = timeout_seconds
+        self.thinking_level = thinking_level
 
     @classmethod
     def from_app_config(cls, config):
@@ -132,6 +133,7 @@ class GeminiClient:
             key_manager=cls._manager,
             model=config["GEMINI_MODEL"],
             timeout_seconds=config["GEMINI_TIMEOUT_SECONDS"],
+            thinking_level=config.get("GEMINI_THINKING_LEVEL", "minimal"),
         )
 
     @classmethod
@@ -146,7 +148,9 @@ class GeminiClient:
     def generate_text(self, prompt, max_attempts=None, deadline_seconds=None):
         attempts_allowed = max_attempts or self.key_manager.total_keys
         last_error = None
-        deadline = time.monotonic() + deadline_seconds if deadline_seconds else None
+        # A timeout per key otherwise permits eight keys to block for six minutes.
+        budget = 35 if deadline_seconds is None else deadline_seconds
+        deadline = time.monotonic() + budget
 
         for attempt in range(1, attempts_allowed + 1):
             remaining = deadline - time.monotonic() if deadline else None
@@ -187,6 +191,10 @@ class GeminiClient:
                 "topP": 0.9,
             },
         }
+        # Gemini 3 Flash otherwise spends substantial time thinking even for
+        # short tutoring replies. Older model families use different controls.
+        if self.model.startswith('gemini-3') and 'flash' in self.model and self.thinking_level:
+            payload['generationConfig']['thinkingConfig'] = {'thinkingLevel': self.thinking_level}
 
         try:
             response = requests.post(
@@ -197,7 +205,7 @@ class GeminiClient:
                 if remaining is not None else self.timeout_seconds,
             )
         except requests.RequestException as exc:
-            message = f"Network error on {state.label}: {exc}"
+            message = f"Network error on {state.label}: {type(exc).__name__}"
             self.key_manager.mark_error(state, message)
             raise GeminiClientError(message, retryable=True) from exc
 

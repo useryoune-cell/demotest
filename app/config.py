@@ -17,6 +17,7 @@ class Config:
         if key.strip()
     ]
     GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+    GEMINI_THINKING_LEVEL = os.getenv("GEMINI_THINKING_LEVEL", "minimal").strip().lower()
     GEMINI_TIMEOUT_SECONDS = int(os.getenv("GEMINI_TIMEOUT_SECONDS", "45"))
     GEMINI_KEY_COOLDOWN_SECONDS = int(os.getenv("GEMINI_KEY_COOLDOWN_SECONDS", "60"))
     ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")

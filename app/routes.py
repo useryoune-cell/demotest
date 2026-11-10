@@ -1076,7 +1076,8 @@ def socratic_message():
         result = client.generate_text(prompt)
         parsed = parse_socratic_response(result.text, stage_index)
     except GeminiClientError as exc:
-        return jsonify({"error": str(exc)}), 502
+        current_app.logger.warning("Socratic Gemini unavailable: %s", exc)
+        return jsonify({"error": "AI chưa trả lời được trong thời gian chờ hoặc đang gặp lỗi. Em hãy thử gửi lại câu hỏi."}), 502
     except ValueError:
         parsed = fallback_socratic_response(stage_index)
         result = None
@@ -1247,8 +1248,8 @@ def assignment_chat():
         result = client.generate_text(build_assignment_chat_prompt(task, messages), deadline_seconds=35)
         answer = result.text
         meta = {"model": result.model, "key_label": f"key_{result.key_index + 1}", "attempts": result.attempts}
-    except GeminiClientError:
-        pass
+    except GeminiClientError as exc:
+        current_app.logger.warning("Assignment chat Gemini unavailable: %s", exc)
 
     answer = clean_ai_text(answer)
     append_chat(attempt_id, "assistant", answer)
@@ -1258,7 +1259,7 @@ def assignment_chat():
         "assignment_chat",
         payload={"task_id": task["id"], "attempt_id": attempt_id},
     )
-    return jsonify({"ok": True, "answer": answer, "meta": meta})
+    return jsonify({"ok": True, "answer": answer, "meta": meta, "ai_available": meta['model'] != 'fallback'})
 
 
 @main_bp.post("/api/modules/assignments/submit")
